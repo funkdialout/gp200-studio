@@ -52,6 +52,14 @@ Hover any pedal and the top strip tells you what it actually is. All 305 effects
 are matched to the real amps and stompboxes they model, so "MESS4 LD 3" reads as
 a Mesa/Boogie Mark IV instead of a code you have to look up.
 
+And each block is drawn as the kind of hardware it models, not one grey box in
+different colours. Amps are heads, with tolex, a control panel, a pilot lamp that
+lights when the amp is on and a strip of grille cloth. Cabinets show their cloth
+and speaker layout, from a 1×8 to an 8×10. Wahs and volume pedals are treadles,
+tape echoes have reels and a VU meter, rack delays have ears and a readout, and
+the small squat boxes get a round stomp switch. It is all colour, shape and
+layout: no logos or brand names are drawn on anything.
+
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="public/guide/04-info-bar-chain-dark.png" />
   <img src="public/guide/04-info-bar-chain.png" alt="The signal chain strip and the effect info line" width="100%" />

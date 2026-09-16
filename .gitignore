@@ -23,7 +23,8 @@ CLAUDE.md
 .claude/
 
 # Internal notes and local fixtures (kept out of the public repo)
-docs/
+docs/screens/
+# (fork) docs/ is tracked here: design docs + handoff notes
 mockups/
 prst/
 

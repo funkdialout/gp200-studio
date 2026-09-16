@@ -8,7 +8,8 @@
  *
  *   public/pedals/{slug}.svg        one per unique effect name+module
  *   public/pedals/manifest.json     name/module → file, basedOn, type, blurb,
- *                                   body colors, and the artwork's content box
+ *                                   body colors, the board chassis `look`, and
+ *                                   the artwork's content box
  *
  * Slug convention comes from docs/board-design-system.md (name lowercased,
  * non-alphanumerics → '-'). When two different effects share a slug (e.g.
@@ -22,6 +23,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { PATTERN_HEX, patternDef } from '../src/components/board/patterns.ts';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = join(ROOT, 'public', 'pedals');
@@ -233,48 +235,10 @@ function tplEq(s) {
   return svgDoc(out, defs);
 }
 
-/* grille cloth / tolex pattern fills */
+/* grille cloth / tolex pattern fills: the tile table lives in
+   src/components/board/patterns.ts so the board draws the same weaves */
 function patternDefs(kind, id, base) {
-  switch (kind) {
-    case 'tweed':
-      return `<pattern id="${id}" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-<rect width="6" height="6" fill="#c9a86a"/><rect width="6" height="3" fill="#b8945a"/><rect y="3" width="3" height="3" fill="#d8b878"/></pattern>`;
-    case 'oxblood':
-      return `<pattern id="${id}" width="4" height="4" patternUnits="userSpaceOnUse">
-<rect width="4" height="4" fill="#4a2028"/><circle cx="1" cy="1" r=".6" fill="#6a3038"/><circle cx="3" cy="3" r=".6" fill="#2e1418"/></pattern>`;
-    case 'silverface':
-      return `<pattern id="${id}" width="5" height="5" patternUnits="userSpaceOnUse">
-<rect width="5" height="5" fill="#a8a49a"/><circle cx="1.2" cy="1.2" r=".7" fill="#c8c4ba"/><circle cx="3.6" cy="3.6" r=".7" fill="#8a867c"/></pattern>`;
-    case 'wheat':
-      return `<pattern id="${id}" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-<rect width="5" height="5" fill="#cfc0a0"/><rect width="5" height="2.4" fill="#bfae8c"/></pattern>`;
-    case 'diamond':
-      return `<pattern id="${id}" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-<rect width="8" height="8" fill="#5a4632"/><path d="M0 0H8V8H0Z" fill="none" stroke="#7a6248" stroke-width="1"/><circle cx="4" cy="4" r=".8" fill="#8a7250"/></pattern>`;
-    case 'cane':
-      return `<pattern id="${id}" width="7" height="7" patternUnits="userSpaceOnUse">
-<rect width="7" height="7" fill="#c8a878"/><path d="M0 3.5 H7 M3.5 0 V7" stroke="#a8885c" stroke-width="1.6"/><path d="M0 0 L7 7" stroke="#8a6c44" stroke-width=".8"/></pattern>`;
-    case 'basket':
-      return `<pattern id="${id}" width="8" height="8" patternUnits="userSpaceOnUse">
-<rect width="8" height="8" fill="#8a7454"/><rect width="4" height="4" fill="#6a5840"/><rect x="4" y="4" width="4" height="4" fill="#6a5840"/></pattern>`;
-    case 'blackweave':
-      return `<pattern id="${id}" width="4" height="4" patternUnits="userSpaceOnUse">
-<rect width="4" height="4" fill="#1c1c1e"/><path d="M0 2 H4" stroke="#2e2e32" stroke-width="1"/><path d="M2 0 V4" stroke="#0e0e10" stroke-width="1"/></pattern>`;
-    case 'metalgrid':
-      return `<pattern id="${id}" width="5" height="5" patternUnits="userSpaceOnUse">
-<rect width="5" height="5" fill="#26282a"/><circle cx="2.5" cy="2.5" r="1.5" fill="#0c0d0e"/></pattern>`;
-    case 'bluecheck':
-      return `<pattern id="${id}" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-<rect width="8" height="8" fill="#28407c"/><rect width="8" height="4" fill="#1e3468"/><rect width="4" height="8" fill="rgba(255,255,255,.08)"/></pattern>`;
-    case 'orangeweave':
-      return `<pattern id="${id}" width="5" height="5" patternUnits="userSpaceOnUse">
-<rect width="5" height="5" fill="#d86a1a"/><path d="M0 2.5 H5 M2.5 0 V5" stroke="#c05a10" stroke-width="1"/></pattern>`;
-    case 'diamondplate':
-      return `<pattern id="${id}" width="10" height="10" patternUnits="userSpaceOnUse">
-<rect width="10" height="10" fill="#b0b4b8"/><ellipse cx="2.5" cy="2.5" rx="2" ry=".9" fill="#d0d4d8" transform="rotate(45 2.5 2.5)"/><ellipse cx="7.5" cy="7.5" rx="2" ry=".9" fill="#d0d4d8" transform="rotate(-45 7.5 7.5)"/></pattern>`;
-    default:
-      return `<pattern id="${id}" width="4" height="4" patternUnits="userSpaceOnUse"><rect width="4" height="4" fill="${base}"/></pattern>`;
-  }
+  return patternDef(kind, id, base);
 }
 
 /**
@@ -624,12 +588,6 @@ const MODULE_LED = {
   CAB: '#ffa23f', EQ: '#ff4d4d', MOD: '#4da6ff', DLY: '#4da6ff', RVB: '#4dffe0', VOL: '#ffffff',
 };
 
-/* representative base hex for each pattern fill (see patternDefs) */
-const PATTERN_HEX = {
-  tweed: '#c9a86a', oxblood: '#4a2028', silverface: '#a8a49a', wheat: '#cfc0a0',
-  diamond: '#5a4632', cane: '#c8a878', basket: '#8a7454', blackweave: '#1c1c1e',
-  metalgrid: '#26282a', bluecheck: '#28407c', orangeweave: '#d86a1a', diamondplate: '#b0b4b8',
-};
 const hexOf = (c, fallback) => (typeof c === 'string' && c.startsWith('#') ? c : PATTERN_HEX[c] ?? fallback);
 
 const relLum = (hex) => {
@@ -693,6 +651,86 @@ function bodyColorsFor(spec, module) {
   return colors;
 }
 
+/**
+ * The board's render recipe for an effect: which chassis template to draw and
+ * the spec fields that template needs, normalised so the board never has to
+ * re-derive anything (see PedalLook in src/components/board/pedalManifest.ts
+ * and docs/board-design-system.md).
+ *
+ * Colours are hex; tolex / grille / panel may instead be a pattern name from
+ * src/components/board/patterns.ts. `knob` is the board knob-cap style (a
+ * KNOB_STYLES key) for whatever surface the knobs sit on in that template, which
+ * is not always the body: amp knobs sit on the panel, cab knobs on a back plate.
+ * `label` is the spec's model-style shorthand; the board does not print it.
+ */
+function lookFor(spec, colors) {
+  const look = { template: spec.t, label: spec.label ?? '' };
+  const put = (key, value) => {
+    if (value !== undefined && value !== null && value !== '') look[key] = value;
+  };
+  switch (spec.t) {
+    case 'stomp':
+      put('shape', spec.shape ?? 'standard');
+      // the round (fuzz-face) enclosure has a stomp button, never a plate
+      put('plate', spec.plate !== false && spec.shape !== 'round');
+      put('knob', colors.knob);
+      break;
+    case 'rocker':
+      put('knob', colors.knob);
+      break;
+    case 'eq':
+      put('bands', spec.bands);
+      put('sliderColor', spec.sliderColor ?? '#f5f5f0');
+      put('knob', colors.knob);
+      break;
+    case 'amp': {
+      put('tolex', spec.tolex);
+      put('panel', spec.panel);
+      put('panelText', colors.panelText);
+      put('grille', spec.grille);
+      put('piping', spec.piping);
+      // the same fallback tplAmp paints its chicken-heads with
+      const knobColor = spec.knobColor ?? (spec.panel === '#c9b998' || spec.panel === '#e8e0cc' ? '#7a3020' : '#d8d2c0');
+      put('knobColor', knobColor);
+      put('knob', relLum(knobColor) < 90 ? 'dark' : 'cream');
+      put('lamp', spec.lamp ?? '#ff5a4d');
+      put('face', spec.face);
+      break;
+    }
+    case 'cab':
+      put('tolex', spec.tolex);
+      put('grille', spec.grille);
+      put('piping', spec.piping);
+      put('cols', spec.cols);
+      put('rows', spec.rows);
+      put('size', spec.size);
+      put('cone', spec.cone);
+      put('exposed', spec.exposed);
+      // knobs live on a brushed back-panel plate
+      put('knob', 'dark');
+      break;
+    case 'acoustic':
+      put('shape', spec.shape);
+      put('wood', spec.wood ?? '#d9a95e');
+      put('knob', 'cream');
+      break;
+    case 'rack':
+      put('display', spec.display ?? '00');
+      put('displayColor', spec.displayColor ?? '#5df08a');
+      put('knob', 'dark');
+      break;
+    case 'tape':
+      put('kind', spec.kind ?? 'reels');
+      put('panel', spec.panel);
+      put('knob', 'cream');
+      break;
+    default: // util
+      put('motif', spec.motif);
+      put('knob', colors.knob);
+  }
+  return look;
+}
+
 function main() {
   const effects = readEffects();
   mkdirSync(OUT, { recursive: true });
@@ -721,6 +759,7 @@ function main() {
     const collides = bySlug.get(slug).length > 1;
     const file = collides ? `${slug}--${e.module.toLowerCase()}.svg` : `${slug}.svg`;
     const svg = TEMPLATES[spec.t](spec);
+    const colors = bodyColorsFor(spec, e.module);
     writeFileSync(join(OUT, file), svg);
     manifest.push({
       name: e.name,
@@ -730,7 +769,8 @@ function main() {
       type: spec.type ?? 'Special',
       basedOn: spec.basedOn ?? '-',
       blurb: spec.blurb ?? TYPE_BLURBS[spec.type] ?? '',
-      colors: bodyColorsFor(spec, e.module),
+      colors,
+      look: lookFor(spec, colors),
       art: BOXES[spec.t](spec),
     });
   }

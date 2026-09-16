@@ -41,12 +41,26 @@ export function isWideSlot(slotIndex: number): boolean {
 }
 
 /**
- * Whether the pedal body renders wide. A pedal is wide only when its own effect
- * is wide *and* its bay is wide, so a rare wide effect in a mostly-compact
- * module (bay is compact) renders compact instead of overflowing/overlapping its
- * neighbours. In a wide bay, compact effects still render compact and float with
- * padding. Either way the body never exceeds its bay, so nothing reflows.
+ * Chassis templates that are wide by nature: an amp head and a 1U rack unit are
+ * landscape boxes, and drawing one as a 172px tower reads as a different object.
+ * (Tape machines are not on the list: a compact deck still reads as one, and
+ * the delay bay is the one most often holding a compact effect, so widening it
+ * pushed the 1000px tablet board onto a third line.) They take the full width of a wide bay whatever their knob
+ * count. The bay already reserves that width (isWideSlot), so on the desktop
+ * board this moves nothing; only the tablet band, where bays hug their pedal,
+ * sees the extra width.
  */
-export function pedalIsWide(slotIndex: number, effectId: number): boolean {
-  return isWideSlot(slotIndex) && isWidePedal(effectId);
+const LANDSCAPE_TEMPLATES: ReadonlySet<string> = new Set(['amp', 'rack']);
+
+/**
+ * Whether the pedal body renders wide. A pedal is wide only when its own effect
+ * is wide (or its chassis template is landscape, see above) *and* its bay is
+ * wide, so a rare wide effect in a mostly-compact module (bay is compact)
+ * renders compact instead of overflowing/overlapping its neighbours. In a wide
+ * bay, compact effects still render compact and float with padding. Either way
+ * the body never exceeds its bay, so nothing reflows.
+ */
+export function pedalIsWide(slotIndex: number, effectId: number, template?: string): boolean {
+  if (!isWideSlot(slotIndex)) return false;
+  return isWidePedal(effectId) || (template !== undefined && LANDSCAPE_TEMPLATES.has(template));
 }

@@ -216,6 +216,11 @@
 }
 .board-view .cables-svg text {
   fill: var(--stub-ink);
+  /* halo: keeps a stub label legible where it grazes an enclosure edge */
+  paint-order: stroke;
+  stroke: var(--case);
+  stroke-width: 3px;
+  stroke-linejoin: round;
   font-family: var(--font-jetbrains-mono), monospace;
   font-size: 9px;
   font-weight: 700;
@@ -1157,7 +1162,7 @@
 .board-view .stomp-round:active {
   transform: translateY(1px);
 }
-.board-view .pedal.wide .fs-row {
+.board-view .pedal .fs-row {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1189,6 +1194,527 @@
 }
 .board-view .jack.in { left: -6px; top: 44%; }
 .board-view .jack.out { right: -6px; top: 44%; }
+
+/* ════════════════════════════════════════════════════════════════════════
+   Chassis templates (PedalChassis.tsx, docs/board-design-system.md)
+
+   Every block used to be the same stompbox in a different colour. The article
+   now carries `tpl-<template>` from the manifest `look`, and each template
+   restyles the same DOM: the controls, footswitch, chips and jacks stay exactly
+   where the interaction code expects them. Decoration that needs its own
+   element lives in PedalChassis, either as `.chassis` (absolute, painted behind
+   the content: the article is `isolation: isolate`, the chassis z-index -1) or
+   as an in-flow face panel before/after the controls.
+
+   Bypass is still the article's ::after scrim; templates with a non-rectangular
+   silhouette give the scrim the same shape.
+   ════════════════════════════════════════════════════════════════════════ */
+.board-view .pedal {
+  isolation: isolate;
+}
+.board-view .chassis {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.board-view .chassis {
+  border-radius: inherit;
+}
+.board-view .chassis-skin {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+}
+.board-view .chassis-tolex {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── stomp shapes ── */
+/* mxr: the small squat die-cast box , narrower, tighter corners, one round
+   stomp button and no footswitch plate */
+.board-view .pedal.shape-mxr:not(.wide) {
+  width: 150px;
+  padding-left: 9px;
+  padding-right: 9px;
+  border-radius: 7px;
+}
+.board-view .pedal.shape-mxr::before,
+.board-view .pedal.shape-mxr::after {
+  border-radius: 7px;
+}
+.board-view .pedal.shape-mxr .module-chip { left: 13px; }
+.board-view .pedal.shape-mxr .chain-num { right: 13px; }
+.board-view .pedal.shape-mxr .info-chip { right: 30px; }
+/* big: the larger folded-steel enclosure , squarer corners */
+.board-view .pedal.shape-big,
+.board-view .pedal.shape-big::before,
+.board-view .pedal.shape-big::after {
+  border-radius: 6px;
+}
+/* round: the domed fuzz enclosure. The dome is the top corners; the chips drop
+   under the curve so they stay on the body. */
+.board-view .pedal.shape-round,
+.board-view .pedal.shape-round::before,
+.board-view .pedal.shape-round::after {
+  border-radius: 86px 86px 16px 16px / 70px 70px 16px 16px;
+}
+.board-view .pedal.shape-round {
+  padding-top: 34px;
+}
+.board-view .pedal.shape-round .module-chip { top: 30px; left: 12px; }
+.board-view .pedal.shape-round .chain-num { top: 30px; right: 12px; }
+.board-view .pedal.shape-round .info-chip { top: 14px; right: 50%; transform: translateX(28px); }
+.board-view .pedal.shape-round .pedal-grip { top: 9px; }
+.board-view .pedal.shape-round .screw.tl,
+.board-view .pedal.shape-round .screw.tr {
+  display: none;
+}
+.board-view .pedal.shape-round .controls {
+  margin-top: 10px;
+}
+
+/* ── rocker: wah / volume / pitch treadle ──
+   A cast body that tapers toward the toe, nearly all of it covered by one
+   ribbed rubber tread hinged at the heel. The controls sit on the toe. */
+.board-view .pedal.tpl-rocker {
+  background: none;
+  box-shadow: none;
+  padding-top: 16px;
+  border-radius: 14px 14px 10px 10px;
+}
+.board-view .pedal.tpl-rocker::before {
+  display: none;
+}
+.board-view .pedal.tpl-rocker .chassis {
+  filter: drop-shadow(0 10px 12px rgba(0, 0, 0, 0.32));
+}
+.board-view .pedal.tpl-rocker .chassis-skin,
+.board-view .pedal.tpl-rocker::after {
+  clip-path: polygon(9% 0, 91% 0, 100% 100%, 0 100%);
+  border-radius: 14px 14px 10px 10px;
+}
+.board-view .pedal.tpl-rocker .chassis-skin {
+  /* a machined edge, so a black casting still has a silhouette on the dark stage */
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14), inset 0 -3px 6px rgba(0, 0, 0, 0.3);
+  background:
+    linear-gradient(120deg, rgba(255, 255, 255, 0.2), transparent 38%),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, var(--body), var(--body-deep));
+}
+/* the toe stop: a raised lip across the front of the casting */
+.board-view .pedal.tpl-rocker .rocker-toe {
+  position: absolute;
+  top: 0;
+  left: 12%;
+  right: 12%;
+  height: 5px;
+  border-radius: 0 0 4px 4px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.35), rgba(0, 0, 0, 0.25));
+}
+.board-view .pedal.tpl-rocker .screw.tl,
+.board-view .pedal.tpl-rocker .screw.tr {
+  display: none;
+}
+.board-view .pedal.tpl-rocker .module-chip { left: 22px; }
+.board-view .pedal.tpl-rocker .chain-num { right: 22px; }
+.board-view .pedal.tpl-rocker .info-chip { right: 40px; }
+.board-view .pedal.tpl-rocker .p-desc {
+  margin-bottom: 8px;
+}
+.board-view .pedal.tpl-rocker .treadle {
+  height: 88px;
+  margin: 0 -2px;
+  width: calc(100% + 4px);
+  border-radius: 10px 10px 8px 8px;
+  clip-path: polygon(4% 0, 96% 0, 100% 100%, 0 100%);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent 22%),
+    repeating-linear-gradient(180deg, #25262a 0 5px, #141517 5px 10px),
+    #141517;
+}
+/* the hinge moves to the heel */
+.board-view .pedal.tpl-rocker .treadle::before {
+  top: auto;
+  bottom: 4px;
+  left: 18px;
+  right: 18px;
+}
+
+/* ── eq: slim box, brushed face, faders in a recessed slot panel ── */
+.board-view .pedal.tpl-eq,
+.board-view .pedal.tpl-eq::before,
+.board-view .pedal.tpl-eq::after {
+  border-radius: 5px;
+}
+.board-view .pedal.tpl-eq {
+  background: none;
+}
+.board-view .pedal.tpl-eq .chassis-skin {
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.07) 0 1px, rgba(0, 0, 0, 0.035) 1px 2px, transparent 2px 4px),
+    linear-gradient(165deg, var(--body), var(--body-deep));
+}
+.board-view .pedal.tpl-eq .controls {
+  margin: 16px 2px 8px;
+  padding: 7px 4px 5px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--ink) 9%, transparent);
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.28),
+    0 1px 0 rgba(255, 255, 255, 0.25);
+}
+.board-view .pedal.tpl-eq .fader .f-cap {
+  background: linear-gradient(180deg, var(--slider, #f6f2e8), color-mix(in srgb, var(--slider, #f6f2e8) 70%, #555));
+}
+
+/* ── amp head ──
+   Tolex box with a carrying handle, a control panel strip carrying the knobs
+   and a jewel pilot lamp, then a strip of grille cloth edged in piping. */
+.board-view .pedal.tpl-amp {
+  background: none;
+  border-radius: 9px;
+  padding-top: 16px;
+}
+.board-view .pedal.tpl-amp::before,
+.board-view .pedal.tpl-amp::after {
+  border-radius: 9px;
+}
+.board-view .pedal.tpl-amp .chassis-skin {
+  background:
+    radial-gradient(ellipse at 30% 0%, rgba(255, 255, 255, 0.1), transparent 60%),
+    repeating-linear-gradient(35deg, rgba(255, 255, 255, 0.025) 0 2px, rgba(0, 0, 0, 0.05) 2px 3px),
+    linear-gradient(180deg, color-mix(in srgb, var(--tolex) 88%, white), var(--tolex) 30%, color-mix(in srgb, var(--tolex) 80%, black));
+  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.35);
+}
+.board-view .pedal.tpl-amp .chassis-tolex {
+  opacity: 0.95;
+}
+.board-view .pedal.tpl-amp .amp-handle {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  width: 34%;
+  max-width: 96px;
+  height: 10px;
+  transform: translateX(-50%);
+  border-radius: 6px 6px 3px 3px;
+  background: linear-gradient(180deg, #34302c, #121110);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+}
+/* corner protectors instead of enclosure screws */
+.board-view .pedal.tpl-amp .screw,
+.board-view .pedal.tpl-cab .screw {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: linear-gradient(135deg, #d6d6d6, #6a6a6a 60%, #3a3a3a);
+}
+.board-view .pedal.tpl-amp .screw::after,
+.board-view .pedal.tpl-cab .screw::after {
+  display: none;
+}
+.board-view .pedal.tpl-amp .screw.tl,
+.board-view .pedal.tpl-cab .screw.tl { top: 2px; left: 2px; border-radius: 5px 1px 1px 1px; }
+.board-view .pedal.tpl-amp .screw.tr,
+.board-view .pedal.tpl-cab .screw.tr { top: 2px; right: 2px; border-radius: 1px 5px 1px 1px; }
+.board-view .pedal.tpl-amp .screw.bl,
+.board-view .pedal.tpl-cab .screw.bl { bottom: 2px; left: 2px; border-radius: 1px 1px 1px 5px; }
+.board-view .pedal.tpl-amp .screw.br,
+.board-view .pedal.tpl-cab .screw.br { bottom: 2px; right: 2px; border-radius: 1px 1px 5px 1px; }
+
+.board-view .pedal.tpl-amp .controls.amp-panel {
+  /* room on the right for the pilot lamp */
+  padding: 6px 22px 5px 6px;
+  margin: 12px 0 0;
+}
+.board-view .pedal.tpl-amp.panel-pattern .controls.amp-panel {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(0, 0, 0, 0.1)),
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.35) 0 2px, transparent 2px 6px),
+    repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.12) 0 2px, transparent 2px 6px),
+    var(--panel);
+}
+.board-view .pedal.tpl-amp .p-led {
+  position: absolute;
+  top: 36px;
+  right: 17px;
+  margin: 0;
+  width: 13px;
+  height: 13px;
+  z-index: 1;
+  --led: var(--lamp, #ff5a4d);
+  background: radial-gradient(circle at 40% 35%, color-mix(in srgb, var(--led) 45%, #222), color-mix(in srgb, var(--led) 18%, #000) 70%);
+  border: 2px solid #b8b4ac;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+.board-view .pedal.tpl-amp .p-led.on {
+  background: radial-gradient(circle at 40% 35%, #fff, var(--led) 45%, color-mix(in srgb, var(--led) 60%, #000));
+  box-shadow:
+    0 0 8px 2px color-mix(in srgb, var(--led) 80%, transparent),
+    0 0 18px 6px color-mix(in srgb, var(--led) 25%, transparent);
+}
+.board-view .amp-grille {
+  position: relative;
+  height: 26px;
+  margin: 7px 0 8px;
+  border-radius: 3px;
+  overflow: hidden;
+  border: 2px solid var(--piping, rgba(0, 0, 0, 0.55));
+  box-shadow:
+    inset 0 2px 5px rgba(0, 0, 0, 0.45),
+    0 1px 0 rgba(255, 255, 255, 0.12);
+}
+.board-view .pedal.wide .amp-grille {
+  height: 30px;
+}
+.board-view .grille-cloth {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── cab: tolex box, full-face grille, controls on a back-panel plate ── */
+.board-view .pedal.tpl-cab {
+  background: none;
+  border-radius: 7px;
+  padding-top: 26px;
+}
+.board-view .pedal.tpl-cab::before,
+.board-view .pedal.tpl-cab::after {
+  border-radius: 7px;
+}
+.board-view .pedal.tpl-cab .chassis-skin {
+  background:
+    radial-gradient(ellipse at 30% 0%, rgba(255, 255, 255, 0.1), transparent 60%),
+    repeating-linear-gradient(35deg, rgba(255, 255, 255, 0.025) 0 2px, rgba(0, 0, 0, 0.05) 2px 3px),
+    linear-gradient(180deg, color-mix(in srgb, var(--tolex) 88%, white), var(--tolex) 30%, color-mix(in srgb, var(--tolex) 80%, black));
+  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.35);
+}
+.board-view .cab-grille {
+  position: relative;
+  border-radius: 5px;
+  overflow: hidden;
+  border: 2px solid var(--piping, rgba(0, 0, 0, 0.5));
+  box-shadow:
+    inset 0 2px 6px rgba(0, 0, 0, 0.5),
+    0 1px 0 rgba(255, 255, 255, 0.12);
+  margin: 0 -2px;
+}
+.board-view .cab-grille svg {
+  display: block;
+}
+.board-view .cab-size {
+  position: absolute;
+  right: 4px;
+  bottom: 3px;
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  padding: 0 4px;
+  border-radius: 3px;
+  color: #efeae0;
+  background: rgba(0, 0, 0, 0.62);
+}
+/* jacks up on the cabinet side, level with the grille: at the default 44% they
+   sat on the back plate, and a board-edge stub cable then lay across its knob
+   labels */
+.board-view .pedal.tpl-cab .jack,
+.board-view .pedal.tpl-acoustic .jack {
+  top: 30%;
+}
+/* brushed back-panel plate; its own dark ink on light metal */
+.board-view .controls.back-plate {
+  margin: 10px -4px 8px;
+  padding: 6px 0 4px;
+  gap: 4px 0;
+  border-radius: 4px;
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.18) 0 1px, rgba(0, 0, 0, 0.04) 1px 3px),
+    linear-gradient(180deg, #d9dadc, #a9abae);
+  border: 1px solid rgba(0, 0, 0, 0.45);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 2px 3px rgba(0, 0, 0, 0.35);
+}
+.board-view .controls.back-plate .k-label,
+.board-view .controls.back-plate .k-value {
+  color: #1c1c1e;
+}
+.board-view .controls.back-plate .combo-select select,
+.board-view .controls.back-plate .mini-switch {
+  --ink: #1c1c1e;
+}
+
+/* ── acoustic IR: the instrument body in its case ── */
+.board-view .pedal.tpl-acoustic {
+  background: none;
+  padding-top: 24px;
+}
+.board-view .pedal.tpl-acoustic .chassis-skin {
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(160, 30, 40, 0.25), transparent 70%),
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, #3a2a26, #1e1614);
+  box-shadow: inset 0 0 0 3px rgba(0, 0, 0, 0.4), inset 0 0 18px rgba(0, 0, 0, 0.5);
+}
+.board-view .acoustic-body {
+  height: 104px;
+  filter: drop-shadow(0 4px 5px rgba(0, 0, 0, 0.55));
+}
+.board-view .acoustic-body svg {
+  display: block;
+}
+.board-view .controls.strip-plate {
+  margin: 10px -4px 8px;
+  padding: 6px 0 4px;
+  gap: 4px 0;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #2a2420, #15110f);
+  border: 1px solid rgba(0, 0, 0, 0.6);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+/* ── rack: 1U faceplate with rack ears and a readout ── */
+.board-view .pedal.tpl-rack {
+  background: none;
+  border-radius: 3px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+.board-view .pedal.tpl-rack::before,
+.board-view .pedal.tpl-rack::after {
+  border-radius: 3px;
+}
+.board-view .pedal.tpl-rack .chassis-skin {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.14), transparent 8%, transparent 92%, rgba(0, 0, 0, 0.3)),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, var(--body), var(--body-deep));
+}
+.board-view .rack-ear {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.25), rgba(255, 255, 255, 0.08) 40%, rgba(0, 0, 0, 0.2));
+}
+.board-view .rack-ear.left { left: 0; border-right: 1px solid rgba(0, 0, 0, 0.45); }
+.board-view .rack-ear.right { right: 0; border-left: 1px solid rgba(0, 0, 0, 0.45); }
+.board-view .rack-ear i {
+  width: 7px;
+  height: 12px;
+  border-radius: 4px;
+  background: #0a0a0b;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.8), 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+.board-view .pedal.tpl-rack .screw {
+  display: none;
+}
+.board-view .pedal.tpl-rack .module-chip { left: 28px; }
+.board-view .pedal.tpl-rack .chain-num { right: 28px; }
+.board-view .pedal.tpl-rack .info-chip { right: 46px; }
+.board-view .pedal.tpl-rack .jack.in { left: -6px; }
+.board-view .rack-display {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 18px 0 0;
+}
+.board-view .rd-screen {
+  flex: none;
+  min-width: 64px;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-align: center;
+  color: color-mix(in srgb, var(--display, #5df08a) 30%, #0a0d0a);
+  background: #070a07;
+  border: 1px solid rgba(0, 0, 0, 0.7);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.9), 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: color 0.15s ease, text-shadow 0.15s ease;
+}
+.board-view .pedal.tpl-rack:not(.bypassed) .rd-screen {
+  color: var(--display, #5df08a);
+  text-shadow: 0 0 6px color-mix(in srgb, var(--display, #5df08a) 70%, transparent);
+}
+.board-view .rd-vents {
+  flex: 1;
+  height: 16px;
+  background: repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.55) 0 2px, transparent 2px 6px);
+  border-radius: 2px;
+  opacity: 0.6;
+}
+.board-view .pedal.tpl-rack .controls {
+  margin-top: 10px;
+}
+
+/* ── tape: machine face with reels / echo drum and a VU meter ── */
+.board-view .pedal.tpl-tape {
+  background: none;
+  border-radius: 6px;
+  padding-top: 26px;
+}
+.board-view .pedal.tpl-tape::before,
+.board-view .pedal.tpl-tape::after {
+  border-radius: 6px;
+}
+.board-view .pedal.tpl-tape .chassis-skin {
+  background:
+    linear-gradient(120deg, rgba(255, 255, 255, 0.12), transparent 40%),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, var(--body), var(--body-deep));
+  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.3);
+}
+.board-view .tape-deck {
+  /* PedalChassis draws the deck at exactly this box (154×64, wide 292×80) */
+  height: 64px;
+  margin: 0 -3px;
+  border-radius: 5px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(255, 255, 255, 0.14);
+  overflow: hidden;
+}
+.board-view .pedal.wide .tape-deck {
+  height: 80px;
+}
+.board-view .tape-deck svg {
+  display: block;
+}
+.board-view .tape-deck .vu-needle {
+  transition: transform 0.4s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+.board-view .pedal.tpl-tape .controls {
+  margin-top: 10px;
+}
+
+/* the shared chassis templates replace the enclosure gloss/shadow with their
+   own; the article still owns the drop shadow for the rectangular ones */
+.board-view .pedal.tpl-amp,
+.board-view .pedal.tpl-cab,
+.board-view .pedal.tpl-rack,
+.board-view .pedal.tpl-tape,
+.board-view .pedal.tpl-acoustic,
+.board-view .pedal.tpl-eq {
+  box-shadow: var(--pedal-shadow);
+}
+.board-view .pedal.tpl-amp::before,
+.board-view .pedal.tpl-cab::before,
+.board-view .pedal.tpl-rack::before,
+.board-view .pedal.tpl-acoustic::before {
+  display: none;
+}
 
 /* ── signal-flow markers ── */
 .board-view .chain-end {

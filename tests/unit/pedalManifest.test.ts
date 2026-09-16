@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, it, expect } from 'vitest';
 import { buildManifestIndex, lookupPedalArt, type PedalArtEntry } from '@/components/board/pedalManifest';
@@ -67,5 +67,34 @@ describe('generated manifest.json (public/pedals/)', () => {
     expect(withPanel.length).toBeGreaterThan(40);
     expect(withPanel.every((e) => e.module === 'AMP')).toBe(true);
     expect(manifest.find((e) => e.name === 'UK 800')?.colors?.panel).toBeDefined();
+  });
+
+  it('every entry carries a board `look` with a known template', () => {
+    const templates = ['stomp', 'rocker', 'eq', 'amp', 'cab', 'acoustic', 'rack', 'tape', 'util'];
+    for (const entry of manifest) {
+      expect(templates, `${entry.module}::${entry.name}`).toContain(entry.look?.template);
+    }
+    const byName = (module: string, name: string) => manifest.find((e) => e.module === module && e.name === name)!;
+    expect(byName('AMP', 'UK 800').look).toMatchObject({ template: 'amp', grille: 'blackweave', panel: '#b8933a' });
+    expect(byName('CAB', 'UK GRN 2').look).toMatchObject({ template: 'cab', cols: 2, rows: 2, size: '4×12' });
+    expect(byName('MOD', 'O-Phase').look).toMatchObject({ template: 'stomp', shape: 'mxr', plate: false });
+  });
+
+  it('resolves both halves of every slug collision to files that exist', () => {
+    // Dark Twin (AMP/CAB), Tube (DST/DLY), SnapTone (AMP/DST) share a slug, so
+    // their files carry a --module suffix. A URL built from `slug` alone is not
+    // a file at all: the preview/SPA fallback answers it with HTML, which an
+    // <img> shows as a broken image. Always go through `file` (pedalArtUrl).
+    const index = buildManifestIndex(manifest);
+    expect(lookupPedalArt(index, 117440516)?.file).toBe('dark-twin--amp.svg');
+    expect(lookupPedalArt(index, 167772178)?.file).toBe('dark-twin--cab.svg');
+    for (const entry of manifest) {
+      expect(existsSync(join(process.cwd(), 'public/pedals', entry.file)), entry.file).toBe(true);
+    }
+    const slugs = new Map<string, number>();
+    for (const e of manifest) slugs.set(e.slug, (slugs.get(e.slug) ?? 0) + 1);
+    for (const e of manifest.filter((m) => (slugs.get(m.slug) ?? 0) > 1)) {
+      expect(e.file).toBe(`${e.slug}--${e.module.toLowerCase()}.svg`);
+    }
   });
 });

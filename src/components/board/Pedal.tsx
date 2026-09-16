@@ -7,6 +7,15 @@ import { getBodySpec } from './boardPalette';
 import { pedalIsWide } from './boardLayout';
 import { type PedalArtEntry } from './pedalManifest';
 import { ModuleGlyph } from './ModuleGlyph';
+import { ChassisFace, ChassisSkin } from './PedalChassis';
+import {
+  chassisClasses,
+  controlsClass,
+  controlsInk,
+  lookVars,
+  resolveLook,
+  usesRoundStomp,
+} from './chassisLook';
 import { PedalKnob } from './PedalKnob';
 import { PedalFader } from './PedalFader';
 import { ComboSelect, MiniSwitch } from './MiniSwitch';
@@ -66,14 +75,22 @@ export function Pedal({
   // the pedal keeps its natural size, but never wider than its fixed bay, so
   // swapping an effect only changes the padding inside the bay, never a
   // neighbour's position (see pedalIsWide)
-  const wide = pedalIsWide(slot.slotIndex, slot.effectId);
+  // the chassis template (stomp, amp head, cab, rack, ...) and its look, from
+  // the same art spec that drew the thumbnail (see PedalChassis)
+  const look = resolveLook(art);
+  const wide = pedalIsWide(slot.slotIndex, slot.effectId, look.template);
   const caption = art?.basedOn ?? EFFECT_DESCRIPTIONS[effectName] ?? '';
 
-  // amps get a control-panel strip (knobs live on the panel, like the hardware)
+  // amps get a control-panel strip (knobs live on the panel, like the hardware).
+  // A manifest from before `look` still has the panel colour, so keep the strip.
   const panel = art?.colors?.panel;
   const panelText = art?.colors?.panelText ?? spec.ink;
+  const legacyPanel = !art?.look && panel !== undefined;
+  const knobInk = controlsInk(look, spec.ink, panel ? panelText : undefined);
+  const knobStyle = look.knob ?? spec.knob;
   // graphic EQs get faders, not knobs
   const isEq = moduleName === 'EQ';
+  const roundStomp = usesRoundStomp(look, wide);
 
   const bodyVars = {
     '--body': spec.body,
@@ -81,9 +98,10 @@ export function Pedal({
     '--ink': spec.ink,
     '--led': spec.led,
     ...(panel ? { '--panel': panel, '--panel-text': panelText } : {}),
+    ...lookVars(look),
   } as CSSProperties;
 
-  const classes = ['pedal'];
+  const classes = ['pedal', ...chassisClasses(look)];
   if (wide) classes.push('wide');
   if (dragging) classes.push('dragging');
   if (!slot.enabled) classes.push('bypassed');
@@ -91,7 +109,7 @@ export function Pedal({
   const footswitch = (
     <button
       type="button"
-      className={wide ? 'stomp-round' : 'treadle'}
+      className={roundStomp ? 'stomp-round' : 'treadle'}
       aria-pressed={slot.enabled}
       aria-label={`Toggle ${effectName}`}
       onClick={onToggle}
@@ -128,6 +146,7 @@ export function Pedal({
       onFocusCapture={() => onInspect(true)}
       onBlurCapture={() => onInspect(false)}
     >
+      <ChassisSkin look={look} />
       {/* knurled dot grip: signals the whole pedal is draggable */}
       <span className="pedal-grip" aria-hidden="true" />
       <span className="jack in" data-jack="in" />
@@ -164,9 +183,11 @@ export function Pedal({
         #{index + 1}
       </span>
 
+      <ChassisFace where="before" look={look} enabled={slot.enabled} wide={wide} />
+
       {/* knob/switch drags must never start a pedal drag */}
       <div
-        className={`controls${panel ? ' amp-panel' : ''}`}
+        className={`controls${controlsClass(look, legacyPanel)}`}
         draggable
         onDragStart={(e) => {
           e.preventDefault();
@@ -196,8 +217,8 @@ export function Pedal({
                 param={def}
                 value={value}
                 onChange={(v) => onParamChange(def.idx, v)}
-                knobStyle={spec.knob}
-                ink={panel ? panelText : spec.ink}
+                knobStyle={knobStyle}
+                ink={knobInk}
                 pedalName={effectName}
               />
             );
@@ -225,6 +246,8 @@ export function Pedal({
         })}
       </div>
 
+      <ChassisFace where="after" look={look} enabled={slot.enabled} wide={wide} />
+
       <span className={`p-led${slot.enabled ? ' on' : ''}`} />
       {/* visual-only: state is announced via the footswitch aria-pressed */}
       {!slot.enabled && <span className="p-off-tag" aria-hidden="true">BYPASSED</span>}
@@ -245,7 +268,7 @@ export function Pedal({
         {caption}
       </p>
 
-      {wide ? <div className="fs-row">{footswitch}</div> : footswitch}
+      {roundStomp ? <div className="fs-row">{footswitch}</div> : footswitch}
 
       {/* Touch-only chain reorder. Absolutely positioned over the brand strip so
           enabling them doesn't change the pedal's height (and with it the bay). */}

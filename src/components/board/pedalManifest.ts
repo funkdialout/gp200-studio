@@ -21,6 +21,70 @@ export interface PedalArtColors {
   panelText?: string;
 }
 
+/** Chassis templates the board draws (docs/board-design-system.md). */
+export type PedalTemplate =
+  | 'stomp'
+  | 'rocker'
+  | 'eq'
+  | 'amp'
+  | 'cab'
+  | 'acoustic'
+  | 'rack'
+  | 'tape'
+  | 'util';
+
+/**
+ * The board's render recipe for an effect, written by the generator from the
+ * same spec that drew its thumbnail. Colours are hex; `tolex`, `grille` and
+ * `panel` may instead name a pattern in ./patterns.ts. Only the fields the
+ * template uses are present.
+ */
+export interface PedalLook {
+  template: PedalTemplate;
+  /** model-style shorthand from the art spec; never printed on the board */
+  label: string;
+  /** stomp: `standard` | `mxr` (squat, round stomp) | `big` | `round`; acoustic: body style */
+  shape?: string;
+  /** stomp: footswitch plate (true) or a round stomp button (false) */
+  plate?: boolean;
+  /** knob-cap style for the surface the knobs sit on */
+  knob?: PedalArtColors['knob'];
+  /** amp / cab: covering, hex or pattern name */
+  tolex?: string;
+  /** amp / cab: grille cloth pattern name */
+  grille?: string;
+  /** amp / cab: piping line colour */
+  piping?: string;
+  /** amp: control-panel colour or pattern; tape: deck colour */
+  panel?: string;
+  panelText?: string;
+  /** amp: chicken-head knob colour */
+  knobColor?: string;
+  /** amp: pilot lamp jewel colour */
+  lamp?: string;
+  /** amp: `panelfull` when the panel covers the whole face */
+  face?: string;
+  /** cab: speaker grid and size tag, e.g. 2 × 2, "4×12" */
+  cols?: number;
+  rows?: number;
+  size?: string;
+  /** cab: tinted dust caps / cones on show */
+  cone?: string;
+  exposed?: boolean;
+  /** acoustic: body wood colour */
+  wood?: string;
+  /** rack: LED display text + colour */
+  display?: string;
+  displayColor?: string;
+  /** tape: `reels` | `drum` */
+  kind?: string;
+  /** eq: band count + slider cap colour */
+  bands?: number;
+  sliderColor?: string;
+  /** util: motif glyph key */
+  motif?: string;
+}
+
 /**
  * Where the subject actually sits on an artwork's 160×64 canvas.
  *
@@ -49,6 +113,8 @@ export interface PedalArtEntry {
   blurb: string;
   /** authentic body colors derived from the artwork spec (older manifests omit it) */
   colors?: PedalArtColors;
+  /** board chassis template + look (older manifests omit it: the board then draws a stompbox) */
+  look?: PedalLook;
   /** content box of the artwork (older manifests omit it — see artBox) */
   art?: ArtBox;
 }
