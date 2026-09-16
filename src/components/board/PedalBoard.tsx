@@ -102,6 +102,7 @@ export interface PedalBoardProps {
   onCtrlBlockToggle: (ctrlIndex: number, blockIndex: number, on: boolean) => void;
   onCtrlClear: (ctrlIndex: number) => void;
   onOpenPatchManager: () => void;
+  onOpenLibrary: () => void;
   onActivateSlot: (slot: number) => void;
   onOpenGuide: () => void;
   /** Engagement analytics: a drawer (desktop) or tab/sheet (phone) was opened.
@@ -196,6 +197,7 @@ export function PedalBoard({
   onCtrlBlockToggle,
   onCtrlClear,
   onOpenPatchManager,
+  onOpenLibrary,
   onActivateSlot,
   onOpenGuide,
   onPanelOpen,
@@ -397,6 +399,7 @@ export function PedalBoard({
         onPatchNameChange={onPatchNameChange}
         onAuthorChange={onAuthorChange}
         onOpenPatchManager={onOpenPatchManager}
+        onOpenLibrary={onOpenLibrary}
         onActivateSlot={onActivateSlot}
         onOpenGuide={onOpenGuide}
         onConnectRequest={onConnectRequest}

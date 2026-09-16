@@ -122,6 +122,11 @@ const ACTIONS: Record<string, ActionSpec> = {
     d: '<circle cx="5.2" cy="5.2" r="2.2" /><circle cx="10.8" cy="5.2" r="2.2" /><circle cx="5.2" cy="10.8" r="2.2" /><circle cx="10.8" cy="10.8" r="2.2" />',
     color: '#7a4fb5',
   },
+  // preset library: a bookshelf of spines (distinct from the two-slot "patches" mark)
+  library: {
+    d: '<path d="M3 2.4v11.2M6.2 2.4v11.2M9.4 2.4v11.2" /><path d="m11.8 3 1.8 10.6-3.2.5" />',
+    color: '#2f6fa8',
+  },
 };
 
 export type ActionIconName = keyof typeof ACTIONS;

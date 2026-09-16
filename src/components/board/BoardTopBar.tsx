@@ -19,6 +19,7 @@ interface BoardTopBarProps {
   onLoadRequest: () => void;
   onPushRequest: () => void;
   onOpenPatchManager: () => void;
+  onOpenLibrary: () => void;
   onConnectRequest: () => void;
   onDisconnect: () => void;
   onCloseRequest: () => void;
@@ -93,6 +94,7 @@ export function BoardTopBar({
   onLoadRequest,
   onPushRequest,
   onOpenPatchManager,
+  onOpenLibrary,
   onConnectRequest,
   onDisconnect,
   onCloseRequest,
@@ -293,6 +295,15 @@ export function BoardTopBar({
         >
           <ActionIcon name="patches" />
           <span className="db-label">PATCHES</span>
+        </button>
+        <button
+          type="button"
+          className="deck-btn"
+          title="Bulk preset library: import folders of .prst files, search, and load a selection onto the device"
+          onClick={onOpenLibrary}
+        >
+          <ActionIcon name="library" />
+          <span className="db-label">LIBRARY</span>
         </button>
         {connected && (
           <>

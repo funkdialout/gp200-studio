@@ -120,6 +120,7 @@ function renderBoard(overrides: Partial<Parameters<typeof PedalBoard>[0]> = {}) 
     onCtrlBlockToggle: vi.fn(),
     onCtrlClear: vi.fn(),
     onOpenPatchManager: vi.fn(),
+    onOpenLibrary: vi.fn(),
     onPanelOpen: vi.fn(),
     looper: fakeLooper,
     drumMachine: fakeDrumMachine,

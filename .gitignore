@@ -27,6 +27,10 @@ docs/
 mockups/
 prst/
 
+# Third-party sample fixture (has no redistribution rights); tests skip
+# themselves when it's absent. See LIBRARY-SPEC.md.
+ref/fixtures/private/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
