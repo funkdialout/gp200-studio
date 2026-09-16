@@ -195,6 +195,10 @@ body {
 :root[data-theme='dark'] .shot-light { display: none; }
 :root[data-theme='dark'] .shot-dark { display: block; }
 
+/* Reserve the scrollbar gutter so a scrollbar appearing never changes the
+   viewport width (which could cross a layout breakpoint, see useIsPhone). */
+html { scrollbar-gutter: stable; }
+
 /* ── Custom scrollbar ── */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-primary); }
