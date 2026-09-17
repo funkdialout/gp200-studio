@@ -18,6 +18,10 @@ push to upstream; PRs to upstream only for the protocol fixes below, if Rob asks
    emits a `look` object per manifest entry. No brand names/logos are drawn; the "Based on …"
    caption text comes from upstream's manifest.
 
+4. **Support/donation UI removed** — the top-bar coffee button, landing nav link, credits and
+   mobile "buy me a coffee" links are gone (fork is private/personal). Author credit and the
+   GPL-3.0 notice stay. Upstream README links replaced with a fork note.
+
 ## Protocol facts learned on real hardware (fw 1.8.2, editor V1.8.1) — not all in upstream
 - Effect-change (sub 0x14): the effect-ID **sub-category byte** (bits 16–23; 0x10 = User IR cab)
   is nibble-encoded at raw[49], raw[50]. Upstream's `buildEffectChange` still zeroes it, so a

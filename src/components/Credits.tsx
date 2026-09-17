@@ -6,7 +6,6 @@ interface CreditsProps {
 
 /** One home for the support link: the credits block promotes it to its own
  *  element, and the board chrome links to it directly. */
-export const COFFEE_URL = 'https://buymeacoffee.com/kabir0st';
 
 const LINKS: { href: string; label: string }[] = [
   { href: 'https://kabirtamari.com', label: 'kabirtamari.com' },
@@ -27,14 +26,6 @@ export function Credits({ className = '' }: CreditsProps) {
           </a>
         ))}
       </span>
-      <a
-        className="credits-coffee"
-        href={COFFEE_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        ☕ Buy me a coffee
-      </a>
     </div>
   );
 }

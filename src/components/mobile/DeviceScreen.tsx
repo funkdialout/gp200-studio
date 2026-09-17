@@ -3,7 +3,6 @@ import { SysExCodec } from '@/core/SysExCodec';
 import { tunerShow } from '@/core/ccControl';
 import type { CCCommand } from '@/core/ccControl';
 import type { KnobParam } from '@/core/effectParams';
-import { COFFEE_URL } from '@/components/Credits';
 import { AudioMeters } from '@/components/board/AudioMeters';
 import { RemotePanel } from '@/components/board/RemotePanel';
 import { DeviceStatePanel } from '@/components/board/DeviceStatePanel';
@@ -196,14 +195,6 @@ export function DeviceScreen({
           <button type="button" className="m-btn ghost" onClick={onCloseRequest}>
             CLOSE PATCH
           </button>
-          <a
-            className="m-btn ghost wide"
-            href={COFFEE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            ☕ BUY ME A COFFEE
-          </a>
         </div>
       </section>
 

@@ -10,7 +10,7 @@ Build patches on a pedalboard you can actually see, manage all 256 of them,
 and stack loops over your own playing. It runs in the browser, so there is
 nothing to install and nothing to sign up for.
 
-**[▶ Open the app](https://gp200studio.com/)** · **[☕ Buy me a coffee](https://buymeacoffee.com/kabir0st)**
+**Fork of [kabir0st/gp200-studio](https://github.com/kabir0st/gp200-studio)** — adds a preset library with bulk load-to-device and realistic board chassis. See `HANDOFF.md`. The support/donation links of the upstream project are removed in this fork; support the original author at the upstream repo.
 
 [![Chrome or Edge](https://img.shields.io/badge/works%20in-Chrome%20%7C%20Edge-orange?logo=googlechrome&logoColor=white)](#how-to-start)
 [![Windows, macOS, Linux, Android](https://img.shields.io/badge/on-Windows%20·%20macOS%20·%20Linux%20·%20Android-5df08a)](#how-to-start)
@@ -279,7 +279,7 @@ every site that uses them, so hiding it would buy nothing.
 
 Bug reports, protocol captures from your own pedal and pull requests are all
 welcome on [GitHub](https://github.com/kabir0st/gp200-studio). If this saved you
-from the 4" screen, [buy me a coffee](https://buymeacoffee.com/kabir0st). ☕
+from the 4" screen, support the upstream author via the original repo.
 
 Everything else you see above is a screenshot of the app. GP-200
 and Valeton are their trademarks; this project is not affiliated with or endorsed

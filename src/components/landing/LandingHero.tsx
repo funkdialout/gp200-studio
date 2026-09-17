@@ -4,7 +4,6 @@ import { SLOT_MODULES } from '@/core/effectNames';
 import { getBodySpec } from '@/components/board/boardPalette';
 import { Logo } from '@/components/Logo';
 import { AUTHOR, REPO } from '@/seo/site';
-import { COFFEE_URL } from '@/components/Credits';
 import { LandingConnect } from './LandingConnect';
 import { LandingShot } from './LandingShot';
 import { LandingCables } from './LandingCables';
@@ -65,16 +64,6 @@ export function LandingHero({
               kabirtamari.com
             </a>
           </span>
-          {/* Same URL the credits block uses, promoted to the top of the page:
-              this is the only thing the project asks anyone for. */}
-          <a
-            className="lp-nav-coffee"
-            href={COFFEE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            ☕ Buy me a coffee
-          </a>
         </span>
       </nav>
 
