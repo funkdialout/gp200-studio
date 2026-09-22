@@ -7,7 +7,7 @@ export interface TabDef {
 }
 
 interface TabsProps {
-  tabs: TabDef[];
+  tabs: readonly TabDef[];
   active: string;
   ariaLabel: string;
   onSelect: (id: string) => void;

@@ -244,8 +244,8 @@ function ParaCard({ preset, assignment, onParamSelect, onMinMax }: ParaCardProps
 
 /**
  * EXP pedal assignment, controlled from preset.expAssignments: 3 pages
- * (EXP1 mode A/B, EXP2) × 3 Para slots. Edits persist with the patch; when
- * a device is connected they are also applied live over SysEx.
+ * (EXP1 mode A/B, EXP2) × 3 Para slots. Edits persist in exported .prst files.
+ * The live device assignment message does not survive SAVE/reload on hardware.
  */
 export function ControllerPanel({
   preset,
@@ -277,10 +277,9 @@ export function ControllerPanel({
     };
   });
 
-  let liveHint = 'Offline: assignments save with the patch; connect to also hear them live.';
-  if (connected) {
-    liveHint = 'Connected: changes apply to the device immediately; SAVE to persist them.';
-  }
+  const liveHint = connected
+    ? 'Expression edits are file-only. Export a .prst to keep them; SAVE to GP-200 does not transfer these assignments.'
+    : 'Expression edits are saved in exported .prst files. Connect to test pedal position, not to transfer assignments.';
 
   return (
     <div>

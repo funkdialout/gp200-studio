@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import {
   presetNameCacheKey,
   loadCachedNames,
+  loadCachedStyles,
   saveCachedNames,
   TOTAL_SLOTS,
 } from '@/core/presetNameCache';
@@ -31,6 +32,25 @@ describe('saveCachedNames / loadCachedNames', () => {
     const names = makeNames((i) => (i % 2 === 0 ? `Patch ${i}` : null));
     saveCachedNames(key, names);
     expect(loadCachedNames(key)).toEqual(names);
+  });
+
+  it('round-trips style ids while retaining older name-only caches', () => {
+    const names = makeNames((i) => `Patch ${i}`);
+    const styles = Array.from({ length: TOTAL_SLOTS }, (_v, i) => i % 2 === 0 ? 0 : 8);
+    saveCachedNames(key, names, styles);
+    expect(loadCachedStyles(key)).toEqual(styles);
+    saveCachedNames(key, names);
+    expect(loadCachedNames(key)).toEqual(names);
+    expect(loadCachedStyles(key)).toBeNull();
+  });
+
+  it('rejects malformed style metadata without hiding valid cached names', () => {
+    const names = makeNames(() => null);
+    const styles: unknown[] = makeNames(() => null);
+    styles[2] = 'Metal';
+    localStorage.setItem(key, JSON.stringify({ v: 1, updatedAt: 0, names, styles }));
+    expect(loadCachedNames(key)).toEqual(names);
+    expect(loadCachedStyles(key)).toBeNull();
   });
 
   it('returns null on a cache miss', () => {

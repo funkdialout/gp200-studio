@@ -9,6 +9,7 @@ import { DrumMachinePanel } from '@/components/board/DrumMachinePanel';
 import { FxLoopArrows } from '@/components/FxLoopArrows';
 import { FxScenarioPicker } from '@/components/FxScenarioPicker';
 import { PatchDetailsPanel } from '@/components/PatchDetailsPanel';
+import { PATCH_SETTINGS_TABS, isPatchSettingsTab, type PatchSettingsTab } from '@/components/patchSettingsTabs';
 import { ControllerPanel } from '@/components/ControllerPanel';
 import { FootswitchPanel } from '@/components/FootswitchPanel';
 import { Tabs } from '@/components/ui/Tabs';
@@ -25,15 +26,6 @@ import './mobile.css';
 import './pedals.css';
 
 type Sheet = 'fxloop' | 'patch' | 'meta' | null;
-
-type PatchSettingsTab = 'details' | 'exp' | 'ctrl' | 'bulk';
-
-const PATCH_SETTINGS_TABS = [
-  { id: 'details', label: 'Details' },
-  { id: 'exp', label: 'Expression' },
-  { id: 'ctrl', label: 'Footswitches' },
-  { id: 'bulk', label: 'Bulk Apply' },
-];
 
 /**
  * Root of the phone tree, rendered below 640px in place of PedalBoard.
@@ -63,6 +55,7 @@ export default function MobileShell({
   patchTempo,
   currentSlot,
   connected,
+  userIrNames,
   onLoadRequest,
   onSaveToActiveSlot,
   onPatchNameChange,
@@ -85,7 +78,6 @@ export default function MobileShell({
   onCtrlClear,
   onOpenPatchManager,
   onActivateSlot,
-  onOpenGuide,
   onPanelOpen,
   looper,
   looperTempo,
@@ -124,9 +116,7 @@ export default function MobileShell({
   const [patchTab, setPatchTab] = useState<PatchSettingsTab>('exp');
 
   function selectPatchTab(id: string) {
-    if (id === 'exp' || id === 'ctrl' || id === 'bulk') {
-      setPatchTab(id);
-    }
+    if (isPatchSettingsTab(id)) setPatchTab(id);
   }
   /** array position of the block being edited, or null for the chain list */
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
@@ -204,6 +194,7 @@ export default function MobileShell({
             slot={editingSlot}
             index={editingIndex}
             chainLength={preset.effects.length}
+            userIrNames={userIrNames}
             artIndex={artIndex}
             onBack={() => setEditingIndex(null)}
             onToggle={() => onToggle(editingSlot.slotIndex, editingSlot.enabled)}
@@ -316,7 +307,6 @@ export default function MobileShell({
               onSaveToActiveSlot={onSaveToActiveSlot}
               onOpenFxLoop={() => openSheet('fxloop')}
               onOpenPatchSettings={() => openSheet('patch')}
-              onOpenGuide={onOpenGuide}
               onCloseRequest={onCloseRequest}
               sendCC={sendCC}
               deviceState={deviceState}

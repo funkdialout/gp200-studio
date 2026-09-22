@@ -147,6 +147,15 @@ export const SysExCodec = {
     return name;
   },
 
+  /** Style tag in the first preset/name response chunk. A missing first
+   *  chunk is unknown, which is distinct from the real "no style" id 0. */
+  parsePresetStyle(sysexMsg: Uint8Array): number | null {
+    if (sysexMsg.length < 58 || sysexMsg[11] !== 0 || sysexMsg[12] !== 0) return null;
+    const decoded = this.nibbleDecode(sysexMsg.subarray(13, sysexMsg.length - 1));
+    if (decoded.length < 22) return null;
+    return decoded[20] | (decoded[21] << 8);
+  },
+
   /** Shared: assemble sorted chunks → nibble-decoded bytes */
   assembleChunks(chunks: Uint8Array[]): Uint8Array {
     const sorted = [...chunks].sort((a, b) => {
@@ -228,7 +237,11 @@ export const SysExCodec = {
       const effectId = view.getUint32(base + 8, true);
       const params: number[] = [];
       for (let p = 0; p < 15; p++) {
-        params.push(view.getFloat32(base + 12 + p * 4, true));
+        // The device can return NaN/Infinity for unused parameter slots.
+        // Match PRSTDecoder: keep valid values and normalize non-finite
+        // placeholders to zero so one unused field cannot reject the preset.
+        const raw = view.getFloat32(base + 12 + p * 4, true);
+        params.push(Number.isFinite(raw) ? raw : 0);
       }
       effects.push({ slotIndex, enabled, effectId, params });
     }
@@ -521,10 +534,11 @@ export const SysExCodec = {
   buildEffectChange(blockIndex: number, effectId: number): Uint8Array {
     // CMD=0x12, sub=0x14, 54 bytes, raw SysEx (not nibble-encoded)
     // Confirmed: captures 134828 (COMP→COMP4→AC Boost) + 143107 (AMP→SnapTone)
-    // raw[38]=block, raw[45:47]=variant nibble-encoded, raw[52]=module type
-    // NOTE: Sub-category byte (bits 16-23, e.g. 0x10 for User IR) encoding position
-    // is unknown; only regular effects (sub-category=0x00) are confirmed via captures.
+    // raw[38]=block, raw[45:47]=variant nibble-encoded,
+    // raw[49:51]=subcategory nibble-encoded, raw[52]=module type.
+    // The subcategory position was confirmed on hardware with User-IR cabs.
     const moduleType = (effectId >> 24) & 0xFF;
+    const subcategory = (effectId >> 16) & 0xFF;
     const variant = effectId & 0xFF;
     return new Uint8Array([
       0xF0, 0x21, 0x25, 0x7E, 0x47, 0x50, 0x2D, 0x32, // [0-7]   header
@@ -541,10 +555,59 @@ export const SysExCodec = {
       0x07, 0x06, 0x00, 0x02,                            // [41-44] constant
       (variant >> 4) & 0x0F,                             // [45]    variant high nibble
       variant & 0x0F,                                    // [46]    variant low nibble
-      0x00, 0x00, 0x00, 0x00, 0x00,                     // [47-51]
+      0x00, 0x00,                                        // [47-48]
+      (subcategory >> 4) & 0x0F,                         // [49] subcategory high nibble
+      subcategory & 0x0F,                                // [50] subcategory low nibble
+      0x00,                                              // [51]
       moduleType & 0xFF,                                 // [52]    module type
       0xF7,                                              // [53]    end
     ]);
+  },
+
+  /**
+   * Decode the device-to-host acknowledgement emitted after an effect swap.
+   *
+   * This is the 38-byte 0x12/0x0C form.  Its effect code is split across the
+   * same three fields as the host-to-device 0x12/0x14 command, shifted 16
+   * bytes earlier in the shorter acknowledgement:
+   *
+   *   raw[29:31] variant, raw[33:35] subcategory, raw[36] module.
+   *
+   * Keeping the subcategory matters for User IRs.  Decoding only module and
+   * variant turns 0x0A100007 into built-in cab 0x0A000007 when the device
+   * echoes the selection.
+   */
+  parseEffectChangeNotification(
+    data: Uint8Array,
+  ): { blockIndex: number; effectId: number } | null {
+    if (
+      data.length < 38 ||
+      data[0] !== 0xF0 ||
+      data[1] !== 0x21 || data[2] !== 0x25 || data[3] !== 0x7E ||
+      data[4] !== 0x47 || data[5] !== 0x50 || data[6] !== 0x2D || data[7] !== 0x32 ||
+      data[8] !== 0x12 || data[9] !== 0x0C
+    ) {
+      return null;
+    }
+
+    const blockIndex = data[22];
+    const variantHigh = data[29];
+    const variantLow = data[30];
+    const subcategoryHigh = data[33];
+    const subcategoryLow = data[34];
+    const moduleType = data[36];
+    if (
+      blockIndex > 10 ||
+      variantHigh > 0x0F || variantLow > 0x0F ||
+      subcategoryHigh > 0x0F || subcategoryLow > 0x0F
+    ) {
+      return null;
+    }
+
+    const variant = (variantHigh << 4) | variantLow;
+    const subcategory = (subcategoryHigh << 4) | subcategoryLow;
+    const effectId = ((moduleType << 24) | (subcategory << 16) | variant) >>> 0;
+    return { blockIndex, effectId };
   },
 
   buildParamChange(blockIndex: number, paramIndex: number, effectId: number, value: number): Uint8Array {

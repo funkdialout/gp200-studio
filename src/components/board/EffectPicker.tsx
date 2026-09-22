@@ -3,12 +3,15 @@ import { getEffectsByModule, MODULE_COLORS } from '@/core/effectNames';
 import { EFFECT_DESCRIPTIONS } from '@/core/effectDescriptions';
 import { Dialog } from '@/components/ui/Dialog';
 import { pedalArtUrl, type ManifestIndex, type PedalArtEntry } from './pedalManifest';
+import { userIrSlotIndex } from '@/core/userIr';
 
 interface EffectPickerProps {
   open: boolean;
   /** slot module (PRE, AMP, CAB, ...) that scopes the selectable effects */
   module: string;
   currentEffectId: number;
+  /** Device User-IR names in physical slot order (1-20). */
+  userIrNames: string[];
   artIndex: ManifestIndex | null;
   onSelect: (effectId: number) => void;
   onClose: () => void;
@@ -33,12 +36,19 @@ const ALL = 'All';
 const OTHER = 'Other';
 
 /** Every selectable effect for the module, decorated with its art + caption. */
-function buildRows(module: string, artIndex: ManifestIndex | null): PickerRow[] {
+function buildRows(
+  module: string,
+  artIndex: ManifestIndex | null,
+  userIrNames: string[],
+): PickerRow[] {
   const effects = getEffectsByModule(module);
   return effects.map((effect) => {
     const art = artIndex?.get(`${module}::${effect.name}`);
     const basedOn = art?.basedOn ?? EFFECT_DESCRIPTIONS[effect.name] ?? '';
-    return { effectId: effect.effectId, name: effect.name, type: art?.type ?? OTHER, basedOn, art };
+    const irSlot = userIrSlotIndex(effect.effectId);
+    const loadedIrName = irSlot === null ? '' : (userIrNames[irSlot]?.trim() ?? '');
+    const name = loadedIrName || effect.name;
+    return { effectId: effect.effectId, name, type: art?.type ?? OTHER, basedOn, art };
   });
 }
 
@@ -97,11 +107,15 @@ export function EffectPicker({
   open,
   module,
   currentEffectId,
+  userIrNames,
   artIndex,
   onSelect,
   onClose,
 }: EffectPickerProps) {
-  const rows = useMemo(() => buildRows(module, artIndex), [module, artIndex]);
+  const rows = useMemo(
+    () => buildRows(module, artIndex, userIrNames),
+    [module, artIndex, userIrNames],
+  );
   const categories = useMemo(() => buildCategories(rows), [rows]);
 
   const [category, setCategory] = useState(ALL);

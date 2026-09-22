@@ -105,26 +105,12 @@ describe('prerender safety', () => {
     }
   });
 
-  /**
-   * The landing page is the strongest URL on the site and used to link to
-   * /guide and nothing beneath it, so all thirteen sections depended on a single
-   * hop. These deep links are the fix — and because they are hand-written slugs
-   * rather than derived from the manifest, a rename would turn one into a 404
-   * silently. This is what makes that a test failure instead.
-   */
-  it('links the landing page into real guide sections', async () => {
+  it('keeps guide and support links off the landing page', async () => {
     const { render } = await import('@/prerender/entry-server');
-    const { GUIDE_SECTIONS } = await import('@/guide/manifest');
+    const body = render('/').body;
 
-    const slugs = new Set(GUIDE_SECTIONS.map((s: { slug: string }) => s.slug));
-    const linked = new Set(
-      [...render('/').body.matchAll(/href="\/guide\/([a-z0-9-]+)"/g)].map((m) => m[1]),
-    );
-
-    expect(linked.size, 'landing links no guide section').toBeGreaterThanOrEqual(3);
-    for (const slug of linked) {
-      expect(slugs, `landing links /guide/${slug}, which is not a section`).toContain(slug);
-    }
+    expect(body).not.toMatch(/href="\/guide(?:\/|"|#)/);
+    expect(body).not.toContain('buymeacoffee.com');
   });
 
   it('emits a sitemap listing every indexable URL', async () => {

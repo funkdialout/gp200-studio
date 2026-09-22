@@ -261,56 +261,6 @@
   color: var(--chrome-text);
 }
 
-.lp-nav-links {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px 20px;
-  flex-wrap: wrap;
-  font-family: var(--font-jetbrains-mono), monospace;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.lp-nav-links a {
-  color: var(--chrome-muted);
-  text-decoration: none;
-}
-
-.lp-nav-links a:hover {
-  color: var(--accent);
-}
-
-/* "developed by" stays dim so the byline reads as one item next to the two
-   navigation links rather than competing with them */
-.lp-nav-by {
-  color: color-mix(in srgb, var(--chrome-muted) 62%, transparent);
-  text-transform: none;
-  letter-spacing: 0.06em;
-}
-
-.lp-nav-by a {
-  text-transform: none;
-  color: var(--chrome-muted);
-}
-
-.lp-nav-coffee {
-  display: inline-flex;
-  align-items: center;
-  padding: 8px 15px;
-  border-radius: 999px;
-  border: 1px solid var(--accent);
-  color: var(--accent) !important;
-  text-transform: none;
-  letter-spacing: 0.04em;
-  transition: background 0.12s ease, transform 0.15s ease-out;
-}
-
-.lp-nav-coffee:hover {
-  background: color-mix(in srgb, var(--accent) 14%, transparent);
-}
-
 /* ── the stage ─────────────────────────────────────────────────────────────
    A half-stack at each side, the copy between them, a deck under all three.
    The stacks are deliberately allowed to run off the viewport: cropping them
@@ -1279,7 +1229,6 @@
    tree — cannot leave a card stuck big after a tap. */
 @media (hover: hover) {
   /* ~190px wide → +9px */
-  .lp-nav-coffee:hover,
   .lp-credits .credits-coffee:hover {
     transform: scale(1.05);
   }
@@ -1305,7 +1254,6 @@
 
 /* Press releases the growth, so a click reads as the thing being pushed back
    down. Same idea as `.board-view .chain-node:active` on the board. */
-.lp-nav-coffee:active,
 .lp-credits .credits-coffee:active,
 .lp-btn:active:not(:disabled),
 .lp-card:active,
@@ -1390,7 +1338,6 @@
   .lp-card:hover,
   .lp-post:hover,
   .lp-btn:hover:not(:disabled),
-  .lp-nav-coffee:hover,
   .lp-credits .credits-coffee:hover {
     transform: none;
   }

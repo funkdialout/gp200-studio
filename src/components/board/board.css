@@ -2097,6 +2097,7 @@
 .patch-picker .pp-head {
   display: flex;
   align-items: center;
+  gap: 8px;
   padding-bottom: 12px;
   border-bottom: 1px solid var(--border-subtle);
 }
@@ -2115,6 +2116,28 @@
   outline: none;
   border-color: var(--pp-accent);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--pp-accent) 20%, transparent);
+}
+.patch-picker .pp-style-filter {
+  flex: 0 0 auto;
+  max-width: 145px;
+  padding: 9px 10px;
+  border: 1px solid var(--border-active);
+  border-radius: 8px;
+  background: var(--bg-input);
+  color: var(--text-primary);
+  font-family: var(--font-dm-sans), sans-serif;
+  font-size: 14px;
+}
+.patch-picker .pp-style-filter:focus-visible {
+  outline: none;
+  border-color: var(--pp-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--pp-accent) 20%, transparent);
+}
+.patch-picker .pp-style-progress {
+  margin: 8px 0 0;
+  color: var(--text-muted);
+  font-family: var(--font-dm-sans), sans-serif;
+  font-size: 12px;
 }
 .patch-picker .pp-body {
   display: grid;
@@ -2247,6 +2270,17 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.patch-picker .pp-style {
+  flex-shrink: 0;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-muted);
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 10px;
+  text-transform: uppercase;
 }
 .patch-picker .pp-now {
   flex-shrink: 0;

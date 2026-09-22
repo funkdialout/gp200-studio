@@ -9,10 +9,13 @@ import {
 import { hexOfBytes } from '@/core/looperTriggers';
 import type { GP200Preset } from '@/core/types';
 import type { CCCommand } from '@/core/ccControl';
-import { presetNameCacheKey, loadCachedNames, saveCachedNames } from '@/core/presetNameCache';
+import { presetNameCacheKey, loadCachedNames, loadCachedStyles, saveCachedNames } from '@/core/presetNameCache';
+import { isPresetNameResponseComplete, readPresetNameReliably } from '@/core/presetNameRead';
 import type { BulkApplyOptions, BulkApplyProgress } from '@/core/bulkApply';
 import { track } from '@/core/analytics';
-import { PRSTEncoder } from '@/core/PRSTEncoder';
+import { presetWriteMismatch } from '@/core/presetWriteVerification';
+import { writePresetLive } from '@/core/presetLiveWrite';
+import { USER_IR_QUERY_PAGES } from '@/core/userIr';
 import {
   describeHandshakeSilence,
   describeMidiAccessDenied,
@@ -120,6 +123,9 @@ async function requestGP200Access(): Promise<GP200Access> {
  */
 async function describeHandshakeFailure(err: unknown, sawAnyBytes: boolean): Promise<string> {
   if (!(err instanceof Error)) return 'Handshake failed';
+  // A complete identity/state exchange followed by a failed preset read is
+  // different from a silent handshake. Keep that specific diagnosis visible.
+  if (err.message.startsWith('Could not read current preset')) return err.message;
   if (!/timeout/i.test(err.message)) return err.message;
   return describeHandshakeSilence({
     userAgent: currentUserAgent(),
@@ -135,16 +141,16 @@ export interface UseMidiDeviceReturn {
   deviceName: string | null;
   currentSlot: number | null;
   presetNames: (string | null)[];
+  /** Saved patch style per slot; null means metadata has not been read yet. */
+  presetStyles: (number | null)[];
   namesLoadProgress: number;
   /** True while the background re-scan is verifying cache-seeded names against
    *  the device. Distinct from namesLoadProgress (which drives the first-load bar). */
   namesSyncing: boolean;
   deviceInfo: { deviceType: number; firmwareValues: number[]; versionAccepted: boolean } | null;
   currentPreset: GP200Preset | null;
-  /** User-IR slot names enumerated during the handshake (0x11/0x1C query →
-   *  0x12/0x1C response; re-identified 2026-08-08 as User-IR enumeration, see
-   *  docs/protocol-capture.md §3). 30 entries in device slot order; empty
-   *  array until the sweep runs (or when the device didn't answer). */
+  /** The 20 User-IR slot names enumerated during the handshake
+   *  (0x11/0x1C query → 0x12/0x1C response). */
   userIrNames: string[];
   /** Typed view of the connect-time 0x4E state dump (tuner A4, global-EQ
    *  floats, drum style-group names, raw TLV records). Null until the
@@ -160,9 +166,9 @@ export interface UseMidiDeviceReturn {
   /** Clear cached names (except the already-pulled current bank) and re-enumerate. */
   refreshNames: () => Promise<void>;
   pullPreset: (slot: number) => Promise<GP200Preset>;
-  pushPreset: (preset: GP200Preset, slot: number) => Promise<void>;
+  pushPreset: (preset: GP200Preset, slot: number) => Promise<GP200Preset>;
   writePresetToSlot: (preset: GP200Preset, slot: number) => Promise<void>;
-  saveToSlot: (presetName: string, slot?: number) => Promise<void>;
+  saveToSlot: (presetName: string, slot?: number, style?: number) => Promise<void>;
   /** Rename a slot without touching its effect data. Briefly switches the
    *  device to the target slot (required to load the editing buffer), then
    *  save-commits under the new name and restores the previous slot. */
@@ -237,29 +243,39 @@ interface GP200Access {
 
 function waitForResponse(
   input: GP200Input,
+  request: () => void,
   match: (data: Uint8Array) => boolean,
   timeoutMs: number,
   baseHandler: (event: { data: unknown }) => void,
 ): Promise<Uint8Array> {
   return new Promise((resolve, reject) => {
-    const timer = setTimeout(() => {
+    let settled = false;
+    const finish = (error: Error | null, data?: Uint8Array) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
       input.onmidimessage = baseHandler;
-      reject(new Error('Response timeout'));
+      if (error) reject(error);
+      else resolve(data!);
+    };
+    const timer = setTimeout(() => {
+      finish(new Error('Response timeout'));
     }, timeoutMs);
     input.onmidimessage = (event: { data: unknown }) => {
       const data = getBytes(event.data);
       baseHandler(event);
       if (match(data)) {
-        clearTimeout(timer);
-        input.onmidimessage = baseHandler;
-        resolve(data);
+        finish(null, data);
       }
     };
+    try { request(); }
+    catch (error) { finish(error instanceof Error ? error : new Error(String(error))); }
   });
 }
 
 function collectChunks(
   input: GP200Input,
+  request: () => void,
   cmd: number,
   sub: number,
   expectedCount: number,
@@ -268,22 +284,34 @@ function collectChunks(
 ): Promise<Uint8Array[]> {
   return new Promise((resolve, reject) => {
     const chunks: Uint8Array[] = [];
-    const timer = setTimeout(() => {
+    const offsets = new Set<number>();
+    let settled = false;
+    const finish = (error: Error | null) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
       input.onmidimessage = baseHandler;
-      reject(new Error('Chunk collection timeout'));
+      if (error) reject(error);
+      else resolve(chunks);
+    };
+    const timer = setTimeout(() => {
+      finish(new Error(`Chunk collection timeout (${chunks.length}/${expectedCount} chunks)`));
     }, timeoutMs);
     input.onmidimessage = (event: { data: unknown }) => {
       const data = getBytes(event.data);
       baseHandler(event);
       if (isSysEx(data, cmd, sub)) {
+        const offset = data[11] | (data[12] << 8);
+        if (offsets.has(offset)) return;
+        offsets.add(offset);
         chunks.push(new Uint8Array(data));
         if (chunks.length === expectedCount) {
-          clearTimeout(timer);
-          input.onmidimessage = baseHandler;
-          resolve(chunks);
+          finish(null);
         }
       }
     };
+    try { request(); }
+    catch (error) { finish(error instanceof Error ? error : new Error(String(error))); }
   });
 }
 
@@ -298,6 +326,7 @@ export function useMidiDevice(): UseMidiDeviceReturn {
   const [deviceName, setDeviceName] = useState<string | null>(null);
   const [currentSlot, setCurrentSlot] = useState<number | null>(null);
   const [presetNames, setPresetNames] = useState<(string | null)[]>(new Array(256).fill(null));
+  const [presetStyles, setPresetStyles] = useState<(number | null)[]>(new Array(256).fill(null));
   const [namesLoadProgress, setNamesLoadProgress] = useState(0);
   const [namesSyncing, setNamesSyncing] = useState(false);
   const [deviceInfo, setDeviceInfo] = useState<UseMidiDeviceReturn['deviceInfo']>(null);
@@ -311,6 +340,7 @@ export function useMidiDevice(): UseMidiDeviceReturn {
   const outputRef          = useRef<GP200Output | null>(null);
   const inputRef           = useRef<GP200Input | null>(null);
   const presetNamesRef     = useRef<(string | null)[]>(new Array(256).fill(null));
+  const presetStylesRef    = useRef<(number | null)[]>(new Array(256).fill(null));
   const currentSlotRef     = useRef<number | null>(null);
   const namesLoadAbortRef  = useRef<boolean>(false);
   const namesLoadRunningRef = useRef<boolean>(false);
@@ -438,8 +468,10 @@ export function useMidiDevice(): UseMidiDeviceReturn {
       }
     }
     // sub=0x0C D→H: effect change response (user changed effect type on hardware)
-    // Format (38B raw): payload[12]=blockIndex, payload[26]=module(high byte),
-    // payload[19:21]=variant nibble-encoded: effectId = (module<<24) | (p[19]<<4) | p[20]
+    // Format (38B raw): block@22, variant nibbles@29:31,
+    // subcategory nibbles@33:35, module@36.  The subcategory is 0x10 for
+    // User IRs and must survive the echo or 0x0A10xxxx becomes a built-in
+    // 0x0A00xxxx cab in local state.
     // CAUTION: those module/variant offsets belong to the longer swap frame; on
     // the 38-byte footswitch-ack variant (CTRL 4-8 report a stomp as 0x0C where
     // CTRL 1-3 use 0x08) they land in an all-zero tail, which is precisely the
@@ -448,11 +480,9 @@ export function useMidiDevice(): UseMidiDeviceReturn {
     // src/core/looperTriggers.ts, which must stay in step with this check.
     if (isSysEx(data, 0x12, 0x0C) && data.length >= 38) {
       handled = true;
-      const p = data.subarray(10); // payload starts after header
-      const blockIndex = p[12];
-      const moduleType = p[26];
-      const variant = (p[19] << 4) | p[20];
-      const effectId = (moduleType << 24) | variant;
+      const change = SysExCodec.parseEffectChangeNotification(data);
+      if (!change) return;
+      const { blockIndex, effectId } = change;
       console.log(`[GP-200] device effect change: block=${blockIndex} effectId=0x${effectId.toString(16).padStart(8,'0')}`);
       // Hardware footswitch toggles also emit sub=0x0C frames with the
       // module/variant fields zeroed; decoded blindly that's "effect changed
@@ -462,9 +492,15 @@ export function useMidiDevice(): UseMidiDeviceReturn {
       // applied-callback further validates (known id, same module, actually
       // different); suppress the follow-up FX-state messages ONLY after a
       // real swap, so hardware toggle messages still reach onDeviceToggle.
-      if (effectId !== 0) {
+      // Host-originated effect changes are echoed through this same 0x0C
+      // family.  sendEffectChange raises suppressFxCountRef before writing;
+      // honour it here just as the 0x08/0x10 handlers do, otherwise our own
+      // acknowledgement is mistaken for a second hardware edit.
+      if (effectId !== 0 && suppressFxCountRef.current === 0) {
         const applied = onDeviceEffectChangeRef.current?.(blockIndex, effectId) ?? false;
         if (applied) suppressFxFor(500);
+      } else if (effectId !== 0) {
+        console.log('[GP-200] effect-change echo suppressed');
       }
     }
     // sub=0x10 D→H: toggle OR knob notification (46 bytes)
@@ -513,7 +549,9 @@ export function useMidiDevice(): UseMidiDeviceReturn {
 
   /** Persist the current name list to localStorage under this device's key. */
   const persistNames = useCallback(() => {
-    if (cacheKeyRef.current) saveCachedNames(cacheKeyRef.current, presetNamesRef.current);
+    if (cacheKeyRef.current) {
+      saveCachedNames(cacheKeyRef.current, presetNamesRef.current, presetStylesRef.current);
+    }
   }, []);
 
   const connect = useCallback(async () => {
@@ -523,6 +561,7 @@ export function useMidiDevice(): UseMidiDeviceReturn {
     track('connect_start', { retry: statusRef.current === 'error' });
     setStatus('connecting');
     setErrorMessage(null);
+    setCurrentPreset(null);
     sawDeviceBytesRef.current = false;
     try {
       const access = await requestGP200Access();
@@ -552,9 +591,9 @@ export function useMidiDevice(): UseMidiDeviceReturn {
       try {
         // Step 1-2: Identity
         setHandshakeStep('Identity…');
-        output.send(SysExCodec.buildIdentityQuery());
         const identityMsg = await waitForResponse(
-          input, (d) => isSysEx(d, 0x12, 0x08), READ_TIMEOUT_MS, onMidiMessage
+          input, () => output.send(SysExCodec.buildIdentityQuery()),
+          (d) => isSysEx(d, 0x12, 0x08), READ_TIMEOUT_MS, onMidiMessage
         );
         const identity = SysExCodec.parseIdentityResponse(identityMsg);
         // The GP-200 has no unique serial over MIDI, so key the name cache on the
@@ -568,8 +607,10 @@ export function useMidiDevice(): UseMidiDeviceReturn {
 
         // Step 5-6: State dump (0x4E: current slot at decoded[8:10] LE16)
         setHandshakeStep('State Dump…');
-        output.send(SysExCodec.buildStateDumpRequest());
-        const dumpChunks = await collectChunks(input, 0x12, 0x4E, 5, READ_TIMEOUT_MS, onMidiMessage);
+        const dumpChunks = await collectChunks(
+          input, () => output.send(SysExCodec.buildStateDumpRequest()),
+          0x12, 0x4E, 5, READ_TIMEOUT_MS, onMidiMessage,
+        );
         const stateDump = SysExCodec.parseStateDump(dumpChunks);
         const slot = stateDump.slot;
         setDeviceState(stateDump);
@@ -577,43 +618,33 @@ export function useMidiDevice(): UseMidiDeviceReturn {
 
         // Step 7-8: Version check
         setHandshakeStep('Firmware Check…');
-        output.send(SysExCodec.buildVersionCheck());
         const versionMsg = await waitForResponse(
-          input, (d) => isSysEx(d, 0x12, 0x0A), READ_TIMEOUT_MS, onMidiMessage
+          input, () => output.send(SysExCodec.buildVersionCheck()),
+          (d) => isSysEx(d, 0x12, 0x0A), READ_TIMEOUT_MS, onMidiMessage
         );
         const { accepted } = SysExCodec.parseVersionResponse(versionMsg);
         setDeviceInfo({ ...identity, versionAccepted: accepted });
 
         // Step 9: User-IR slot enumeration (non-critical, short timeout, bail
-        // on first failure). The 0x11/0x1C sweep was long believed to be a
-        // controller-assignment readback; decoded 2026-08-08 as the device's
-        // 30 User-IR slot names (docs/protocol-capture.md §3). The query plan
-        // below mirrors the official editor's own connect sweep verbatim; the
-        // flat response order is the IR slot order 0..29.
+        // on first failure). Section 0/page 0 contains slots 1-16 and page 1
+        // contains 17-20. Section 1 is a different ten-record table.
         setHandshakeStep('User IRs…');
         const ASSIGN_TIMEOUT = 300;
         const assignmentEntries: {
           section: number; page: number; block: number; name: string; rawData: Uint8Array;
         }[] = [];
-        const assignmentPlan = [
-          { section: 0, pages: [[0, 16], [1, 4]] },
-          { section: 1, pages: [[0, 10]] },
-        ];
         let assignFailed = false;
-        for (const { section, pages } of assignmentPlan) {
+        for (const { page, blockCount } of USER_IR_QUERY_PAGES) {
           if (assignFailed) break;
-          for (const [page, blockCount] of pages) {
-            if (assignFailed) break;
-            for (let block = 0; block < blockCount; block++) {
-              try {
-                output.send(SysExCodec.buildAssignmentQuery(section, page, block));
-                const resp = await waitForResponse(
-                  input, (d) => isSysEx(d, 0x12, 0x1C), ASSIGN_TIMEOUT, onMidiMessage
-                );
-                assignmentEntries.push(SysExCodec.parseAssignmentResponse(resp, section, page));
-              } catch {
-                assignFailed = true; break; // bail on first failure: device unresponsive
-              }
+          for (let block = 0; block < blockCount; block++) {
+            try {
+              const resp = await waitForResponse(
+                input, () => output.send(SysExCodec.buildAssignmentQuery(0, page, block)),
+                (d) => isSysEx(d, 0x12, 0x1C), ASSIGN_TIMEOUT, onMidiMessage
+              );
+              assignmentEntries.push(SysExCodec.parseAssignmentResponse(resp, 0, page));
+            } catch {
+              assignFailed = true; break; // bail on first failure: device unresponsive
             }
           }
         }
@@ -634,25 +665,44 @@ export function useMidiDevice(): UseMidiDeviceReturn {
           }
         }
 
-        // Step 10: Pull current bank (4 slots)
+        // Step 10: Pull the active slot first. Other bank names are useful but
+        // must not delay or prevent opening the preset the user is playing.
         const bankBase = Math.floor(slot / 4) * 4;
-        const bankPresets: (GP200Preset | null)[] = [null, null, null, null];
-        for (let i = 0; i < 4; i++) {
-          const s = bankBase + i;
+        const bankSlots = [slot, ...Array.from({ length: 4 }, (_, i) => bankBase + i).filter(s => s !== slot)];
+        let currentPresetError: unknown = null;
+        let currentPresetLoaded = false;
+        for (const s of bankSlots) {
           const label = SysExCodec.slotToLabel(s);
           setHandshakeStep(`Slot ${label}…`);
           try {
-            output.send(SysExCodec.buildReadRequest(s));
-            const chunks = await collectChunks(input, 0x12, 0x18, 7, READ_TIMEOUT_MS, onMidiMessage);
+            const chunks = await collectChunks(
+              input, () => output.send(SysExCodec.buildReadRequest(s)),
+              0x12, 0x18, 7, READ_TIMEOUT_MS, onMidiMessage,
+            );
             const p = SysExCodec.parseReadChunks(chunks);
-            bankPresets[i] = p;
             setHandshakeStep(`Slot ${label} · ${p.patchName}`);
-            if (s === slot) setCurrentPreset(p);
+            if (s === slot) {
+              setCurrentPreset(p);
+              currentPresetLoaded = true;
+            }
             presetNamesRef.current[s] = p.patchName;
-          } catch {
+            presetStylesRef.current[s] = p.patchStyle;
+          } catch (error) {
+            if (s === slot) currentPresetError = error;
             setHandshakeStep(`Slot ${label} · –`);
+            if (s === slot) break;
           }
           await new Promise(r => setTimeout(r, 20));
+        }
+
+        // The slot number and patch name can come from the state dump and a
+        // previous browser cache. Neither proves the current patch loaded.
+        // Never advertise a usable connection with no editor preset.
+        if (!currentPresetLoaded) {
+          const label = SysExCodec.slotToLabel(slot);
+          const detail = currentPresetError instanceof Error
+            ? currentPresetError.message : String(currentPresetError);
+          throw new Error(`Could not read current preset ${label} (${detail}). Reconnect the GP-200 and close other MIDI editors.`);
         }
 
         // Step 11: Seed remaining slots from the local cache so the Patch Manager
@@ -661,6 +711,7 @@ export function useMidiDevice(): UseMidiDeviceReturn {
         // loading complete (progress 256) so no "Loading names…" bar appears; the
         // background sync (syncPresetNames) then re-verifies every slot silently.
         const cached = cacheKeyRef.current ? loadCachedNames(cacheKeyRef.current) : null;
+        const cachedStyles = cacheKeyRef.current ? loadCachedStyles(cacheKeyRef.current) : null;
         if (cached) {
           for (let s = 0; s < 256; s++) {
             if (presetNamesRef.current[s] === null) presetNamesRef.current[s] = cached[s];
@@ -668,7 +719,13 @@ export function useMidiDevice(): UseMidiDeviceReturn {
           const filledCount = presetNamesRef.current.filter((n) => n !== null).length;
           if (filledCount === 256) setNamesLoadProgress(256);
         }
+        if (cachedStyles) {
+          for (let s = 0; s < 256; s++) {
+            if (presetStylesRef.current[s] === null) presetStylesRef.current[s] = cachedStyles[s];
+          }
+        }
         setPresetNames([...presetNamesRef.current]);
+        setPresetStyles([...presetStylesRef.current]);
         // Persist the freshly-pulled bank names into the cache immediately.
         persistNames();
 
@@ -708,8 +765,9 @@ export function useMidiDevice(): UseMidiDeviceReturn {
   const pauseNameLoading = useCallback(async () => {
     if (namesLoadRunningRef.current) {
       namesLoadAbortRef.current = true;
-      // Wait for the running loop to finish (max ~600ms for one in-flight request)
-      for (let i = 0; i < 20 && namesLoadRunningRef.current; i++) {
+      // Wait past the longest 1.5s full-read timeout so the background handler
+      // cannot restore itself over a foreground pull/save handler.
+      for (let i = 0; i < 40 && namesLoadRunningRef.current; i++) {
         await new Promise(r => setTimeout(r, 50));
       }
     }
@@ -750,7 +808,15 @@ export function useMidiDevice(): UseMidiDeviceReturn {
               if (chunks.length === 7) {
                 clearTimeout(timer);
                 if (inputRef.current) inputRef.current.onmidimessage = onMidiMessage;
-                try { resolve(SysExCodec.parseReadChunks(chunks)); }
+                try {
+                  const preset = SysExCodec.parseReadChunks(chunks);
+                  presetNamesRef.current[slot] = preset.patchName;
+                  presetStylesRef.current[slot] = preset.patchStyle;
+                  setPresetNames([...presetNamesRef.current]);
+                  setPresetStyles([...presetStylesRef.current]);
+                  persistNames();
+                  resolve(preset);
+                }
                 catch (e) { reject(e); }
               }
             }
@@ -764,115 +830,41 @@ export function useMidiDevice(): UseMidiDeviceReturn {
 
       tryRequest();
     });
-  }, [onMidiMessage, pauseNameLoading]);
+  }, [onMidiMessage, pauseNameLoading, persistNames]);
 
-  const pushPreset = useCallback(async (preset: GP200Preset, slot: number): Promise<void> => {
+  const pushPreset = useCallback(async (preset: GP200Preset, slot: number): Promise<GP200Preset> => {
     await pauseNameLoading();
     if (!outputRef.current) throw new Error('Not connected');
     console.log(`[GP-200] push: slot=${slot} (${SysExCodec.slotToLabel(slot)}) name="${preset.patchName}"`);
 
-    // Flash upload, mirroring the official editor byte-for-byte
-    // (dumps/patch-upload.pcapng): encode to .prst bytes, derive the upload
-    // image, send it as 0x12/0x20 chunks addressed to the target slot. The
-    // device commits to flash directly , no save-commit follows (verified:
-    // the uploaded patch survives a power-cycle). Because the image carries
-    // the full file content, CTRL/EXP assignments travel with it.
-    const fileBytes = new Uint8Array(new PRSTEncoder().encode(preset));
-    const image = SysExCodec.buildUploadImage(fileBytes);
-    const chunks = SysExCodec.buildUploadChunks(image, slot);
-    // The device echoes lone 0xF7 acks during the burst; mute FX-state
-    // handling so nothing downstream misreads upload traffic, and ignore the
-    // preset-change echoes our park/return hops produce below.
-    suppressFxFor(3000);
-    suppressSlotEchoUntilRef.current = Date.now() + 3000;
+    // The experimental chunk-upload path could be silently discarded by the
+    // pedal. Use the live-edit + save-commit sequence verified on hardware.
+    // Mute write echoes while the multi-second operation is in flight.
+    suppressFxFor(30_000);
+    suppressSlotEchoUntilRef.current = Date.now() + 30_000;
+    await writePresetLive(preset, slot, (message) => outputRef.current!.send(message));
 
-    // The capture (dumps/patch-upload.pcapng) only ever writes to a slot the
-    // device is NOT sitting on; the user re-selects it manually afterwards.
-    // Writing to the active slot looked like a no-op in hardware testing:
-    // the edit buffer keeps serving the pre-push patch and a preset-change
-    // to the current slot doesn't reload it. So park on the adjacent
-    // sub-slot first, write, then return , the return is a real slot change
-    // that loads the freshly written flash copy.
-    const wasActive = currentSlotRef.current === slot;
-    if (wasActive) {
-      const parkSlot = slot ^ 1; // same bank, adjacent sub-slot
-      console.log(`[GP-200] push: parking on slot=${parkSlot} while writing active slot`);
-      outputRef.current.send(SysExCodec.buildPresetChange(parkSlot));
-      await new Promise(r => setTimeout(r, 300));
-    }
-
-    for (let i = 0; i < chunks.length; i++) {
-      console.log(`[GP-200] push chunk ${i + 1}/${chunks.length}: ${chunks[i].length}B`);
-      outputRef.current.send(chunks[i]);
-      await new Promise(r => setTimeout(r, 20));
-    }
-
-    // Let the flash write settle, then switch the device to the slot so the
-    // pushed patch is live (the editor leaves this to the user; we select
-    // it). Hardware testing showed the device goes deaf for a while after
-    // the chunk burst , a preset-change 200ms later was silently dropped —
-    // so give it a generous window.
-    await new Promise(r => setTimeout(r, 800));
-
-    // Experiment toggle: the upload capture stops 30ms after the last chunk,
-    // so a deferred finalize frame from the official editor would be
-    // invisible in it. Hardware runs show the device answering reads but
-    // discarding the upload + refusing slot changes after the burst , the
-    // signature of staged data awaiting a commit. Opt in to sending the
-    // known save-commit opcode as that finalize via
-    // localStorage.setItem('gp200.pushCommit', '1'). CAUTION: if the device
-    // treats it as a plain edit-buffer save instead, the target slot gets
-    // overwritten with the currently active patch , use a scratch slot.
-    let commitRequested = false;
+    // Do not claim the supported patch fields were written until readback
+    // confirms them. EXP assignments are reported separately by callers:
+    // the live bulk writer deliberately leaves those target-slot settings alone.
+    let readback: GP200Preset;
     try {
-      commitRequested = window.localStorage.getItem('gp200.pushCommit') === '1';
-    } catch {
-      commitRequested = false;
+      readback = await pullPreset(slot);
+    } catch (err) {
+      const detail = err instanceof Error ? err.message : String(err);
+      throw new Error(`Could not verify the write to ${SysExCodec.slotToLabel(slot)}: ${detail}. The device slot may have changed.`);
     }
-    if (commitRequested) {
-      console.log('[GP-200] push: sending save-commit finalize (experiment gp200.pushCommit)');
-      outputRef.current.send(SysExCodec.buildSaveCommit(preset.patchName, slot));
-      await new Promise(r => setTimeout(r, 400));
+    const mismatch = presetWriteMismatch(preset, readback);
+    if (mismatch) {
+      throw new Error(`The write to ${SysExCodec.slotToLabel(slot)} was incomplete: ${mismatch}. The device slot may have changed.`);
     }
-    console.log(`[GP-200] push preset-change: slot=${slot}`);
-    outputRef.current.send(SysExCodec.buildPresetChange(slot));
-
-    // Update local state
-    presetNamesRef.current[slot] = preset.patchName;
-    setPresetNames([...presetNamesRef.current]);
-    persistNames();
     setCurrentSlot(slot); currentSlotRef.current = slot;
 
-    // Read the slot back and compare, so a discarded write is loud in the
-    // console instead of silently reverting on the next pull.
-    await new Promise(r => setTimeout(r, 400));
-    try {
-      const readback = await pullPreset(slot);
-      const nameOk = readback.patchName === preset.patchName;
-      const masksOf = (candidate: GP200Preset) =>
-        candidate.ctrlAssignments?.map((assignment) => assignment.blockMask).join(',') ?? null;
-      const wantMasks = masksOf(preset);
-      const gotMasks = masksOf(readback);
-      const ctrlOk = wantMasks === null || wantMasks === gotMasks;
-      if (nameOk && ctrlOk) {
-        console.log('[GP-200] push verify: OK (readback matches pushed name + CTRL masks)');
-      } else {
-        console.warn(
-          `[GP-200] push verify: MISMATCH , name "${readback.patchName}" vs pushed ` +
-          `"${preset.patchName}", ctrlMasks [${gotMasks}] vs pushed [${wantMasks}]. ` +
-          'The device likely discarded the flash write.',
-        );
-      }
-    } catch (err) {
-      console.warn('[GP-200] push verify: readback failed', err);
-    }
+    console.log('[GP-200] push core fields verified');
+    return readback;
+  }, [pauseNameLoading, suppressFxFor, pullPreset]);
 
-    console.log('[GP-200] push complete');
-    // suppressFxFor is a plain per-render function, but unlike onMidiMessage
-    // nothing depends on pushPreset's identity, so listing it is harmless.
-  }, [pauseNameLoading, persistNames, suppressFxFor, pullPreset]);
-
-  const saveToSlot = useCallback(async (presetName: string, slot?: number): Promise<void> => {
+  const saveToSlot = useCallback(async (presetName: string, slot?: number, style?: number): Promise<void> => {
     if (!outputRef.current) return;
     // Save-commit persists the device's current editing buffer to flash.
     // Live edits (toggle, param, reorder) already updated the editing buffer.
@@ -884,73 +876,16 @@ export function useMidiDevice(): UseMidiDeviceReturn {
     outputRef.current.send(msg);
     // Wait for device to write to flash
     await new Promise(r => setTimeout(r, 300));
-  }, []);
+    presetNamesRef.current[targetSlot] = presetName;
+    if (style !== undefined) presetStylesRef.current[targetSlot] = style;
+    setPresetNames([...presetNamesRef.current]);
+    setPresetStyles([...presetStylesRef.current]);
+    persistNames();
+  }, [persistNames]);
 
   const writePresetToSlot = useCallback(async (preset: GP200Preset, slot: number): Promise<void> => {
-    await pauseNameLoading();
-    if (!outputRef.current) throw new Error('Not connected');
-    const output = outputRef.current;
-    const label = SysExCodec.slotToLabel(slot);
-    console.log(`[GP-200] writeToSlot: slot=${slot} (${label}) name="${preset.patchName}"`);
-
-    // Step 1: Switch device to the target slot (loads current data into editing buffer)
-    output.send(SysExCodec.buildPresetChange(slot));
-    await new Promise(r => setTimeout(r, 200));
-
-    // Step 2: Send all effects via live editing for each slot.
-    // Per block: set the effect TYPE first (buildEffectChange, sub=0x14), then
-    // params, then on/off state. Without the effect change the device keeps the
-    // algorithm it already had loaded and the params/toggle apply to the wrong
-    // effect, so the saved slot ends up as "whatever was already there" (#80).
-    // IMPORTANT: address each block by its fixed slotIndex (0=PRE..10=VOL), NOT
-    // the array position. PRSTDecoder returns effects in playback order, so for
-    // a reordered preset the array position diverges from slotIndex and array
-    // addressing writes every effect to the wrong physical block (#90).
-    for (let i = 0; i < preset.effects.length; i++) {
-      const eff = preset.effects[i];
-      output.send(SysExCodec.buildEffectChange(eff.slotIndex, eff.effectId));
-      await new Promise(r => setTimeout(r, 30));
-      for (let p = 0; p < eff.params.length; p++) {
-        if (eff.params[p] !== undefined) {
-          output.send(SysExCodec.buildParamChange(eff.slotIndex, p, eff.effectId, eff.params[p]));
-          await new Promise(r => setTimeout(r, 8));
-        }
-      }
-      output.send(SysExCodec.buildToggleEffect(eff.slotIndex, eff.enabled));
-      await new Promise(r => setTimeout(r, 15));
-    }
-
-    // Step 3: mirror the signal-chain order so the saved slot keeps the preset's
-    // routing (the block writes above are slot-addressed and order-independent),
-    // then send author + save-commit to persist (#90).
-    await new Promise(r => setTimeout(r, 50));
-    output.send(SysExCodec.buildReorderEffects(
-      preset.effects.map(e => e.slotIndex), preset.fxLoopSend, preset.fxLoopReturn,
-    ));
-    await new Promise(r => setTimeout(r, 30));
-    // Per-patch master VOL/PAN/TEMPO, so the saved slot doesn't inherit the
-    // editing buffer's previous values. PAN is device-encoded (left = 256 + signed).
-    output.send(SysExCodec.buildPatchSetting(0x00, preset.patchVolume));
-    await new Promise(r => setTimeout(r, 30));
-    output.send(SysExCodec.buildPatchSetting(0x06, preset.patchPan & 0xFF));
-    await new Promise(r => setTimeout(r, 30));
-    output.send(SysExCodec.buildPatchSetting(0x01, preset.patchTempo));
-    await new Promise(r => setTimeout(r, 30));
-    if (preset.author) {
-      output.send(SysExCodec.buildAuthorName(preset.author));
-      await new Promise(r => setTimeout(r, 30));
-    }
-    output.send(SysExCodec.buildSaveCommit(preset.patchName, slot));
-    // Wait for device to finish writing to flash before returning
-    await new Promise(r => setTimeout(r, 300));
-    console.log(`[GP-200] writeToSlot complete: ${label} → "${preset.patchName}"`);
-
-    // Update local state
-    presetNamesRef.current[slot] = preset.patchName;
-    setPresetNames([...presetNamesRef.current]);
-    persistNames();
-    setCurrentSlot(slot); currentSlotRef.current = slot;
-  }, [pauseNameLoading, persistNames]);
+    await pushPreset(preset, slot);
+  }, [pushPreset]);
 
   /** Request one slot's name. Fast path (sub=0x20 name-only read, fw 1.8.0)
    *  when useFast; full 7-chunk read request otherwise. Either way the
@@ -958,28 +893,56 @@ export function useMidiDevice(): UseMidiDeviceReturn {
   const requestSlotName = useCallback(
     (slot: number, useFast: boolean, timeoutMs: number): Promise<string | null> => {
       return new Promise<string | null>((resolve) => {
-        const timer = setTimeout(() => {
+        let settled = false;
+        let name: string | null = null;
+        const responseOffsets = new Set<number>();
+        const finish = (result: string | null) => {
+          if (settled) return;
+          settled = true;
+          clearTimeout(timer);
           if (inputRef.current) inputRef.current.onmidimessage = onMidiMessage;
-          resolve(null);
+          resolve(result);
+        };
+        const timer = setTimeout(() => {
+          // If offset zero arrived, the name itself is valid even when a tail
+          // chunk went missing. The timeout still gives the remaining response
+          // time to drain before the next slot request begins.
+          finish(name);
         }, timeoutMs);
         if (inputRef.current) {
           inputRef.current.onmidimessage = (event: { data: unknown }) => {
             const data = getBytes(event.data);
             onMidiMessage(event);
-            if (isSysEx(data, 0x12, 0x18)) {
+            // Preset/name chunks are substantially larger than the 62-byte
+            // live parameter-write echoes that share this command/subcommand.
+            if (isSysEx(data, 0x12, 0x18) && data.length > 100) {
+              // Preset-read response offsets are ordinary 16-bit LE (unlike
+              // the 7-bit split used by host-to-device upload chunks).
               const off = data[11] | (data[12] << 8);
+              responseOffsets.add(off);
               if (off === 0) {
-                clearTimeout(timer);
-                if (inputRef.current) inputRef.current.onmidimessage = onMidiMessage;
-                resolve(SysExCodec.parsePresetName(data));
+                name = SysExCodec.parsePresetName(data);
+                const style = SysExCodec.parsePresetStyle(data);
+                if (style !== null) presetStylesRef.current[slot] = style;
               }
+              // A full read produces seven chunks. Waiting for all of them is
+              // essential: sending the next slot request after only offset 0
+              // overlaps six still-streaming chunks and eventually wedges the
+              // pedal's MIDI response queue.
+              if (isPresetNameResponseComplete(useFast, responseOffsets)) finish(name);
             }
           };
         }
         let req: Uint8Array;
         if (useFast) req = SysExCodec.buildNameReadRequest(slot);
         else req = SysExCodec.buildReadRequest(slot);
-        outputRef.current!.send(req);
+        try {
+          outputRef.current!.send(req);
+        } catch {
+          // A disconnected/closed port must behave like a bounded timeout, not
+          // reject the scan and leave namesLoadRunningRef stuck forever.
+          finish(null);
+        }
       });
     },
     [onMidiMessage],
@@ -990,46 +953,47 @@ export function useMidiDevice(): UseMidiDeviceReturn {
     if (namesLoadRunningRef.current) return; // already running
     namesLoadRunningRef.current = true;
     namesLoadAbortRef.current = false;
-    const FULL_TIMEOUT = 500; // device responds in ~20ms normally
+    const FULL_TIMEOUT = 1500; // allow all 7 chunks to drain on slower USB hosts
     const FAST_TIMEOUT = 250; // single-chunk response, fail over quickly
     const BATCH_SIZE = 8;     // Update UI every 8 slots instead of every slot
 
-    for (let s = 0; s < 256; s++) {
-      if (namesLoadAbortRef.current) break;
-      if (presetNamesRef.current[s] !== null) {
-        setNamesLoadProgress(s + 1);
-        continue;
-      }
-      let name: string | null = null;
-      if (fastNameReadRef.current !== false) {
-        name = await requestSlotName(s, true, FAST_TIMEOUT);
-        if (name !== null) {
-          fastNameReadRef.current = true;
-        } else if (fastNameReadRef.current === null && !namesLoadAbortRef.current) {
-          // Probe failed on first use; the firmware may not support the
-          // name-only read. Retry this slot with a full read; if THAT works
-          // the fast path is dead for this connection, not the device.
-          const fallback = await requestSlotName(s, false, FULL_TIMEOUT);
-          if (fallback !== null) fastNameReadRef.current = false;
-          name = fallback;
+    // Progress is slots examined, not names received. A completed scan with a
+    // few transient misses must not look permanently stuck at (say) 12/256.
+    setNamesLoadProgress(0);
+    try {
+      for (let s = 0; s < 256; s++) {
+        if (namesLoadAbortRef.current) break;
+        if (presetNamesRef.current[s] === null || presetStylesRef.current[s] === null) {
+          const result = await readPresetNameReliably(
+            fastNameReadRef.current,
+            () => requestSlotName(s, true, FAST_TIMEOUT),
+            () => requestSlotName(s, false, FULL_TIMEOUT),
+            () => namesLoadAbortRef.current,
+          );
+          fastNameReadRef.current = result.fastSupported;
+          if (namesLoadAbortRef.current) break;
+          // A timeout is not a name. Keep the slot missing so REFRESH can retry
+          // it, while progress still advances because this pass did examine it.
+          if (result.name !== null) presetNamesRef.current[s] = result.name;
+          // Give the pedal a small inter-request gap after its final chunk.
+          await new Promise(r => setTimeout(r, 20));
         }
-      } else {
-        name = await requestSlotName(s, false, FULL_TIMEOUT);
+        // Batch UI updates: only re-render every BATCH_SIZE slots or on the last slot
+        if ((s + 1) % BATCH_SIZE === 0 || s === 255) {
+          setPresetNames([...presetNamesRef.current]);
+          setPresetStyles([...presetStylesRef.current]);
+        }
+        setNamesLoadProgress(s + 1);
       }
-      if (namesLoadAbortRef.current) break;
-      presetNamesRef.current[s] = name;
-      // Batch UI updates: only re-render every BATCH_SIZE slots or on the last slot
-      if ((s + 1) % BATCH_SIZE === 0 || s === 255) {
-        setPresetNames([...presetNamesRef.current]);
-      }
-      setNamesLoadProgress(s + 1);
+    } finally {
+      // Final flush and handler restoration happen even if a port closes or a
+      // parser unexpectedly throws, so a later REFRESH can always start again.
+      setPresetNames([...presetNamesRef.current]);
+      setPresetStyles([...presetStylesRef.current]);
+      if (inputRef.current) inputRef.current.onmidimessage = onMidiMessage;
+      namesLoadRunningRef.current = false;
+      persistNames();
     }
-    // Final flush in case we stopped mid-batch
-    setPresetNames([...presetNamesRef.current]);
-    if (inputRef.current) inputRef.current.onmidimessage = onMidiMessage;
-    namesLoadRunningRef.current = false;
-    // Warm the cache with whatever this pass filled in.
-    persistNames();
   }, [onMidiMessage, requestSlotName, persistNames]);
 
   // Force-read every slot and correct any that drifted from the cache-seeded
@@ -1044,38 +1008,42 @@ export function useMidiDevice(): UseMidiDeviceReturn {
     namesLoadRunningRef.current = true;
     namesLoadAbortRef.current = false;
     setNamesSyncing(true);
-    const FULL_TIMEOUT = 500;
+    const FULL_TIMEOUT = 1500;
     const FAST_TIMEOUT = 250;
-    let changed = false;
 
-    for (let s = 0; s < 256; s++) {
-      if (namesLoadAbortRef.current) break;
-      let name: string | null = null;
-      if (fastNameReadRef.current !== false) {
-        name = await requestSlotName(s, true, FAST_TIMEOUT);
-        if (name !== null) {
-          fastNameReadRef.current = true;
-        } else if (fastNameReadRef.current === null && !namesLoadAbortRef.current) {
-          const fallback = await requestSlotName(s, false, FULL_TIMEOUT);
-          if (fallback !== null) fastNameReadRef.current = false;
-          name = fallback;
+    try {
+      for (let s = 0; s < 256; s++) {
+        if (namesLoadAbortRef.current) break;
+        const previousStyle = presetStylesRef.current[s];
+        const result = await readPresetNameReliably(
+          fastNameReadRef.current,
+          () => requestSlotName(s, true, FAST_TIMEOUT),
+          () => requestSlotName(s, false, FULL_TIMEOUT),
+          () => namesLoadAbortRef.current,
+        );
+        const name = result.name;
+        fastNameReadRef.current = result.fastSupported;
+        if (namesLoadAbortRef.current) break;
+        // A null read is a transient miss (timeout), so keep the cached value rather
+        // than blanking a slot we already have a good name for.
+        if (name !== null && name !== presetNamesRef.current[s]) {
+          presetNamesRef.current[s] = name;
+          setPresetNames([...presetNamesRef.current]);
         }
-      } else {
-        name = await requestSlotName(s, false, FULL_TIMEOUT);
+        if (presetStylesRef.current[s] !== previousStyle) {
+          setPresetStyles([...presetStylesRef.current]);
+        }
+        await new Promise(r => setTimeout(r, 20));
       }
-      if (namesLoadAbortRef.current) break;
-      // A null read is a transient miss (timeout), so keep the cached value rather
-      // than blanking a slot we already have a good name for.
-      if (name !== null && name !== presetNamesRef.current[s]) {
-        presetNamesRef.current[s] = name;
-        changed = true;
-        setPresetNames([...presetNamesRef.current]);
-      }
+    } finally {
+      if (inputRef.current) inputRef.current.onmidimessage = onMidiMessage;
+      namesLoadRunningRef.current = false;
+      setNamesSyncing(false);
+      // A foreground action can abort after the first chunk supplied a style
+      // but before the full name response drained. Keep that valid metadata.
+      setPresetStyles([...presetStylesRef.current]);
+      persistNames();
     }
-    if (inputRef.current) inputRef.current.onmidimessage = onMidiMessage;
-    namesLoadRunningRef.current = false;
-    setNamesSyncing(false);
-    if (changed) persistNames();
   }, [onMidiMessage, requestSlotName, persistNames]);
 
   const refreshNames = useCallback(async (): Promise<void> => {
@@ -1088,9 +1056,13 @@ export function useMidiDevice(): UseMidiDeviceReturn {
     })();
     for (let s = 0; s < 256; s++) {
       const inCurrentBank = bankBase >= 0 && s >= bankBase && s < bankBase + 4;
-      if (!inCurrentBank) presetNamesRef.current[s] = null;
+      if (!inCurrentBank) {
+        presetNamesRef.current[s] = null;
+        presetStylesRef.current[s] = null;
+      }
     }
     setPresetNames([...presetNamesRef.current]);
+    setPresetStyles([...presetStylesRef.current]);
     setNamesLoadProgress(0);
     await loadPresetNames();
   }, [pauseNameLoading, loadPresetNames]);
@@ -1219,7 +1191,7 @@ export function useMidiDevice(): UseMidiDeviceReturn {
   }, [status, connect]);
 
   return {
-    status, handshakeStep, errorMessage, deviceName, currentSlot, presetNames, namesLoadProgress,
+    status, handshakeStep, errorMessage, deviceName, currentSlot, presetNames, presetStyles, namesLoadProgress,
     namesSyncing,
     deviceInfo, currentPreset, userIrNames, deviceState,
     connect, disconnect, loadPresetNames, syncPresetNames, refreshNames,

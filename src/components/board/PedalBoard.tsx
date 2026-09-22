@@ -38,20 +38,12 @@ import { DeckDrawer } from './DeckDrawer';
 import { FxScenarioPicker } from '@/components/FxScenarioPicker';
 import type { DeviceModelId } from '@/core/deviceModel';
 import { PatchDetailsPanel } from '@/components/PatchDetailsPanel';
+import { PATCH_SETTINGS_TABS, isPatchSettingsTab, type PatchSettingsTab } from '@/components/patchSettingsTabs';
 import { Dialog } from '@/components/ui/Dialog';
 import { Tabs } from '@/components/ui/Tabs';
 import { useCoarsePointer, useSingleRowBoard } from '@/hooks/useMediaQuery';
 import { prefersReducedMotion } from '@/lib/motion';
 import './board.css';
-
-type PatchSettingsTab = 'details' | 'exp' | 'ctrl' | 'bulk';
-
-const PATCH_SETTINGS_TABS = [
-  { id: 'details', label: 'Details' },
-  { id: 'exp', label: 'Expression' },
-  { id: 'ctrl', label: 'Footswitches' },
-  { id: 'bulk', label: 'Bulk Apply' },
-];
 
 export interface PedalBoardProps {
   preset: GP200Preset;
@@ -70,6 +62,7 @@ export interface PedalBoardProps {
   patchTempo: number;
   currentSlot: number | null;
   connected: boolean;
+  userIrNames: string[];
   onLoadRequest: () => void;
   onSaveToActiveSlot?: () => void;
   /* deck: metadata, live settings, drawers */
@@ -103,7 +96,6 @@ export interface PedalBoardProps {
   onCtrlClear: (ctrlIndex: number) => void;
   onOpenPatchManager: () => void;
   onActivateSlot: (slot: number) => void;
-  onOpenGuide: () => void;
   /** Engagement analytics: a drawer (desktop) or tab/sheet (phone) was opened.
    *  Both trees report into the same PanelId vocabulary so "did anyone find the
    *  looper?" is one number rather than two incomparable ones. */
@@ -175,6 +167,7 @@ export function PedalBoard({
   patchTempo,
   currentSlot,
   connected,
+  userIrNames,
   onLoadRequest,
   onSaveToActiveSlot,
   onPatchNameChange,
@@ -197,7 +190,6 @@ export function PedalBoard({
   onCtrlClear,
   onOpenPatchManager,
   onActivateSlot,
-  onOpenGuide,
   onPanelOpen,
   looper,
   looperTempo,
@@ -257,9 +249,7 @@ export function PedalBoard({
   const [chromeOpen, setChromeOpen] = useState(false);
 
   function selectPatchTab(id: string) {
-    if (id === 'exp' || id === 'ctrl' || id === 'bulk') {
-      setPatchTab(id);
-    }
+    if (isPatchSettingsTab(id)) setPatchTab(id);
   }
 
   // Report the looper drawer's open state up to App: the MIDI dispatcher tap
@@ -398,7 +388,6 @@ export function PedalBoard({
         onAuthorChange={onAuthorChange}
         onOpenPatchManager={onOpenPatchManager}
         onActivateSlot={onActivateSlot}
-        onOpenGuide={onOpenGuide}
         onConnectRequest={onConnectRequest}
         onDisconnect={onDisconnect}
         onCloseRequest={onCloseRequest}
@@ -648,6 +637,7 @@ export function PedalBoard({
           open
           module={getSlotModule(pickerEffect.slotIndex)}
           currentEffectId={pickerEffect.effectId}
+          userIrNames={userIrNames}
           artIndex={artIndex}
           onSelect={(effectId) => onChangeEffect(pickerEffect.slotIndex, effectId)}
           onClose={() => setPickerSlot(null)}
