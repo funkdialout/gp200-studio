@@ -7,6 +7,7 @@ import { getBodySpec } from '@/components/board/boardPalette';
 import { EffectPicker } from '@/components/board/EffectPicker';
 import { lookupPedalArt, type ManifestIndex } from '@/components/board/pedalManifest';
 import { playSwitchClick } from '@/lib/uiSound';
+import { stepEffect, type CycleDirection } from '@/core/effectCycle';
 import { PedalArt } from './PedalArt';
 import { MobileKnob } from './MobileKnob';
 import { FocusRail } from './FocusRail';
@@ -76,6 +77,25 @@ export function PedalEditorScreen({
     ...(panel ? { '--panel': panel, '--panel-text': panelText } : {}),
   } as CSSProperties;
 
+  function cycle(direction: CycleDirection) {
+    const next = stepEffect(moduleName, slot.effectId, direction, userIrNames);
+    if (next === null) return;
+    onChangeEffect(next);
+    // same as a picker choice: the rail's param index means nothing on the new model
+    setFocusIdx(null);
+  }
+
+  const cycleButton = (direction: CycleDirection) => (
+    <button
+      type="button"
+      className="m-cycle"
+      aria-label={`${direction === -1 ? 'Previous' : 'Next'} ${moduleName} effect`}
+      onClick={() => cycle(direction)}
+    >
+      <span aria-hidden="true">{direction === -1 ? '‹' : '›'}</span>
+    </button>
+  );
+
   return (
     <div className="m-screen editor" style={vars}>
       <div className="m-editor-head">
@@ -96,13 +116,17 @@ export function PedalEditorScreen({
         </div>
       )}
 
-      <button type="button" className="m-identity" onClick={() => setPickerOpen(true)}>
-        <span className="m-identity-text">
-          <span className="m-identity-name">{effectName}</span>
-          {basedOn && <span className="m-identity-based">based on {basedOn}</span>}
-        </span>
-        <span className="m-identity-swap">SWAP</span>
-      </button>
+      <div className="m-identity-row">
+        {cycleButton(-1)}
+        <button type="button" className="m-identity" onClick={() => setPickerOpen(true)}>
+          <span className="m-identity-text">
+            <span className="m-identity-name">{effectName}</span>
+            {basedOn && <span className="m-identity-based">based on {basedOn}</span>}
+          </span>
+          <span className="m-identity-swap">SWAP</span>
+        </button>
+        {cycleButton(1)}
+      </div>
 
       {defs.length === 0 && <p className="m-empty">This block has no editable parameters.</p>}
 

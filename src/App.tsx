@@ -27,6 +27,7 @@ import { Landing } from '@/components/Landing';
 import { PedalBoard, type PedalBoardProps } from '@/components/board/PedalBoard';
 import { useIsPhone } from '@/hooks/useMediaQuery';
 import { useCoalescedParamSend } from '@/hooks/useCoalescedParamSend';
+import { useCoalescedEffectSend } from '@/hooks/useCoalescedEffectSend';
 import { useTheme } from '@/hooks/useTheme';
 import { useDeviceModel } from '@/hooks/useDeviceModel';
 import { useUiSound } from '@/hooks/useUiSound';
@@ -790,11 +791,15 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [toggleEffect, midiDevice.status]);
 
+  // Pedal ‹ › arrows can step through models faster than the pedal needs to
+  // load them; only the newest per block goes out (see useCoalescedEffectSend).
+  const effectSend = useCoalescedEffectSend(midiDevice.sendEffectChange);
+
   const handleSlotEffectChange = useCallback((slotIndex: number, effectId: number) => {
     changeEffect(slotIndex, effectId);
-    if (midiDevice.status === 'connected') midiDevice.sendEffectChange(slotIndex, effectId);
+    if (midiDevice.status === 'connected') effectSend.send(slotIndex, effectId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [changeEffect, midiDevice.status]);
+  }, [changeEffect, midiDevice.status, effectSend.send]);
 
   // One frame per parameter on the wire. A knob drag reports far more often
   // than that, and the extra frames are values nobody ever saw.
@@ -802,9 +807,13 @@ function App() {
 
   const handleSlotParamChange = useCallback((slotIndex: number, effectId: number, paramIndex: number, value: number) => {
     setParam(slotIndex, paramIndex, value);
-    if (midiDevice.status === 'connected') sendParamCoalesced(slotIndex, paramIndex, effectId, value);
+    if (midiDevice.status === 'connected') {
+      // a queued model change must land before a param meant for that model
+      effectSend.flush(slotIndex);
+      sendParamCoalesced(slotIndex, paramIndex, effectId, value);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setParam, midiDevice.status, sendParamCoalesced]);
+  }, [setParam, midiDevice.status, sendParamCoalesced, effectSend.flush]);
 
   const handleDragStart = useCallback((index: number) => setDragIndex(index), []);
   const handleDragOver = useCallback((e: React.DragEvent, index: number) => {
