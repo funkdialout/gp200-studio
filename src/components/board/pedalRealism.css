@@ -8,81 +8,53 @@
    are pattern classes on the article, solid colors arrive as --tolex/--piping.
    ════════════════════════════════════════════════════════════════════════ */
 
-/* ── finishes: tolex ── */
+/* ── finishes: tolex (textures: src/styles/materials.css) ──
+   The grain is a transparent specular layer, so one texture serves every
+   tolex color; the color itself is a lit gradient underneath. */
 .board-view .pedal.tolex-solid {
   background:
-    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.06) 1px, transparent 1.4px) 0 0 / 4px 4px,
-    radial-gradient(circle at 3px 2px, rgba(0, 0, 0, 0.32) 1px, transparent 1.5px) 0 0 / 5px 5px,
-    linear-gradient(180deg, color-mix(in srgb, var(--tolex) 88%, white), color-mix(in srgb, var(--tolex) 82%, black));
+    var(--tex-tolex),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--tolex) 90%, white),
+      var(--tolex) 30%,
+      color-mix(in srgb, var(--tolex) 80%, black)
+    );
 }
 .board-view .pedal.tolex-tweed {
   background:
-    repeating-linear-gradient(45deg, rgba(90, 60, 20, 0.35) 0 2px, transparent 2px 5px),
-    repeating-linear-gradient(-45deg, rgba(255, 240, 200, 0.18) 0 1px, transparent 1px 4px),
-    linear-gradient(180deg, #cdb07a, #a88550);
+    linear-gradient(180deg, rgba(255, 240, 200, 0.16), transparent 35%, rgba(60, 35, 10, 0.25)),
+    var(--tex-tweed);
 }
 .board-view .pedal.tolex-orangeweave {
   background:
-    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.12) 0 1px, transparent 1px 3px),
-    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px 3px),
-    linear-gradient(180deg, #e2761c, #b85810);
+    var(--tex-tolex),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.1) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, #e67c20, #c86410 30%, #a24c0a);
 }
 .board-view .pedal.tolex-bluecheck {
   background:
-    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0 2px, transparent 2px 6px),
-    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.22) 0 2px, transparent 2px 6px),
-    linear-gradient(180deg, #34508e, #22386a);
+    var(--tex-tolex),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.08) 0 2px, transparent 2px 6px),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.2) 0 2px, transparent 2px 6px),
+    linear-gradient(180deg, #3a5696, #2a4278 30%, #1c2e56);
 }
 
-/* ── finishes: grille cloth (consumed by .amp-grille / .cab-baffle) ── */
-.board-view .grille-blackweave {
-  --grille:
-    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.07) 0 1px, transparent 1px 3px),
-    repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 3px),
-    #141416;
-}
-.board-view .grille-silverface {
-  --grille:
-    repeating-linear-gradient(90deg, rgba(40, 70, 140, 0.35) 0 1px, transparent 1px 4px),
-    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.18) 0 1px, transparent 1px 3px),
-    linear-gradient(180deg, #cfd2d6, #a9adb3);
-}
-.board-view .grille-oxblood {
-  --grille:
-    repeating-linear-gradient(90deg, rgba(230, 190, 120, 0.22) 0 1px, transparent 1px 4px),
-    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.25) 0 1px, transparent 1px 3px),
-    linear-gradient(180deg, #6a2a22, #4a1a14);
-}
+/* ── finishes: grille cloth (consumed by .amp-grille / .cab-baffle) ──
+   Woven SVG tiles plus a slub layer, so the cloth reads as fabric rather
+   than stripes. */
+.board-view .grille-blackweave { --grille: var(--tex-slub), var(--tex-weave-black); }
+.board-view .grille-silverface { --grille: var(--tex-slub), var(--tex-weave-silver); }
+.board-view .grille-oxblood { --grille: var(--tex-slub), var(--tex-weave-oxblood); }
 .board-view .grille-metalgrid {
   --grille:
-    radial-gradient(circle, #050505 1.3px, transparent 1.6px) 0 0 / 6px 6px,
-    linear-gradient(180deg, #5a5c61, #35373b);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent 40%, rgba(0, 0, 0, 0.25)),
+    var(--tex-metalgrid);
 }
-.board-view .grille-basket {
-  --grille:
-    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.35) 0 3px, transparent 3px 6px),
-    repeating-linear-gradient(90deg, rgba(255, 240, 210, 0.22) 0 3px, transparent 3px 6px),
-    linear-gradient(180deg, #d8ccb0, #b4a684);
-}
-.board-view .grille-wheat {
-  --grille:
-    repeating-linear-gradient(90deg, rgba(120, 90, 40, 0.28) 0 1px, transparent 1px 3px),
-    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.12) 0 1px, transparent 1px 3px),
-    linear-gradient(180deg, #d8c9a4, #b8a67c);
-}
-.board-view .grille-cane {
-  --grille:
-    repeating-linear-gradient(45deg, rgba(90, 60, 20, 0.45) 0 2px, transparent 2px 7px),
-    repeating-linear-gradient(-45deg, rgba(90, 60, 20, 0.45) 0 2px, transparent 2px 7px),
-    linear-gradient(180deg, #d4b884, #b09260);
-}
-.board-view .grille-diamond {
-  --grille:
-    repeating-linear-gradient(60deg, rgba(220, 180, 110, 0.35) 0 1px, transparent 1px 9px),
-    repeating-linear-gradient(-60deg, rgba(220, 180, 110, 0.35) 0 1px, transparent 1px 9px),
-    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0 1px, transparent 1px 3px),
-    linear-gradient(180deg, #5a4632, #3e2f20);
-}
+.board-view .grille-basket { --grille: var(--tex-slub), var(--tex-weave-basket); }
+.board-view .grille-wheat { --grille: var(--tex-slub), var(--tex-weave-wheat); }
+.board-view .grille-cane { --grille: var(--tex-weave-cane); }
+.board-view .grille-diamond { --grille: var(--tex-slub), var(--tex-weave-diamond); }
 
 /* ── shared hardware: corner protectors + carry handle ── */
 .board-view .corner {
@@ -107,7 +79,7 @@
   width: 30%;
   height: 15px;
   border-radius: 10px 10px 3px 3px;
-  background: linear-gradient(180deg, #2b2b2e, #0e0e10);
+  background: var(--tex-leather), linear-gradient(180deg, #2b2826, #0e0d0c);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 2px 3px rgba(0, 0, 0, 0.5);
   pointer-events: none;
 }
@@ -271,6 +243,19 @@
   background: linear-gradient(180deg, rgba(20, 20, 22, 0.78), rgba(8, 8, 10, 0.86));
   border-color: rgba(255, 255, 255, 0.14);
 }
+/* on a dark cloth the script sits straight on the grille, embossed like a
+   real logo; light cloths keep the dark plate for contrast */
+.board-view .form-amp:is(.grille-blackweave, .grille-metalgrid, .grille-oxblood, .grille-diamond) .p-name-btn {
+  font-size: 25px;
+  background: transparent;
+  border-color: transparent;
+  color: #efe9da;
+  text-shadow:
+    0 -1px 0 rgba(255, 255, 255, 0.35),
+    0 1px 0 #6d6656,
+    0 2px 0 #3a362d,
+    0 3px 5px rgba(0, 0, 0, 0.9);
+}
 .board-view .form-amp .p-name-btn:hover,
 .board-view .form-amp .p-name-btn:focus-visible {
   border-color: var(--accent);
@@ -299,17 +284,18 @@
   --ink: var(--panel-text, #e8e8e8);
   color: var(--ink);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 35%),
-    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 2px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent 20%, transparent 80%, rgba(0, 0, 0, 0.22)),
+    var(--tex-brush),
     linear-gradient(180deg, color-mix(in srgb, var(--panel, #26282c) 92%, white), var(--panel, #26282c));
+  background-blend-mode: normal, overlay, normal;
   border: 1px solid rgba(0, 0, 0, 0.5);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 -2px 4px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.6);
 }
 .board-view .form-amp.panel-plate .amp-panel-row {
   background:
-    repeating-linear-gradient(45deg, transparent 0 7px, rgba(255, 255, 255, 0.45) 7px 9px, transparent 9px 14px),
-    repeating-linear-gradient(-45deg, transparent 0 7px, rgba(0, 0, 0, 0.22) 7px 9px, transparent 9px 14px),
-    linear-gradient(180deg, #d4d7db, #9a9ea4);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.3), transparent 30%, rgba(0, 0, 0, 0.18)),
+    var(--tex-diamondplate);
+  background-blend-mode: normal;
 }
 .board-view .form-amp .controls.amp-panel {
   flex: 1;
@@ -374,13 +360,16 @@
   width: 88%;
   aspect-ratio: 1;
   border-radius: 50%;
+  /* dust cap, cone and surround read faintly through the cloth */
   background: radial-gradient(
-    circle,
-    rgba(0, 0, 0, 0.5) 0 11%,
-    rgba(0, 0, 0, 0.22) 12% 56%,
-    rgba(0, 0, 0, 0.12) 57% 68%,
-    rgba(255, 255, 255, 0.07) 69% 72%,
-    transparent 73%
+    circle at 46% 42%,
+    rgba(0, 0, 0, 0.6) 0 11%,
+    rgba(255, 255, 255, 0.06) 12% 14%,
+    rgba(0, 0, 0, 0.28) 15% 50%,
+    rgba(255, 255, 255, 0.08) 51% 55%,
+    rgba(0, 0, 0, 0.22) 56% 66%,
+    rgba(255, 255, 255, 0.1) 67% 70%,
+    transparent 71%
   );
   pointer-events: none;
 }
@@ -444,7 +433,8 @@
      knob labels, values and switch read from */
   --ink: #e4e4e6;
   color: var(--ink);
-  background: linear-gradient(180deg, #2c2e32, #1a1b1e);
+  background: var(--tex-brush), linear-gradient(180deg, #2c2e32, #1a1b1e);
+  background-blend-mode: overlay, normal;
   border: 1px solid #3a3c42;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 2px 5px rgba(0, 0, 0, 0.45);
 }
@@ -481,8 +471,14 @@
   border-radius: 20px 20px 12px 12px;
   padding: 24px 10px 12px;
   background:
-    linear-gradient(120deg, rgba(255, 255, 255, 0.18), transparent 40%),
-    linear-gradient(180deg, var(--body), var(--body-deep));
+    linear-gradient(120deg, rgba(255, 255, 255, 0.24), transparent 38%),
+    var(--tex-flake),
+    linear-gradient(180deg, color-mix(in srgb, var(--body) 92%, white), color-mix(in srgb, var(--body-deep) 80%, black));
+  background-blend-mode: normal, soft-light, normal;
+  box-shadow:
+    inset 0 2px 1px rgba(255, 255, 255, 0.35),
+    inset 0 -3px 2px rgba(0, 0, 0, 0.35),
+    var(--pedal-shadow);
 }
 .board-view .pedal.form-rocker::before,
 .board-view .pedal.form-rocker::after {
@@ -496,8 +492,10 @@
   border-radius: 14px 14px 6px 6px;
   border: 1px solid #070708;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent 25%),
-    repeating-linear-gradient(0deg, #1b1b1d 0 3px, #2e2f33 3px 6px);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent 25%, transparent 75%, rgba(0, 0, 0, 0.45)),
+    repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.07) 0 2px, transparent 2px 7px),
+    var(--tex-leather),
+    #161618;
   box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.14), 0 6px 10px rgba(0, 0, 0, 0.5);
   cursor: pointer;
   transform-origin: 50% 100%;
@@ -564,15 +562,22 @@
 /* die-cast enclosure: softer gloss, bevelled edge, no fake brand strip */
 .board-view .pedal.form-stomp {
   padding-bottom: 14px;
+  /* die-cast body: metal-flake powder coat under a soft top-left light */
+  background:
+    linear-gradient(115deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0.05) 22%, transparent 40%, rgba(0, 0, 0, 0.12)),
+    var(--tex-flake),
+    linear-gradient(180deg, color-mix(in srgb, var(--body) 94%, white), var(--body-deep));
+  background-blend-mode: normal, soft-light, normal;
   box-shadow:
-    inset 0 2px 0 rgba(255, 255, 255, 0.28),
-    inset 0 -3px 0 rgba(0, 0, 0, 0.22),
-    inset 2px 0 0 rgba(255, 255, 255, 0.08),
-    inset -2px 0 0 rgba(0, 0, 0, 0.12),
+    inset 0 2px 1px rgba(255, 255, 255, 0.35),
+    inset 0 -3px 2px rgba(0, 0, 0, 0.35),
+    inset 3px 0 2px rgba(255, 255, 255, 0.08),
+    inset -3px 0 2px rgba(0, 0, 0, 0.18),
+    0 2px 0 color-mix(in srgb, var(--body) 55%, black),
     var(--pedal-shadow);
 }
 .board-view .pedal.form-stomp::before {
-  background: linear-gradient(115deg, rgba(255, 255, 255, 0.12), transparent 38%);
+  background: none;
 }
 /* compact 1590B-style box */
 .board-view .pedal.form-stomp.shape-mxr {

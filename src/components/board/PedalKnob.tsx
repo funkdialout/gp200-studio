@@ -1,8 +1,16 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import type { KnobParam } from '@/core/effectParams';
 import { KNOB_STYLES, type BodySpec } from './boardPalette';
 import { clampSnap, formatValue } from './paramValue';
-import { KNOB_VIEWBOX, keyStep, knobAngle, tickPaths } from './knobGeometry';
+import { KNOB_VIEWBOX, keyStep, knobAngle, polar, tickPaths } from './knobGeometry';
+
+/** Knurling on the knob skirt: short radial grooves, drawn once. */
+const KNURL: string[] = Array.from({ length: 44 }, (_, i) => {
+  const a = (360 * i) / 44;
+  const [x0, y0] = polar(50, 50, 27.5, a);
+  const [x1, y1] = polar(50, 50, 33.5, a);
+  return `M${x0.toFixed(2)} ${y0.toFixed(2)}L${x1.toFixed(2)} ${y1.toFixed(2)}`;
+});
 
 interface PedalKnobProps {
   param: KnobParam;
@@ -37,6 +45,8 @@ function wheelPixels(event: WheelEvent): number {
  */
 export function PedalKnob({ param, value, onChange, knobStyle, ink, pedalName }: PedalKnobProps) {
   const style = KNOB_STYLES[knobStyle];
+  // per-instance gradient id (useId's punctuation isn't safe inside url(#…))
+  const capId = `kcap${useId().replace(/[^a-zA-Z0-9]/g, '')}`;
   const [dragging, setDragging] = useState(false);
   const dragStart = useRef({ y: 0, value: 0 });
   const unitRef = useRef<HTMLDivElement>(null);
@@ -141,9 +151,21 @@ export function PedalKnob({ param, value, onChange, knobStyle, ink, pedalName }:
             strokeLinecap="round"
           />
         ))}
+        <defs>
+          <radialGradient id={capId} cx="40%" cy="32%" r="75%">
+            <stop offset="0" stopColor={style.cap0} />
+            <stop offset="0.7" stopColor={style.cap1} />
+            <stop offset="1" stopColor={style.cap1} stopOpacity={0.85} />
+          </radialGradient>
+        </defs>
+        {/* contact shadow, knurled skirt, then the lit cap */}
+        <circle cx={51} cy={54} r={34} fill="rgba(0,0,0,.32)" />
         <circle cx={50} cy={50} r={34} fill={style.cap1} />
-        <circle cx={46} cy={44} r={30} fill={style.cap0} />
-        <circle cx={50} cy={50} r={34} fill="none" stroke="rgba(0,0,0,.45)" strokeWidth={2} />
+        <path d={KNURL.join('')} stroke="rgba(0,0,0,.38)" strokeWidth={2.2} />
+        <circle cx={50} cy={50} r={34} fill="none" stroke="rgba(0,0,0,.5)" strokeWidth={1.5} />
+        <circle cx={50} cy={50} r={25} fill={`url(#${capId})`} />
+        <circle cx={50} cy={50} r={25} fill="none" stroke="rgba(0,0,0,.35)" strokeWidth={1.2} />
+        <ellipse cx={42} cy={39} rx={11} ry={7} fill="#fff" opacity={0.28} />
         <line
           x1={50}
           y1={48}
