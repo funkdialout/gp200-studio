@@ -36,6 +36,33 @@ export interface ArtBox {
   w: number;
 }
 
+/**
+ * Physical look of the block for the board view (written by the generator from
+ * the same spec that drew the SVG). Pattern names such as `tweed`,
+ * `blackweave` or `diamondplate` pass through; anything else is a hex color.
+ */
+export type PedalLook =
+  | {
+      kind: 'amp';
+      tolex: string;
+      grille: string;
+      panel: string;
+      piping?: string;
+      lamp?: string;
+    }
+  | {
+      kind: 'cab';
+      tolex: string;
+      grille: string;
+      cols: number;
+      rows: number;
+      size: string;
+      piping?: string;
+    }
+  | { kind: 'stomp'; shape: 'std' | 'big' | 'mxr' | 'round' }
+  | { kind: 'rocker' }
+  | { kind: 'acoustic' | 'rack' | 'tape' | 'util' | 'eq' };
+
 export interface PedalArtEntry {
   name: string;
   module: string;
@@ -51,6 +78,8 @@ export interface PedalArtEntry {
   colors?: PedalArtColors;
   /** content box of the artwork (older manifests omit it — see artBox) */
   art?: ArtBox;
+  /** physical look for the board view (older manifests omit it — see resolveLook) */
+  look?: PedalLook;
 }
 
 const CANVAS_W = 160;

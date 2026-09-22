@@ -17,6 +17,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -37,6 +41,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -57,6 +65,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -77,6 +89,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -97,6 +113,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -117,6 +137,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -137,6 +161,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -157,6 +185,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "mxr"
     }
   },
   {
@@ -177,6 +209,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "mxr"
     }
   },
   {
@@ -197,6 +233,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "mxr"
     }
   },
   {
@@ -217,6 +257,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "mxr"
     }
   },
   {
@@ -237,6 +281,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -257,6 +304,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -277,6 +327,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -297,6 +350,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -317,6 +374,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -337,6 +397,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -357,6 +420,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -377,6 +443,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -397,6 +466,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -417,6 +489,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -437,6 +512,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -457,6 +535,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -477,6 +558,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -497,6 +581,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -517,6 +604,9 @@
     "art": {
       "x": 54,
       "w": 52
+    },
+    "look": {
+      "kind": "eq"
     }
   },
   {
@@ -537,6 +627,9 @@
     "art": {
       "x": 54,
       "w": 52
+    },
+    "look": {
+      "kind": "eq"
     }
   },
   {
@@ -557,6 +650,9 @@
     "art": {
       "x": 54,
       "w": 52
+    },
+    "look": {
+      "kind": "eq"
     }
   },
   {
@@ -577,6 +673,9 @@
     "art": {
       "x": 54,
       "w": 52
+    },
+    "look": {
+      "kind": "eq"
     }
   },
   {
@@ -597,6 +696,9 @@
     "art": {
       "x": 54,
       "w": 52
+    },
+    "look": {
+      "kind": "eq"
     }
   },
   {
@@ -617,6 +719,9 @@
     "art": {
       "x": 42,
       "w": 76
+    },
+    "look": {
+      "kind": "eq"
     }
   },
   {
@@ -637,6 +742,9 @@
     "art": {
       "x": 36,
       "w": 88
+    },
+    "look": {
+      "kind": "rocker"
     }
   },
   {
@@ -657,6 +765,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -677,6 +788,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -697,6 +811,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -717,6 +835,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -737,6 +859,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -757,6 +883,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -777,6 +907,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -797,6 +931,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -817,6 +955,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -837,6 +979,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -857,6 +1003,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -877,6 +1027,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -897,6 +1051,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -917,6 +1075,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "mxr"
     }
   },
   {
@@ -937,6 +1099,10 @@
     "art": {
       "x": 47.6,
       "w": 64.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "big"
     }
   },
   {
@@ -957,6 +1123,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -977,6 +1147,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "mxr"
     }
   },
   {
@@ -997,6 +1171,10 @@
     "art": {
       "x": 47.6,
       "w": 64.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "big"
     }
   },
   {
@@ -1017,6 +1195,10 @@
     "art": {
       "x": 53,
       "w": 54
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "round"
     }
   },
   {
@@ -1037,6 +1219,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "mxr"
     }
   },
   {
@@ -1057,6 +1243,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "mxr"
     }
   },
   {
@@ -1077,6 +1267,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -1097,6 +1291,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "mxr"
     }
   },
   {
@@ -1117,6 +1315,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -1137,6 +1339,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -1157,6 +1363,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "mxr"
     }
   },
   {
@@ -1177,6 +1387,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -1197,6 +1411,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -1217,6 +1435,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -1237,6 +1459,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "mxr"
     }
   },
   {
@@ -1257,6 +1483,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -1277,6 +1507,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -1297,6 +1531,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -1317,6 +1555,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -1337,6 +1579,10 @@
     "art": {
       "x": 47.6,
       "w": 64.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "big"
     }
   },
   {
@@ -1357,6 +1603,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -1377,6 +1627,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -1397,6 +1651,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -1417,6 +1675,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -1437,6 +1699,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -1457,6 +1723,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -1477,6 +1747,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -1497,6 +1770,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -1517,6 +1794,10 @@
     "art": {
       "x": 47.6,
       "w": 64.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "big"
     }
   },
   {
@@ -1537,6 +1818,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -1557,6 +1842,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -1577,6 +1865,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "mxr"
     }
   },
   {
@@ -1597,6 +1889,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -1617,6 +1913,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "mxr"
     }
   },
   {
@@ -1637,6 +1937,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -1657,6 +1960,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "mxr"
     }
   },
   {
@@ -1677,6 +1984,10 @@
     "art": {
       "x": 47.6,
       "w": 64.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "big"
     }
   },
   {
@@ -1697,6 +2008,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "mxr"
     }
   },
   {
@@ -1717,6 +2032,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -1737,6 +2055,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -1757,6 +2078,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -1777,6 +2101,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -1797,6 +2124,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -1817,6 +2147,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -1837,6 +2170,9 @@
     "art": {
       "x": 36,
       "w": 88
+    },
+    "look": {
+      "kind": "rocker"
     }
   },
   {
@@ -1857,6 +2193,9 @@
     "art": {
       "x": 36,
       "w": 88
+    },
+    "look": {
+      "kind": "rocker"
     }
   },
   {
@@ -1877,6 +2216,9 @@
     "art": {
       "x": 36,
       "w": 88
+    },
+    "look": {
+      "kind": "rocker"
     }
   },
   {
@@ -1897,6 +2239,9 @@
     "art": {
       "x": 36,
       "w": 88
+    },
+    "look": {
+      "kind": "rocker"
     }
   },
   {
@@ -1917,6 +2262,9 @@
     "art": {
       "x": 36,
       "w": 88
+    },
+    "look": {
+      "kind": "rocker"
     }
   },
   {
@@ -1937,6 +2285,9 @@
     "art": {
       "x": 36,
       "w": 88
+    },
+    "look": {
+      "kind": "rocker"
     }
   },
   {
@@ -1959,6 +2310,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "tweed",
+      "grille": "oxblood",
+      "panel": "#4a3520"
     }
   },
   {
@@ -1981,6 +2338,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "tweed",
+      "grille": "oxblood",
+      "panel": "#4a3520"
     }
   },
   {
@@ -2003,6 +2366,13 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "silverface",
+      "panel": "#26282c",
+      "piping": "#b8b8c0"
     }
   },
   {
@@ -2025,6 +2395,13 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "silverface",
+      "panel": "#26282c",
+      "piping": "#b8b8c0"
     }
   },
   {
@@ -2047,6 +2424,13 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "silverface",
+      "panel": "#26282c",
+      "piping": "#b8b8c0"
     }
   },
   {
@@ -2069,6 +2453,13 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "silverface",
+      "panel": "#b8bcc0",
+      "piping": "#8a90a8"
     }
   },
   {
@@ -2091,6 +2482,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#c8c8c0",
+      "grille": "wheat",
+      "panel": "#28304a"
     }
   },
   {
@@ -2113,6 +2510,13 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1a1a1c",
+      "grille": "diamond",
+      "panel": "#2a2620",
+      "piping": "#c8a850"
     }
   },
   {
@@ -2135,6 +2539,13 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1a1a1c",
+      "grille": "diamond",
+      "panel": "#2a2620",
+      "piping": "#c8a850"
     }
   },
   {
@@ -2157,6 +2568,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "panel": "#2a2a2e"
     }
   },
   {
@@ -2179,6 +2596,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "silverface",
+      "panel": "#1a1a1c"
     }
   },
   {
@@ -2201,6 +2624,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "cane",
+      "panel": "#c9b998"
     }
   },
   {
@@ -2223,6 +2652,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "panel": "#c8ccd0"
     }
   },
   {
@@ -2245,6 +2680,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#8a2222",
+      "grille": "wheat",
+      "panel": "#1c1c1e"
     }
   },
   {
@@ -2267,6 +2708,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#2a4a3a",
+      "grille": "basket",
+      "panel": "#c8b888"
     }
   },
   {
@@ -2289,6 +2736,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "wheat",
+      "panel": "#e8e0c8"
     }
   },
   {
@@ -2311,6 +2764,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "panel": "#2a2a2e"
     }
   },
   {
@@ -2333,6 +2792,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "tweed",
+      "grille": "oxblood",
+      "panel": "#4a3520"
     }
   },
   {
@@ -2355,6 +2820,13 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1a1a1c",
+      "grille": "diamond",
+      "panel": "#2a2620",
+      "piping": "#c8a850"
     }
   },
   {
@@ -2377,6 +2849,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#c8c8c0",
+      "grille": "wheat",
+      "panel": "#28304a"
     }
   },
   {
@@ -2399,6 +2877,13 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "panel": "#b8933a",
+      "piping": "#c8a850"
     }
   },
   {
@@ -2421,6 +2906,13 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "panel": "#b8933a",
+      "piping": "#c8a850"
     }
   },
   {
@@ -2443,6 +2935,13 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "panel": "#b8933a",
+      "piping": "#c8a850"
     }
   },
   {
@@ -2465,6 +2964,13 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "panel": "#b8933a",
+      "piping": "#c8a850"
     }
   },
   {
@@ -2487,6 +2993,13 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "panel": "#b8933a",
+      "piping": "#c8a850"
     }
   },
   {
@@ -2509,6 +3022,13 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "panel": "#b8933a",
+      "piping": "#c8a850"
     }
   },
   {
@@ -2531,6 +3051,13 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "panel": "#b8933a",
+      "piping": "#c8a850"
     }
   },
   {
@@ -2553,6 +3080,13 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "panel": "#b8933a",
+      "piping": "#c8a850"
     }
   },
   {
@@ -2575,6 +3109,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "cane",
+      "panel": "#c8ccd0"
     }
   },
   {
@@ -2597,6 +3137,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "cane",
+      "panel": "#c8ccd0"
     }
   },
   {
@@ -2619,6 +3165,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "cane",
+      "panel": "#c8ccd0"
     }
   },
   {
@@ -2641,6 +3193,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "panel": "#c8ccd0"
     }
   },
   {
@@ -2663,6 +3221,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "orangeweave",
+      "grille": "basket",
+      "panel": "#e8e0c8"
     }
   },
   {
@@ -2685,6 +3249,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "panel": "#26262a"
     }
   },
   {
@@ -2707,6 +3277,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "panel": "#26262a"
     }
   },
   {
@@ -2729,6 +3305,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "panel": "#3a3a3e"
     }
   },
   {
@@ -2751,6 +3333,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "panel": "#3a3a3e"
     }
   },
   {
@@ -2773,6 +3361,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "panel": "#2a2a2e"
     }
   },
   {
@@ -2795,6 +3389,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "silverface",
+      "panel": "#1a1a1c"
     }
   },
   {
@@ -2817,6 +3417,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#8a2222",
+      "grille": "wheat",
+      "panel": "#1c1c1e"
     }
   },
   {
@@ -2839,6 +3445,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "cane",
+      "panel": "#c9b998"
     }
   },
   {
@@ -2861,6 +3473,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "wheat",
+      "panel": "#e8e0c8"
     }
   },
   {
@@ -2883,6 +3501,13 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "panel": "#b8933a",
+      "piping": "#c8a850"
     }
   },
   {
@@ -2905,6 +3530,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "orangeweave",
+      "grille": "basket",
+      "panel": "#e8e0c8"
     }
   },
   {
@@ -2927,6 +3558,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "cane",
+      "panel": "#c8ccd0"
     }
   },
   {
@@ -2949,6 +3586,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "cane",
+      "panel": "#c8ccd0"
     }
   },
   {
@@ -2971,6 +3614,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "cane",
+      "panel": "#c8ccd0"
     }
   },
   {
@@ -2993,6 +3642,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "panel": "#2a2a2e"
     }
   },
   {
@@ -3015,6 +3670,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "panel": "#26282c"
     }
   },
   {
@@ -3037,6 +3698,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "panel": "#26262a"
     }
   },
   {
@@ -3059,6 +3726,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "panel": "#26262a"
     }
   },
   {
@@ -3081,6 +3754,13 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "panel": "#1a1a1c",
+      "lamp": "#4a90e0"
     }
   },
   {
@@ -3103,6 +3783,13 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "panel": "#1a1a1c",
+      "lamp": "#4a90e0"
     }
   },
   {
@@ -3125,6 +3812,13 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "panel": "#1a1a1c",
+      "lamp": "#4a90e0"
     }
   },
   {
@@ -3147,6 +3841,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "panel": "#b8bcc0"
     }
   },
   {
@@ -3169,6 +3869,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "panel": "#b8bcc0"
     }
   },
   {
@@ -3191,6 +3897,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "panel": "diamondplate"
     }
   },
   {
@@ -3213,6 +3925,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "panel": "diamondplate"
     }
   },
   {
@@ -3235,6 +3953,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "panel": "#b8bcc0"
     }
   },
   {
@@ -3257,6 +3981,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "panel": "#b8bcc0"
     }
   },
   {
@@ -3279,6 +4009,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "panel": "#3a3a3e"
     }
   },
   {
@@ -3301,6 +4037,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "panel": "#3a3a3e"
     }
   },
   {
@@ -3323,6 +4065,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "panel": "#26282c"
     }
   },
   {
@@ -3345,6 +4093,13 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1a1a1c",
+      "grille": "diamond",
+      "panel": "#2a2620",
+      "piping": "#c8a850"
     }
   },
   {
@@ -3367,6 +4122,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "panel": "#c8ccd0"
     }
   },
   {
@@ -3389,6 +4150,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#2a4a3a",
+      "grille": "basket",
+      "panel": "#c8b888"
     }
   },
   {
@@ -3411,6 +4178,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#2a4a3a",
+      "grille": "basket",
+      "panel": "#c8b888"
     }
   },
   {
@@ -3433,6 +4206,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "bluecheck",
+      "grille": "silverface",
+      "panel": "#26282c"
     }
   },
   {
@@ -3453,6 +4232,9 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "rack"
     }
   },
   {
@@ -3475,6 +4257,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#26262a",
+      "grille": "blackweave",
+      "panel": "#c8c4b8"
     }
   },
   {
@@ -3497,6 +4285,12 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "amp",
+      "tolex": "#26262a",
+      "grille": "blackweave",
+      "panel": "#c8c4b8"
     }
   },
   {
@@ -3517,6 +4311,14 @@
     "art": {
       "x": 38,
       "w": 84
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#c8c8c0",
+      "grille": "wheat",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×6"
     }
   },
   {
@@ -3537,6 +4339,14 @@
     "art": {
       "x": 38,
       "w": 84
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "tweed",
+      "grille": "oxblood",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×8"
     }
   },
   {
@@ -3557,6 +4367,14 @@
     "art": {
       "x": 38,
       "w": 84
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "tweed",
+      "grille": "oxblood",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×10"
     }
   },
   {
@@ -3577,6 +4395,15 @@
     "art": {
       "x": 38,
       "w": 84
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "silverface",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×12",
+      "piping": "#b8b8c0"
     }
   },
   {
@@ -3597,6 +4424,15 @@
     "art": {
       "x": 38,
       "w": 84
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "silverface",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×12",
+      "piping": "#b8b8c0"
     }
   },
   {
@@ -3617,6 +4453,14 @@
     "art": {
       "x": 38,
       "w": 84
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#d8d0b8",
+      "grille": "wheat",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×12"
     }
   },
   {
@@ -3637,6 +4481,14 @@
     "art": {
       "x": 38,
       "w": 84
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×12"
     }
   },
   {
@@ -3657,6 +4509,14 @@
     "art": {
       "x": 38,
       "w": 84
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "wheat",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×12"
     }
   },
   {
@@ -3677,6 +4537,15 @@
     "art": {
       "x": 38,
       "w": 84
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1a1a1c",
+      "grille": "diamond",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×12",
+      "piping": "#c8a850"
     }
   },
   {
@@ -3697,6 +4566,14 @@
     "art": {
       "x": 38,
       "w": 84
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "cane",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×12"
     }
   },
   {
@@ -3717,6 +4594,14 @@
     "art": {
       "x": 38,
       "w": 84
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#c8b890",
+      "grille": "wheat",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×12"
     }
   },
   {
@@ -3737,6 +4622,14 @@
     "art": {
       "x": 38,
       "w": 84
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "tweed",
+      "grille": "oxblood",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×12"
     }
   },
   {
@@ -3757,6 +4650,14 @@
     "art": {
       "x": 38,
       "w": 84
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×12"
     }
   },
   {
@@ -3777,6 +4678,14 @@
     "art": {
       "x": 38,
       "w": 84
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#3a5a4a",
+      "grille": "wheat",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×12"
     }
   },
   {
@@ -3797,6 +4706,15 @@
     "art": {
       "x": 38,
       "w": 84
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×12",
+      "piping": "#c8a850"
     }
   },
   {
@@ -3817,6 +4735,15 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1a1a1c",
+      "grille": "diamond",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×12",
+      "piping": "#c8a850"
     }
   },
   {
@@ -3837,6 +4764,14 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "silverface",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×12"
     }
   },
   {
@@ -3857,6 +4792,14 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×12"
     }
   },
   {
@@ -3877,6 +4820,15 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "silverface",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×12",
+      "piping": "#b8b8c0"
     }
   },
   {
@@ -3897,6 +4849,15 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×12",
+      "piping": "#c8a850"
     }
   },
   {
@@ -3917,6 +4878,14 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "tweed",
+      "grille": "oxblood",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×10"
     }
   },
   {
@@ -3937,6 +4906,14 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#5a4a6a",
+      "grille": "wheat",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×12"
     }
   },
   {
@@ -3957,6 +4934,14 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#d8cfa8",
+      "grille": "oxblood",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×12"
     }
   },
   {
@@ -3977,6 +4962,14 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#c8c8c0",
+      "grille": "wheat",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×12"
     }
   },
   {
@@ -3997,6 +4990,14 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "silverface",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×12"
     }
   },
   {
@@ -4017,6 +5018,14 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "cane",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×12"
     }
   },
   {
@@ -4037,6 +5046,14 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×12"
     }
   },
   {
@@ -4057,6 +5074,14 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "silverface",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×12"
     }
   },
   {
@@ -4077,6 +5102,14 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#3a3a3e",
+      "grille": "silverface",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×12"
     }
   },
   {
@@ -4097,6 +5130,14 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#26324a",
+      "grille": "blackweave",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×12"
     }
   },
   {
@@ -4117,6 +5158,14 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "tweed",
+      "grille": "oxblood",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×10"
     }
   },
   {
@@ -4137,6 +5186,15 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12",
+      "piping": "#c8a850"
     }
   },
   {
@@ -4157,6 +5215,15 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "basket",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12",
+      "piping": "#c8a850"
     }
   },
   {
@@ -4177,6 +5244,15 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12",
+      "piping": "#c8a850"
     }
   },
   {
@@ -4197,6 +5273,15 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "basket",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12",
+      "piping": "#c8a850"
     }
   },
   {
@@ -4217,6 +5302,14 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12"
     }
   },
   {
@@ -4237,6 +5330,14 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12"
     }
   },
   {
@@ -4257,6 +5358,14 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12"
     }
   },
   {
@@ -4277,6 +5386,14 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12"
     }
   },
   {
@@ -4297,6 +5414,14 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12"
     }
   },
   {
@@ -4317,6 +5442,14 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12"
     }
   },
   {
@@ -4337,6 +5470,14 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "orangeweave",
+      "grille": "basket",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12"
     }
   },
   {
@@ -4357,6 +5498,15 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12",
+      "piping": "#4a70b8"
     }
   },
   {
@@ -4377,6 +5527,14 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "basket",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12"
     }
   },
   {
@@ -4397,6 +5555,14 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "wheat",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12"
     }
   },
   {
@@ -4417,6 +5583,14 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12"
     }
   },
   {
@@ -4437,6 +5611,14 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12"
     }
   },
   {
@@ -4457,6 +5639,14 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12"
     }
   },
   {
@@ -4477,6 +5667,15 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12",
+      "piping": "#c8a850"
     }
   },
   {
@@ -4497,6 +5696,14 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12"
     }
   },
   {
@@ -4517,6 +5724,14 @@
     "art": {
       "x": 38,
       "w": 84
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×15"
     }
   },
   {
@@ -4537,6 +5752,14 @@
     "art": {
       "x": 38,
       "w": 84
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×15"
     }
   },
   {
@@ -4557,6 +5780,14 @@
     "art": {
       "x": 38,
       "w": 84
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×15"
     }
   },
   {
@@ -4577,6 +5808,14 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×10"
     }
   },
   {
@@ -4597,6 +5836,14 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×10"
     }
   },
   {
@@ -4617,6 +5864,14 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×10"
     }
   },
   {
@@ -4637,6 +5892,15 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×10",
+      "piping": "#c8c8cc"
     }
   },
   {
@@ -4657,6 +5921,14 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×10"
     }
   },
   {
@@ -4677,6 +5949,14 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12"
     }
   },
   {
@@ -4697,6 +5977,15 @@
     "art": {
       "x": 26,
       "w": 108
+    },
+    "look": {
+      "kind": "cab",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "cols": 2,
+      "rows": 4,
+      "size": "8×10",
+      "piping": "#c8c8cc"
     }
   },
   {
@@ -4717,6 +6006,9 @@
     "art": {
       "x": 58,
       "w": 44
+    },
+    "look": {
+      "kind": "acoustic"
     }
   },
   {
@@ -4737,6 +6029,9 @@
     "art": {
       "x": 58,
       "w": 44
+    },
+    "look": {
+      "kind": "acoustic"
     }
   },
   {
@@ -4757,6 +6052,9 @@
     "art": {
       "x": 58,
       "w": 44
+    },
+    "look": {
+      "kind": "acoustic"
     }
   },
   {
@@ -4777,6 +6075,9 @@
     "art": {
       "x": 58,
       "w": 44
+    },
+    "look": {
+      "kind": "acoustic"
     }
   },
   {
@@ -4797,6 +6098,9 @@
     "art": {
       "x": 58,
       "w": 44
+    },
+    "look": {
+      "kind": "acoustic"
     }
   },
   {
@@ -4817,6 +6121,9 @@
     "art": {
       "x": 58,
       "w": 44
+    },
+    "look": {
+      "kind": "acoustic"
     }
   },
   {
@@ -4837,6 +6144,9 @@
     "art": {
       "x": 58,
       "w": 44
+    },
+    "look": {
+      "kind": "acoustic"
     }
   },
   {
@@ -4857,6 +6167,9 @@
     "art": {
       "x": 58,
       "w": 44
+    },
+    "look": {
+      "kind": "acoustic"
     }
   },
   {
@@ -4877,6 +6190,9 @@
     "art": {
       "x": 58,
       "w": 44
+    },
+    "look": {
+      "kind": "acoustic"
     }
   },
   {
@@ -4897,6 +6213,9 @@
     "art": {
       "x": 58,
       "w": 44
+    },
+    "look": {
+      "kind": "acoustic"
     }
   },
   {
@@ -4917,6 +6236,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -4937,6 +6259,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -4957,6 +6283,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -4977,6 +6307,9 @@
     "art": {
       "x": 32,
       "w": 96
+    },
+    "look": {
+      "kind": "tape"
     }
   },
   {
@@ -4997,6 +6330,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -5017,6 +6353,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -5037,6 +6376,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -5057,6 +6400,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -5077,6 +6423,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -5097,6 +6446,9 @@
     "art": {
       "x": 32,
       "w": 96
+    },
+    "look": {
+      "kind": "tape"
     }
   },
   {
@@ -5117,6 +6469,9 @@
     "art": {
       "x": 32,
       "w": 96
+    },
+    "look": {
+      "kind": "tape"
     }
   },
   {
@@ -5137,6 +6492,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "mxr"
     }
   },
   {
@@ -5157,6 +6516,9 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "rack"
     }
   },
   {
@@ -5177,6 +6539,9 @@
     "art": {
       "x": 6,
       "w": 148
+    },
+    "look": {
+      "kind": "rack"
     }
   },
   {
@@ -5197,6 +6562,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -5217,6 +6586,10 @@
     "art": {
       "x": 55.6,
       "w": 48.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "std"
     }
   },
   {
@@ -5237,6 +6610,9 @@
     "art": {
       "x": 32,
       "w": 96
+    },
+    "look": {
+      "kind": "tape"
     }
   },
   {
@@ -5257,6 +6633,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -5277,6 +6656,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -5297,6 +6679,10 @@
     "art": {
       "x": 47.6,
       "w": 64.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "big"
     }
   },
   {
@@ -5317,6 +6703,10 @@
     "art": {
       "x": 47.6,
       "w": 64.8
+    },
+    "look": {
+      "kind": "stomp",
+      "shape": "big"
     }
   },
   {
@@ -5337,6 +6727,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -5357,6 +6750,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -5377,6 +6773,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -5397,6 +6796,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -5417,6 +6819,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -5437,6 +6842,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -5457,6 +6865,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -5477,6 +6888,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -5497,6 +6911,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -5517,6 +6934,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -5537,6 +6957,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -5557,6 +6980,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -5577,6 +7003,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -5597,6 +7026,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -5617,6 +7049,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -5637,6 +7072,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -5657,6 +7095,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -5677,6 +7118,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   },
   {
@@ -5697,6 +7141,9 @@
     "art": {
       "x": 51,
       "w": 58
+    },
+    "look": {
+      "kind": "util"
     }
   }
 ]

@@ -1,0 +1,623 @@
+/* ════════════════════════════════════════════════════════════════════════
+   Gear realism: amp heads, speaker cabinets, rocker treadles and metal-switch
+   stompboxes (see pedalLook.ts). Layered on top of board.css: every selector
+   here adds a `.form-*` class, so it out-specifies the base `.pedal` rules
+   without touching them.
+
+   Finishes come from the generated manifest (`look`): tolex and grille cloth
+   are pattern classes on the article, solid colors arrive as --tolex/--piping.
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* ── finishes: tolex ── */
+.board-view .pedal.tolex-solid {
+  background:
+    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.06) 1px, transparent 1.4px) 0 0 / 4px 4px,
+    radial-gradient(circle at 3px 2px, rgba(0, 0, 0, 0.32) 1px, transparent 1.5px) 0 0 / 5px 5px,
+    linear-gradient(180deg, color-mix(in srgb, var(--tolex) 88%, white), color-mix(in srgb, var(--tolex) 82%, black));
+}
+.board-view .pedal.tolex-tweed {
+  background:
+    repeating-linear-gradient(45deg, rgba(90, 60, 20, 0.35) 0 2px, transparent 2px 5px),
+    repeating-linear-gradient(-45deg, rgba(255, 240, 200, 0.18) 0 1px, transparent 1px 4px),
+    linear-gradient(180deg, #cdb07a, #a88550);
+}
+.board-view .pedal.tolex-orangeweave {
+  background:
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.12) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, #e2761c, #b85810);
+}
+.board-view .pedal.tolex-bluecheck {
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0 2px, transparent 2px 6px),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.22) 0 2px, transparent 2px 6px),
+    linear-gradient(180deg, #34508e, #22386a);
+}
+
+/* ── finishes: grille cloth (consumed by .amp-grille / .cab-baffle) ── */
+.board-view .grille-blackweave {
+  --grille:
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.07) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 3px),
+    #141416;
+}
+.board-view .grille-silverface {
+  --grille:
+    repeating-linear-gradient(90deg, rgba(40, 70, 140, 0.35) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.18) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, #cfd2d6, #a9adb3);
+}
+.board-view .grille-oxblood {
+  --grille:
+    repeating-linear-gradient(90deg, rgba(230, 190, 120, 0.22) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.25) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, #6a2a22, #4a1a14);
+}
+.board-view .grille-metalgrid {
+  --grille:
+    radial-gradient(circle, #050505 1.3px, transparent 1.6px) 0 0 / 6px 6px,
+    linear-gradient(180deg, #5a5c61, #35373b);
+}
+.board-view .grille-basket {
+  --grille:
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.35) 0 3px, transparent 3px 6px),
+    repeating-linear-gradient(90deg, rgba(255, 240, 210, 0.22) 0 3px, transparent 3px 6px),
+    linear-gradient(180deg, #d8ccb0, #b4a684);
+}
+.board-view .grille-wheat {
+  --grille:
+    repeating-linear-gradient(90deg, rgba(120, 90, 40, 0.28) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.12) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, #d8c9a4, #b8a67c);
+}
+.board-view .grille-cane {
+  --grille:
+    repeating-linear-gradient(45deg, rgba(90, 60, 20, 0.45) 0 2px, transparent 2px 7px),
+    repeating-linear-gradient(-45deg, rgba(90, 60, 20, 0.45) 0 2px, transparent 2px 7px),
+    linear-gradient(180deg, #d4b884, #b09260);
+}
+.board-view .grille-diamond {
+  --grille:
+    repeating-linear-gradient(60deg, rgba(220, 180, 110, 0.35) 0 1px, transparent 1px 9px),
+    repeating-linear-gradient(-60deg, rgba(220, 180, 110, 0.35) 0 1px, transparent 1px 9px),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, #5a4632, #3e2f20);
+}
+
+/* ── shared hardware: corner protectors + carry handle ── */
+.board-view .corner {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  z-index: 3;
+  background: radial-gradient(circle at 35% 35%, #f2f2f2, #8d8f94 55%, #4a4b4f);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+}
+.board-view .corner.tl { top: -3px; left: -3px; border-radius: 6px 3px 3px 3px; }
+.board-view .corner.tr { top: -3px; right: -3px; border-radius: 3px 6px 3px 3px; }
+.board-view .corner.bl { bottom: -3px; left: -3px; border-radius: 3px 3px 3px 6px; }
+.board-view .corner.br { bottom: -3px; right: -3px; border-radius: 3px 3px 6px 3px; }
+
+.board-view .gear-handle {
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30%;
+  height: 15px;
+  border-radius: 10px 10px 3px 3px;
+  background: linear-gradient(180deg, #2b2b2e, #0e0e10);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 2px 3px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}
+.board-view .gear-handle::before,
+.board-view .gear-handle::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  width: 14px;
+  height: 7px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #c9c9cd, #6d6e73);
+}
+.board-view .gear-handle::before { left: -9px; }
+.board-view .gear-handle::after { right: -9px; }
+
+/* ── power / standby switch: the bypass for amps and cabs ──
+   One button holding the pilot jewel and the toggle bat, so clicking either
+   toggles. The bat is up when the block is live, down on standby. */
+.board-view .gear-power {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 4px;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  color: inherit;
+}
+.board-view .gear-power:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+.board-view .gear-power .p-led.jewel {
+  margin: 0;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #b9babf;
+  background: radial-gradient(circle at 40% 35%, #4a1a12, #1a0806 80%);
+  box-shadow: inset 0 0 2px #000;
+}
+.board-view .gear-power .p-led.jewel.on {
+  background: radial-gradient(
+    circle at 40% 35%,
+    color-mix(in srgb, var(--lamp, var(--led)) 30%, white),
+    var(--lamp, var(--led)) 45%,
+    color-mix(in srgb, var(--lamp, var(--led)) 40%, black) 85%
+  );
+  box-shadow:
+    0 0 10px 3px color-mix(in srgb, var(--lamp, var(--led)) 60%, transparent),
+    inset 0 0 2px #000;
+}
+.board-view .gear-power .lever {
+  position: relative;
+  width: 12px;
+  height: 20px;
+}
+.board-view .gear-power .lever::before {
+  /* mounting nut */
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 5px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #e0e0e4, #6a6b70);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+.board-view .gear-power .lever::after {
+  /* bat */
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 11px;
+  width: 4px;
+  height: 10px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #8c8d92, #f2f2f4, #8c8d92);
+  transition: top 0.12s ease;
+}
+.board-view .gear-power.on .lever::after {
+  top: -1px;
+}
+.board-view .gear-power .lever-label {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+/* ════════════════════════════════ AMP HEAD ════════════════════════════════ */
+.board-view .pedal.form-amp {
+  width: 380px;
+  margin-top: 16px; /* headroom for the handle */
+  border-radius: 7px;
+  padding: 26px 12px 12px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.35),
+    var(--pedal-shadow);
+}
+.board-view .pedal.form-amp::before,
+.board-view .pedal.form-amp::after,
+.board-view .pedal.form-cab::before,
+.board-view .pedal.form-cab::after {
+  border-radius: inherit;
+}
+.board-view .pedal-bay:has(> .pedal.form-amp) {
+  width: 390px;
+}
+
+/* the front baffle: grille cloth behind the logo plate */
+.board-view .form-amp .amp-face {
+  position: relative;
+  min-height: 66px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 10px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.board-view .form-amp .amp-grille {
+  position: absolute;
+  inset: 0;
+  background: var(--grille);
+  border-radius: inherit;
+  box-shadow:
+    inset 0 0 0 2px var(--piping, rgba(0, 0, 0, 0.45)),
+    inset 0 3px 8px rgba(0, 0, 0, 0.5);
+}
+.board-view .form-amp.no-piping .amp-grille {
+  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.45), inset 0 3px 8px rgba(0, 0, 0, 0.5);
+}
+.board-view .form-amp .p-name {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  max-width: 100%;
+}
+.board-view .form-amp .p-name-btn {
+  width: auto;
+  max-width: 100%;
+  padding: 2px 12px;
+  border-radius: 3px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: none;
+  color: #f1ede4;
+  text-shadow: 0 1px 0 #000, 0 0 6px rgba(0, 0, 0, 0.6);
+  background: linear-gradient(180deg, rgba(20, 20, 22, 0.78), rgba(8, 8, 10, 0.86));
+  border-color: rgba(255, 255, 255, 0.14);
+}
+.board-view .form-amp .p-name-btn:hover,
+.board-view .form-amp .p-name-btn:focus-visible {
+  border-color: var(--accent);
+  background: rgba(8, 8, 10, 0.92);
+}
+.board-view .form-amp .p-desc {
+  position: relative;
+  margin: 0;
+  max-width: 100%;
+  padding: 1px 8px;
+  border-radius: 2px;
+  font-size: 10px;
+  color: #dedbd4;
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+/* the control panel runs the full width, like the real front panel */
+.board-view .form-amp .amp-panel-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  --ink: var(--panel-text, #e8e8e8);
+  color: var(--ink);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 35%),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 2px),
+    linear-gradient(180deg, color-mix(in srgb, var(--panel, #26282c) 92%, white), var(--panel, #26282c));
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 -2px 4px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+.board-view .form-amp.panel-plate .amp-panel-row {
+  background:
+    repeating-linear-gradient(45deg, transparent 0 7px, rgba(255, 255, 255, 0.45) 7px 9px, transparent 9px 14px),
+    repeating-linear-gradient(-45deg, transparent 0 7px, rgba(0, 0, 0, 0.22) 7px 9px, transparent 9px 14px),
+    linear-gradient(180deg, #d4d7db, #9a9ea4);
+}
+.board-view .form-amp .controls.amp-panel {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  gap: 4px 0;
+  background: none;
+  border: 0;
+  box-shadow: none;
+}
+.board-view .form-amp .knob {
+  width: 44px;
+}
+.board-view .form-amp .knob svg {
+  width: 40px;
+  height: 40px;
+}
+/* chips sit on the tolex band above the baffle */
+.board-view .form-amp .module-chip,
+.board-view .form-amp .chain-num {
+  top: 7px;
+}
+.board-view .form-amp .p-off-tag {
+  /* on the grille, clear of the logo plate and the panel */
+  top: 26%;
+  left: auto;
+  right: 18px;
+  transform: rotate(-6deg);
+}
+
+/* ═══════════════════════════════ CABINET ═══════════════════════════════ */
+.board-view .pedal.form-cab {
+  width: 172px;
+  border-radius: 6px;
+  padding: 26px 9px 10px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.35),
+    var(--pedal-shadow);
+}
+.board-view .form-cab .cab-baffle {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), 1fr);
+  grid-template-rows: repeat(var(--rows), 1fr);
+  place-items: center;
+  width: 100%;
+  aspect-ratio: calc(var(--cols) + 0.6) / calc(var(--rows) + 0.6);
+  padding: 6px;
+  border-radius: 4px;
+  background: var(--grille);
+  box-shadow:
+    inset 0 0 0 2px var(--piping, rgba(0, 0, 0, 0.45)),
+    inset 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+.board-view .form-cab.no-piping .cab-baffle {
+  box-shadow: inset 0 0 0 3px rgba(0, 0, 0, 0.45), inset 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+/* speakers read faintly through the cloth */
+.board-view .form-cab .cab-speaker {
+  width: 88%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 0.5) 0 11%,
+    rgba(0, 0, 0, 0.22) 12% 56%,
+    rgba(0, 0, 0, 0.12) 57% 68%,
+    rgba(255, 255, 255, 0.07) 69% 72%,
+    transparent 73%
+  );
+  pointer-events: none;
+}
+.board-view .form-cab.cab-acoustic .cab-speaker {
+  width: 62%;
+  background: radial-gradient(circle, #120c06 0 55%, #3a2412 56% 62%, transparent 63%);
+}
+.board-view .form-cab .cab-badge {
+  position: absolute;
+  top: 34px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  max-width: 88%;
+}
+.board-view .form-cab .p-name {
+  margin: 0;
+  max-width: 100%;
+}
+.board-view .form-cab .p-name-btn {
+  width: auto;
+  max-width: 100%;
+  padding: 2px 8px;
+  border-radius: 2px;
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: #eceae4;
+  background: rgba(8, 8, 10, 0.72);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+.board-view .form-cab .p-name-btn:hover,
+.board-view .form-cab .p-name-btn:focus-visible {
+  border-color: var(--accent);
+  background: rgba(8, 8, 10, 0.9);
+}
+.board-view .form-cab .cab-size {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #d8d6d0;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 0 5px;
+  border-radius: 2px;
+}
+/* mic / IR strip under the cab carries the three cab controls */
+.board-view .form-cab .cab-tray {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-top: 8px;
+  padding: 4px 4px;
+  border-radius: 5px;
+  /* the tray is always dark metal, whatever the tolex: re-point the ink the
+     knob labels, values and switch read from */
+  --ink: #e4e4e6;
+  color: var(--ink);
+  background: linear-gradient(180deg, #2c2e32, #1a1b1e);
+  border: 1px solid #3a3c42;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 2px 5px rgba(0, 0, 0, 0.45);
+}
+.board-view .form-cab .controls.cab-controls {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  gap: 2px 0;
+}
+.board-view .form-cab .knob {
+  width: 38px;
+}
+.board-view .form-cab .knob svg {
+  width: 34px;
+  height: 34px;
+}
+.board-view .form-cab .k-label {
+  font-size: 7.5px;
+}
+.board-view .form-cab .k-value {
+  font-size: 9px;
+}
+.board-view .form-cab .p-desc {
+  margin: 6px 2px 0;
+}
+.board-view .form-cab .module-chip,
+.board-view .form-cab .chain-num {
+  top: 7px;
+}
+
+/* ════════════════════════════ ROCKER TREADLE ════════════════════════════ */
+.board-view .pedal.form-rocker {
+  width: 150px;
+  border-radius: 20px 20px 12px 12px;
+  padding: 24px 10px 12px;
+  background:
+    linear-gradient(120deg, rgba(255, 255, 255, 0.18), transparent 40%),
+    linear-gradient(180deg, var(--body), var(--body-deep));
+}
+.board-view .pedal.form-rocker::before,
+.board-view .pedal.form-rocker::after {
+  border-radius: inherit;
+}
+.board-view .form-rocker .rocker-plate {
+  display: block;
+  width: 100%;
+  height: 124px;
+  padding: 0;
+  border-radius: 14px 14px 6px 6px;
+  border: 1px solid #070708;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent 25%),
+    repeating-linear-gradient(0deg, #1b1b1d 0 3px, #2e2f33 3px 6px);
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.14), 0 6px 10px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  transform-origin: 50% 100%;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+/* toe-down press: the plate rocks forward */
+.board-view .form-rocker .rocker-plate:active {
+  transform: perspective(320px) rotateX(7deg);
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.08), 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+.board-view .form-rocker .rocker-plate:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.board-view .form-rocker .rocker-toe {
+  position: absolute;
+  top: 36px;
+  left: 24px;
+  right: 24px;
+  z-index: 4;
+}
+.board-view .form-rocker .p-name {
+  margin: 0;
+}
+.board-view .form-rocker .p-name-btn {
+  padding: 5px 4px;
+  border-radius: 5px;
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: #1c1c1e;
+  background: linear-gradient(180deg, #e2e4e8, #9a9da3);
+  border-color: rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+.board-view .form-rocker .p-name-btn:hover,
+.board-view .form-rocker .p-name-btn:focus-visible {
+  border-color: var(--accent);
+  background: linear-gradient(180deg, #f2f3f5, #b0b3b8);
+}
+.board-view .form-rocker .p-led {
+  margin: 8px auto 2px;
+}
+.board-view .form-rocker .controls {
+  margin: 4px 0 4px;
+}
+.board-view .form-rocker .knob {
+  width: 42px;
+}
+.board-view .form-rocker .knob svg {
+  width: 36px;
+  height: 36px;
+}
+.board-view .form-rocker .module-chip,
+.board-view .form-rocker .chain-num {
+  top: 7px;
+}
+.board-view .form-rocker .p-off-tag {
+  top: 30%;
+}
+
+/* ═════════════════════════════ STOMPBOX ═════════════════════════════ */
+/* die-cast enclosure: softer gloss, bevelled edge, no fake brand strip */
+.board-view .pedal.form-stomp {
+  padding-bottom: 14px;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.22),
+    inset 2px 0 0 rgba(255, 255, 255, 0.08),
+    inset -2px 0 0 rgba(0, 0, 0, 0.12),
+    var(--pedal-shadow);
+}
+.board-view .pedal.form-stomp::before {
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0.12), transparent 38%);
+}
+/* compact 1590B-style box */
+.board-view .pedal.form-stomp.shape-mxr {
+  width: 140px;
+  border-radius: 7px;
+}
+.board-view .pedal.form-stomp.shape-mxr::before,
+.board-view .pedal.form-stomp.shape-mxr::after {
+  border-radius: 7px;
+}
+/* big-box and round (fuzz-face) enclosures get a fuller radius */
+.board-view .pedal.form-stomp.shape-round,
+.board-view .pedal.form-stomp.shape-round::before,
+.board-view .pedal.form-stomp.shape-round::after {
+  border-radius: 30px 30px 22px 22px;
+}
+/* metal stomp switch on a hex-nut collar */
+.board-view .stomp-round.stomp-metal {
+  width: 36px;
+  height: 36px;
+  margin: 6px auto 4px;
+  background: radial-gradient(circle at 38% 32%, #fbfbfc, #b1b4b9 42%, #5a5c61 78%);
+  border: 1px solid #1a1b1d;
+  box-shadow:
+    0 0 0 5px #75777c,
+    0 0 0 6px #3a3b3f,
+    0 0 0 7px rgba(0, 0, 0, 0.35),
+    inset 0 -3px 5px rgba(0, 0, 0, 0.4),
+    inset 0 2px 2px rgba(255, 255, 255, 0.6),
+    0 6px 9px rgba(0, 0, 0, 0.5);
+}
+.board-view .stomp-round.stomp-metal:active {
+  transform: translateY(1px) scale(0.97);
+}
+.board-view .stomp-round.stomp-metal:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 8px;
+}
+
+/* ── touch: the reorder arrows need a strip at the bottom of every form ── */
+@media (pointer: coarse) {
+  .board-view .pedal.form-amp,
+  .board-view .pedal.form-cab,
+  .board-view .pedal.form-rocker,
+  .board-view .pedal.form-stomp {
+    padding-bottom: 50px;
+  }
+}
