@@ -1,0 +1,252 @@
+/* ════════════════════════════════════════════════════════════════════════
+   Studio Rack skin (design option A).
+
+   The board chrome as studio hardware: brushed-aluminium top bar and deck with
+   walnut end cheeks, an amber plasma display for the patch name, machined
+   buttons, and a black loop-carpet pedalboard on aluminium rails. Daylight
+   (the light theme) is the same hardware in satin silver on grey carpet.
+
+   Colors come from the stage tokens in src/index.css; textures from
+   src/styles/materials.css. Every rule is written as `:root .board-view …`:
+   this file is imported from index.css, so it lands BEFORE board.css in the
+   cascade, and the extra :root is what lets it win without !important.
+   ════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* brushed-metal chrome: gradient ends under the brush texture */
+  --chrome-hi: #d9dbdf;
+  --chrome-lo: #b3b6bb;
+  /* machined button face */
+  --btn-hi: #f7f8f9;
+  --btn-lo: #d3d5d9;
+  --btn-edge: #7c8086;
+  /* aluminium rails under the carpet, and the board frame */
+  --rail: rgba(255, 255, 255, 0.22);
+  --rail-shade: rgba(0, 0, 0, 0.35);
+  --frame: #a9acb1;
+  /* the display glass is black in both themes; only its glow warms */
+  --display-bg: #0b0a08;
+  --display-ink: #ffb347;
+  --display-glow: rgba(255, 170, 60, 0.55);
+  --gold-hi: #f2d38a;
+  --gold-lo: #c79a3c;
+  --gold-ink: #1b1204;
+  /* ink for the IN/OUT markers and cable-stub labels printed on the carpet */
+  --board-ink: #eceef0;
+}
+:root[data-theme='dark'],
+.theme-dark {
+  --chrome-hi: #3d3f44;
+  --chrome-lo: #25272a;
+  --btn-hi: #494b50;
+  --btn-lo: #2a2b2f;
+  --btn-edge: #0e0f11;
+  --rail: rgba(255, 255, 255, 0.11);
+  --rail-shade: rgba(0, 0, 0, 0.7);
+  --frame: #2a2b2e;
+  --board-ink: #cbc6bb;
+}
+
+/* ── room ── */
+:root .board-view {
+  background: var(--tex-grain), var(--case);
+}
+
+/* ── brushed chrome: top bar + control deck ── */
+:root .board-view .board-topbar,
+:root .board-view .deck {
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.22), transparent 3%, transparent 97%, rgba(0, 0, 0, 0.22)),
+    var(--tex-brush),
+    linear-gradient(180deg, var(--chrome-hi), var(--chrome-lo));
+  border: 1px solid var(--chrome-border);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.35),
+    0 3px 6px rgba(0, 0, 0, 0.35),
+    0 14px 30px rgba(0, 0, 0, 0.3);
+}
+/* walnut end cheeks, like a mixing desk */
+:root .board-view .board-topbar {
+  border-radius: 6px;
+  padding-left: 26px;
+  padding-right: 26px;
+}
+:root .board-view .board-topbar::before,
+:root .board-view .board-topbar::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  bottom: -1px;
+  width: 14px;
+  background: var(--tex-walnut), #5a3a22;
+  pointer-events: none;
+}
+:root .board-view .board-topbar::before {
+  left: -1px;
+  border-radius: 6px 0 0 6px;
+  box-shadow: inset -2px 0 3px rgba(0, 0, 0, 0.5), inset 1px 0 0 rgba(255, 255, 255, 0.12);
+}
+:root .board-view .board-topbar::after {
+  right: -1px;
+  border-radius: 0 6px 6px 0;
+  box-shadow: inset 2px 0 3px rgba(0, 0, 0, 0.5), inset -1px 0 0 rgba(255, 255, 255, 0.12);
+}
+:root .board-view .deck {
+  border-radius: 8px;
+}
+
+/* ── machined buttons ── */
+:root .board-view .deck-btn {
+  font-family: var(--font-condensed), var(--font-dm-sans), sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 4px;
+  background: linear-gradient(180deg, var(--btn-hi), var(--btn-lo));
+  border: 1px solid var(--btn-edge);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 2px 3px rgba(0, 0, 0, 0.45);
+  transition: box-shadow 0.08s ease, transform 0.08s ease, filter 0.1s ease;
+}
+:root .board-view .deck-btn:hover:not(:disabled) {
+  border-color: var(--btn-edge);
+  filter: brightness(1.08);
+}
+:root .board-view .deck-btn:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.45);
+}
+:root .board-view .deck-btn.primary {
+  background: linear-gradient(180deg, var(--gold-hi), var(--gold-lo));
+  color: var(--gold-ink);
+  border-color: #6a4c10;
+}
+:root .board-view .deck-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ── the patch display: amber plasma behind black glass ── */
+:root .board-view .deck-patch-well {
+  padding: 5px 12px;
+  border-radius: 3px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(255, 180, 80, 0.12), transparent 60%),
+    var(--display-bg);
+  box-shadow:
+    inset 0 2px 6px rgba(0, 0, 0, 0.9),
+    0 0 0 2px #1a1a1c,
+    0 0 0 3px color-mix(in srgb, var(--chrome-lo) 60%, #888);
+}
+:root .board-view .deck-patch-well .deck-name {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--display-ink);
+  text-shadow: 0 0 8px var(--display-glow);
+}
+:root .board-view .deck-patch-well .deck-name.editable:hover {
+  color: #ffd08a;
+}
+:root .board-view .deck-patch-well .deck-slot {
+  color: color-mix(in srgb, var(--display-ink) 60%, transparent);
+  text-shadow: 0 0 6px var(--display-glow);
+}
+
+/* ── strips under the top bar ── */
+:root .board-view .chain-strip,
+:root .board-view .info-bar {
+  background: var(--tex-grain), var(--strip-bg);
+}
+:root .board-view .chain-strip .strip-lbl,
+:root .board-view .deck-vol-lbl,
+:root .board-view .deck-live .dl-lbl {
+  font-family: var(--font-condensed), sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+}
+/* chain chips: machined tabs in each pedal's own color */
+:root .board-view .chain-node {
+  border-radius: 3px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 45%, rgba(0, 0, 0, 0.18)),
+    var(--body, #444);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 1px 2px rgba(0, 0, 0, 0.45);
+}
+
+/* ── the pedalboard: loop carpet over aluminium rails, in a metal frame ── */
+:root .board-view .board-deck {
+  border-radius: 8px;
+  padding: 20px 26px 18px;
+  background:
+    repeating-linear-gradient(
+      180deg,
+      transparent 0 116px,
+      var(--rail-shade) 116px 120px,
+      var(--rail) 120px 122px,
+      transparent 122px 126px
+    ),
+    var(--tex-carpet),
+    linear-gradient(180deg, var(--board-top), var(--board));
+  border: 1px solid var(--board-edge);
+  box-shadow:
+    inset 0 0 0 8px var(--frame),
+    inset 0 1px 0 8px color-mix(in srgb, var(--frame) 70%, white),
+    inset 0 0 0 9px rgba(0, 0, 0, 0.6),
+    inset 0 14px 30px rgba(0, 0, 0, 0.5),
+    0 10px 26px rgba(0, 0, 0, 0.45);
+}
+
+/* the carpet is mid/dark grey in both themes, so its printed labels are light */
+:root .board-view .board-deck {
+  --stub-ink: var(--board-ink);
+}
+
+/* ── level meters: LED ladder instead of a flat bar ── */
+:root .board-view .deck-live .dl-track {
+  border-radius: 2px;
+  background: #0b0b0c;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(0, 0, 0, 0.4);
+}
+:root .board-view .deck-live .dl-fill {
+  border-radius: 0;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 5px, rgba(0, 0, 0, 0.55) 5px 6px),
+    linear-gradient(90deg, #2fbf5c 0 60%, #e2c02a 60% 82%, #e0452f 82%);
+  background-size: auto, 72px 100%;
+}
+:root .board-view .deck-vol-slider {
+  accent-color: var(--accent);
+}
+
+/* ── condensed faceplate type on the gear names ── */
+:root .board-view .pedal.form-stomp .p-name-btn,
+:root .board-view .pedal.form-cab .p-name-btn,
+:root .board-view .pedal.form-rocker .p-name-btn {
+  font-family: var(--font-condensed), var(--font-dm-sans), sans-serif;
+}
+:root .board-view .pedal.form-stomp .p-name-btn {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+:root .board-view .pedal.form-stomp.wide .p-name-btn {
+  font-size: 22px;
+}
+:root .board-view .pedal.form-cab .p-name-btn,
+:root .board-view .pedal.form-rocker .p-name-btn {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* ── dialogs and sheets pick up the brushed chrome ── */
+:root [aria-modal='true'].shadow-card {
+  background-image:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 40%),
+    var(--tex-grain);
+}
