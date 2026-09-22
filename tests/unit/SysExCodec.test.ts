@@ -192,6 +192,22 @@ describe('SysExCodec: parseReadChunks', () => {
     expect(preset.effects[3].params[0]).toBeCloseTo(30.0, 4);
   });
 
+  it('normalizes non-finite values in unused device parameter slots', () => {
+    const decoded = buildDecodedPreset('Angry Bass', 95);
+    const view = new DataView(decoded.buffer);
+    view.setFloat32(120 + 1 * 72 + 12 + 4 * 4, NaN, true);
+    view.setFloat32(120 + 3 * 72 + 12 + 5 * 4, Infinity, true);
+    view.setFloat32(120 + 3 * 72 + 12 + 6 * 4, -Infinity, true);
+    view.setFloat32(120 + 3 * 72 + 12 + 7 * 4, 12.5, true);
+
+    const preset = SysExCodec.parseReadChunks(buildFakeChunks(decoded, 95));
+
+    expect(preset.patchName).toBe('Angry Bass');
+    expect(preset.effects[1].params[4]).toBe(0);
+    expect(preset.effects[3].params.slice(5, 7)).toEqual([0, 0]);
+    expect(preset.effects[3].params[7]).toBe(12.5);
+  });
+
   it('sets checksum to 0 (SysEx has no checksum)', () => {
     const decoded = buildDecodedPreset('Test', 0);
     const chunks = buildFakeChunks(decoded, 0);
@@ -1077,12 +1093,77 @@ describe('SysExCodec: buildEffectChange', () => {
     expect(msg3[46]).toBe(0x0C);
   });
 
+  it('encodes the User-IR subcategory at bytes[49:50]', () => {
+    const msg = SysExCodec.buildEffectChange(5, 0x0A100007);
+    expect(msg[45]).toBe(0x00);
+    expect(msg[46]).toBe(0x07);
+    expect(msg[49]).toBe(0x01);
+    expect(msg[50]).toBe(0x00);
+    expect(msg[52]).toBe(0x0A);
+  });
+
+  it('keeps the subcategory zeroed for ordinary effects', () => {
+    const msg = SysExCodec.buildEffectChange(5, 0x0A000010);
+    expect(msg[49]).toBe(0x00);
+    expect(msg[50]).toBe(0x00);
+  });
+
   it('uses bottom 8 bits of effectId as variant', () => {
     // Ensure consistent with response parsing: effectId = (module<<24) | variant
     const msg = SysExCodec.buildEffectChange(2, 0x04000003); // MOD Chorus
     const variant = (msg[45] << 4) | msg[46];
     expect(variant).toBe(3);
     expect(msg[52]).toBe(0x04); // MOD module
+  });
+});
+
+describe('SysExCodec: parseEffectChangeNotification', () => {
+  function notification(
+    blockIndex: number,
+    effectId: number,
+  ): Uint8Array {
+    const message = new Uint8Array(38);
+    message.set([0xF0, 0x21, 0x25, 0x7E, 0x47, 0x50, 0x2D, 0x32, 0x12, 0x0C]);
+    message[22] = blockIndex;
+    const variant = effectId & 0xFF;
+    const subcategory = (effectId >>> 16) & 0xFF;
+    message[29] = variant >>> 4;
+    message[30] = variant & 0x0F;
+    message[33] = subcategory >>> 4;
+    message[34] = subcategory & 0x0F;
+    message[36] = effectId >>> 24;
+    message[37] = 0xF7;
+    return message;
+  }
+
+  it('preserves the User-IR subcategory from the device acknowledgement', () => {
+    expect(SysExCodec.parseEffectChangeNotification(notification(5, 0x0A100007))).toEqual({
+      blockIndex: 5,
+      effectId: 0x0A100007,
+    });
+  });
+
+  it('still decodes ordinary effect acknowledgements', () => {
+    expect(SysExCodec.parseEffectChangeNotification(notification(3, 0x07000055))).toEqual({
+      blockIndex: 3,
+      effectId: 0x07000055,
+    });
+  });
+
+  it('rejects malformed nibble fields instead of inventing an effect id', () => {
+    const message = notification(5, 0x0A100007);
+    message[33] = 0x10;
+    expect(SysExCodec.parseEffectChangeNotification(message)).toBeNull();
+  });
+
+  it('reads a saved style from the same first chunk and rejects non-first chunks', () => {
+    const decoded = buildDecodedPreset('Metal Rig', 0);
+    decoded[20] = 14; // Nu Metal
+    decoded[21] = 0;
+    const chunks = buildFakeChunks(decoded, 0);
+    expect(SysExCodec.parsePresetStyle(chunks[0])).toBe(14);
+    expect(SysExCodec.parsePresetStyle(chunks[1])).toBeNull();
+    expect(SysExCodec.parsePresetStyle(new Uint8Array(20))).toBeNull();
   });
 });
 

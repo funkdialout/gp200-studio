@@ -17,6 +17,7 @@ interface PedalEditorScreenProps {
   /** array position in the chain, for the "3 of 11" readout */
   index: number;
   chainLength: number;
+  userIrNames: string[];
   artIndex: ManifestIndex | null;
   onBack: () => void;
   onToggle: () => void;
@@ -36,6 +37,7 @@ export function PedalEditorScreen({
   slot,
   index,
   chainLength,
+  userIrNames,
   artIndex,
   onBack,
   onToggle,
@@ -161,6 +163,7 @@ export function PedalEditorScreen({
         open={pickerOpen}
         module={moduleName}
         currentEffectId={slot.effectId}
+        userIrNames={userIrNames}
         artIndex={artIndex}
         onSelect={(effectId) => {
           onChangeEffect(effectId);

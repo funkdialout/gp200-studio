@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react';
 import { SysExCodec } from '@/core/SysExCodec';
+import { PATCH_STYLES, patchStyleName } from '@/core/patchStyles';
 
 export interface PatchPickerProps {
   presetNames: (string | null)[];
+  presetStyles: (number | null)[];
   namesLoadProgress: number;
   currentSlot: number | null;
   /** single-select highlight (the anchor row) */
@@ -21,12 +23,13 @@ interface PatchRow {
   label: string;
   bank: number;
   name: string | null;
+  style: number | null;
 }
 
 interface BankCategory {
   bank: number;
-  /** how many slots in this bank have a known name */
-  named: number;
+  /** Named slots normally; matching slots when a style is selected. */
+  count: number;
 }
 
 interface BankGroup {
@@ -38,24 +41,25 @@ const ALL = -1;
 const TOTAL_SLOTS = 256;
 
 /** All 256 slots decorated with their bank + label. */
-function buildRows(presetNames: (string | null)[]): PatchRow[] {
+function buildRows(presetNames: (string | null)[], presetStyles: (number | null)[]): PatchRow[] {
   return Array.from({ length: TOTAL_SLOTS }, (_unused, slot) => ({
     slot,
     label: SysExCodec.slotToLabel(slot),
     bank: Math.floor(slot / 4) + 1,
     name: presetNames[slot] ?? null,
+    style: presetStyles[slot] ?? null,
   }));
 }
 
 /** One rail entry per bank, carrying its count of named slots. */
-function buildBankCategories(rows: PatchRow[]): BankCategory[] {
-  const named = new Map<number, number>();
+function buildBankCategories(rows: PatchRow[], countAll: boolean): BankCategory[] {
+  const counts = new Map<number, number>();
   for (const row of rows) {
-    if (row.name !== null) named.set(row.bank, (named.get(row.bank) ?? 0) + 1);
+    if (countAll || row.name !== null) counts.set(row.bank, (counts.get(row.bank) ?? 0) + 1);
   }
   return Array.from({ length: 64 }, (_unused, index) => {
     const bank = index + 1;
-    return { bank, named: named.get(bank) ?? 0 };
+    return { bank, count: counts.get(bank) ?? 0 };
   });
 }
 
@@ -94,6 +98,7 @@ function slotName(name: string | null, namesLoadProgress: number): string {
  */
 export function PatchPicker({
   presetNames,
+  presetStyles,
   namesLoadProgress,
   currentSlot,
   selected,
@@ -101,12 +106,21 @@ export function PatchPicker({
   onSelect,
   onActivate,
 }: PatchPickerProps) {
-  const rows = useMemo(() => buildRows(presetNames), [presetNames]);
-  const categories = useMemo(() => buildBankCategories(rows), [rows]);
-  const totalNamed = useMemo(
-    () => rows.filter((row) => row.name !== null).length,
-    [rows],
+  const rows = useMemo(() => buildRows(presetNames, presetStyles), [presetNames, presetStyles]);
+  const [styleFilter, setStyleFilter] = useState<number | null>(null);
+  const styleRows = useMemo(
+    () => styleFilter === null ? rows : rows.filter((row) => row.style === styleFilter),
+    [rows, styleFilter],
   );
+  const categories = useMemo(
+    () => buildBankCategories(styleRows, styleFilter !== null),
+    [styleRows, styleFilter],
+  );
+  const totalCount = useMemo(
+    () => styleFilter === null ? rows.filter((row) => row.name !== null).length : styleRows.length,
+    [rows, styleRows, styleFilter],
+  );
+  const stylesKnown = useMemo(() => rows.filter((row) => row.style !== null).length, [rows]);
 
   const [bank, setBank] = useState(ALL);
   const [query, setQuery] = useState('');
@@ -122,7 +136,7 @@ export function PatchPicker({
   }, []);
 
   const normalizedQuery = query.trim().toLowerCase();
-  const visibleRows = rows.filter((row) => {
+  const visibleRows = styleRows.filter((row) => {
     const inBank = bank === ALL || row.bank === bank || normalizedQuery !== '';
     return inBank && matchesQuery(row, normalizedQuery);
   });
@@ -167,15 +181,35 @@ export function PatchPicker({
           aria-label="Search patches"
           onChange={(event) => setQuery(event.target.value)}
         />
+        <select
+          className="pp-style-filter"
+          aria-label="Filter patches by style"
+          value={styleFilter === null ? 'all' : String(styleFilter)}
+          onChange={(event) => {
+            setStyleFilter(event.target.value === 'all' ? null : Number(event.target.value));
+            setBank(ALL);
+          }}
+        >
+          <option value="all">All styles</option>
+          {PATCH_STYLES.map((style, index) => (
+            <option key={index} value={index}>{index === 0 ? 'No style' : style}</option>
+          ))}
+        </select>
       </header>
+
+      {styleFilter !== null && stylesKnown < TOTAL_SLOTS && (
+        <p className="pp-style-progress" role="status">
+          Styles known for {stylesKnown}/{TOTAL_SLOTS} slots; matches may appear as the device scan continues.
+        </p>
+      )}
 
       <div className="pp-body">
         <nav className="pp-rail" aria-label="Patch banks">
           <button type="button" className={railClass(ALL)} onClick={() => setBank(ALL)}>
             <span>All banks</span>
-            <span className="pp-cat-count">{totalNamed}</span>
+            <span className="pp-cat-count">{totalCount}</span>
           </button>
-          {categories.map((category) => (
+          {categories.filter((category) => styleFilter === null || category.count > 0).map((category) => (
             <button
               key={category.bank}
               type="button"
@@ -183,13 +217,17 @@ export function PatchPicker({
               onClick={() => setBank(category.bank)}
             >
               <span>{bankLabel(category.bank)}</span>
-              <span className="pp-cat-count">{category.named}</span>
+              <span className="pp-cat-count">{category.count}</span>
             </button>
           ))}
         </nav>
 
         <div className="pp-list" ref={listRef} onKeyDown={handleListKeyDown}>
-          {groups.length === 0 && <p className="pp-empty">No patches match “{query}”.</p>}
+          {groups.length === 0 && (
+            <p className="pp-empty">
+              No patches match the current search and style filter.
+            </p>
+          )}
           {groups.map((group) => (
             <section key={group.bank} className="pp-group">
               <h3 className="pp-group-head">{bankLabel(group.bank)}</h3>
@@ -220,6 +258,9 @@ export function PatchPicker({
                   >
                     <span className="pp-badge">{row.label}</span>
                     <span className="pp-name">{slotName(row.name, namesLoadProgress)}</span>
+                    {row.style !== null && row.style !== 0 && (
+                      <span className="pp-style">{patchStyleName(row.style)}</span>
+                    )}
                     {isCurrent && <span className="pp-now">NOW</span>}
                   </button>
                 );

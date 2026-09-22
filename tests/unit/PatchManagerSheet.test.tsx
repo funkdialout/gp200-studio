@@ -10,12 +10,21 @@ function makeNames(): (string | null)[] {
   return names;
 }
 
+function makeStyles(): (number | null)[] {
+  const styles = new Array<number | null>(256).fill(null);
+  styles[0] = 1;   // Metal
+  styles[1] = 8;   // Blues
+  styles[248] = 1; // Metal in another bank
+  return styles;
+}
+
 function renderSheet(overrides: Partial<Parameters<typeof PatchManagerSheet>[0]> = {}) {
   const props = {
     open: true,
     onClose: vi.fn(),
     connected: true,
     presetNames: makeNames(),
+    presetStyles: makeStyles(),
     namesLoadProgress: 256,
     currentSlot: 0,
     onActivate: vi.fn(),
@@ -43,7 +52,7 @@ function renderSheet(overrides: Partial<Parameters<typeof PatchManagerSheet>[0]>
 describe('PatchManagerSheet', () => {
   it('renders the patch browser with loaded names', () => {
     renderSheet();
-    expect(screen.getByText('Clean')).toBeTruthy();
+    expect(screen.getByText('Clean', { selector: '.pp-name' })).toBeTruthy();
     expect(screen.getByText('American Idiot')).toBeTruthy();
     expect(screen.getByText('now: 1A')).toBeTruthy();
   });
@@ -102,6 +111,55 @@ describe('PatchManagerSheet', () => {
     expect(screen.queryByText(/USER IRS/)).toBeNull();
   });
 
+  it('shows a failed slot import after the overwrite confirmation', async () => {
+    const onImportToSlot = vi.fn().mockRejectedValue(new Error('Device returned the old patch'));
+    const { container } = renderSheet({ onImportToSlot });
+    fireEvent.click(screen.getByText('Crunch'));
+    const slotImportInput = container.querySelectorAll<HTMLInputElement>('input[type="file"]')[1];
+    fireEvent.change(slotImportInput, {
+      target: { files: [new File([new Uint8Array([1, 2, 3])], 'test.prst')] },
+    });
+    const confirmation = await screen.findByRole('alertdialog', { name: 'Confirm overwrite' });
+    expect(confirmation).toHaveTextContent('Expression-pedal assignments are not transferred');
+    fireEvent.click(confirmation.querySelector('button:last-child')!);
+
+    expect(await screen.findByRole('alert')).toHaveTextContent('Import failed: Device returned the old patch');
+    expect(onImportToSlot).toHaveBeenCalledWith(1, new Uint8Array([1, 2, 3]));
+  });
+
+  it('filters across banks by the saved style without treating unknown as no style', () => {
+    renderSheet();
+    fireEvent.change(screen.getByRole('combobox', { name: 'Filter patches by style' }), {
+      target: { value: '1' },
+    });
+    expect(screen.getByText('Clean', { selector: '.pp-name' })).toBeTruthy();
+    expect(screen.getByText('American Idiot')).toBeTruthy();
+    expect(screen.queryByText('Crunch')).toBeNull();
+    expect(screen.getByText(/Styles known for 3\/256 slots/)).toBeTruthy();
+
+    fireEvent.change(screen.getByRole('combobox', { name: 'Filter patches by style' }), {
+      target: { value: '8' },
+    });
+    expect(screen.getByText('Crunch')).toBeTruthy();
+    expect(screen.queryByText('Clean', { selector: '.pp-name' })).toBeNull();
+  });
+
+  it('distinguishes an explicitly unstyled patch from an unread style', () => {
+    const styles = makeStyles();
+    styles[0] = 0;
+    renderSheet({ presetStyles: styles });
+    fireEvent.change(screen.getByRole('combobox', { name: 'Filter patches by style' }), {
+      target: { value: '0' },
+    });
+    expect(screen.getByText('Clean', { selector: '.pp-name' })).toBeTruthy();
+    expect(screen.queryByText('Crunch')).toBeNull();
+  });
+
+  it('allows a partial name scan to be restarted', () => {
+    renderSheet({ namesLoadProgress: 255 });
+    expect(screen.getByRole('button', { name: 'REFRESH' })).toBeEnabled();
+  });
+
   it('shows bulk progress with a cancel control', () => {
     const { props } = renderSheet({ bulkProgress: { done: 12, total: 256 } });
     expect(screen.getByText('12/256')).toBeTruthy();
@@ -125,21 +183,21 @@ describe('PatchManagerSheet', () => {
 describe('PatchManagerSheet: selection and arrange', () => {
   it('shift-clicking a second row selects the range between them', () => {
     renderSheet();
-    fireEvent.click(screen.getByText('Clean'));
+    fireEvent.click(screen.getByText('Clean', { selector: '.pp-name' }));
     fireEvent.click(screen.getByText('Crunch'), { shiftKey: true });
     expect(screen.getByRole('status')).toHaveTextContent('2 selected');
   });
 
   it('SELECT BANK picks all four slots in the bank', () => {
     renderSheet();
-    fireEvent.click(screen.getByText('Clean'));
+    fireEvent.click(screen.getByText('Clean', { selector: '.pp-name' }));
     fireEvent.click(screen.getByRole('button', { name: 'SELECT BANK' }));
     expect(screen.getByRole('status')).toHaveTextContent('4 selected');
   });
 
   it('CLEAR drops back to the single anchor row', () => {
     renderSheet();
-    fireEvent.click(screen.getByText('Clean'));
+    fireEvent.click(screen.getByText('Clean', { selector: '.pp-name' }));
     fireEvent.click(screen.getByRole('button', { name: 'SELECT BANK' }));
     fireEvent.click(screen.getByRole('button', { name: 'CLEAR' }));
     expect(screen.getByRole('status')).not.toHaveTextContent('selected');
@@ -147,7 +205,7 @@ describe('PatchManagerSheet: selection and arrange', () => {
 
   it('EXPORT SELECTED sends every selected slot, not just the anchor', () => {
     const { props } = renderSheet();
-    fireEvent.click(screen.getByText('Clean'));
+    fireEvent.click(screen.getByText('Clean', { selector: '.pp-name' }));
     fireEvent.click(screen.getByRole('button', { name: 'SELECT BANK' }));
     fireEvent.click(screen.getByRole('button', { name: 'EXPORT SELECTED' }));
     expect(props.onExportSlots).toHaveBeenCalledWith([0, 1, 2, 3]);
@@ -155,7 +213,7 @@ describe('PatchManagerSheet: selection and arrange', () => {
 
   it('PASTE stays disabled until something has been copied', () => {
     renderSheet();
-    fireEvent.click(screen.getByText('Clean'));
+    fireEvent.click(screen.getByText('Clean', { selector: '.pp-name' }));
     expect(screen.getByRole('button', { name: /^PASTE/ })).toBeDisabled();
   });
 
@@ -168,7 +226,7 @@ describe('PatchManagerSheet: selection and arrange', () => {
 
   it('SWAP needs exactly two slots selected', () => {
     const { props } = renderSheet();
-    fireEvent.click(screen.getByText('Clean'));
+    fireEvent.click(screen.getByText('Clean', { selector: '.pp-name' }));
     expect(screen.getByRole('button', { name: 'SWAP' })).toBeDisabled();
     fireEvent.click(screen.getByText('Crunch'), { shiftKey: true });
     fireEvent.click(screen.getByRole('button', { name: 'SWAP' }));
@@ -177,14 +235,14 @@ describe('PatchManagerSheet: selection and arrange', () => {
 
   it('DOWN swaps the selected patch with the slot below it', () => {
     const { props } = renderSheet();
-    fireEvent.click(screen.getByText('Clean'));
+    fireEvent.click(screen.getByText('Clean', { selector: '.pp-name' }));
     fireEvent.click(screen.getByRole('button', { name: '▼ DOWN' }));
     expect(props.onSwapSlots).toHaveBeenCalledWith(0, 1);
   });
 
   it('UP is unavailable on the very first slot', () => {
     renderSheet();
-    fireEvent.click(screen.getByText('Clean'));
+    fireEvent.click(screen.getByText('Clean', { selector: '.pp-name' }));
     expect(screen.getByRole('button', { name: '▲ UP' })).toBeDisabled();
   });
 });

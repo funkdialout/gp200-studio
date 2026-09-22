@@ -3,8 +3,6 @@ import type { UseMidiDeviceReturn } from '@/hooks/useMidiDevice';
 import { SLOT_MODULES } from '@/core/effectNames';
 import { getBodySpec } from '@/components/board/boardPalette';
 import { Logo } from '@/components/Logo';
-import { AUTHOR, REPO } from '@/seo/site';
-import { COFFEE_URL } from '@/components/Credits';
 import { LandingConnect } from './LandingConnect';
 import { LandingShot } from './LandingShot';
 import { LandingCables } from './LandingCables';
@@ -56,26 +54,6 @@ export function LandingHero({
           <Logo size={38} />
           <span className="lp-brand-name">GP200 Studio</span>
         </span>
-        <span className="lp-nav-links">
-          <a href="/guide">Guide</a>
-          <a href={REPO} target="_blank" rel="noopener noreferrer">GitHub</a>
-          <span className="lp-nav-by">
-            developed by{' '}
-            <a href={AUTHOR.url} target="_blank" rel="noopener noreferrer">
-              kabirtamari.com
-            </a>
-          </span>
-          {/* Same URL the credits block uses, promoted to the top of the page:
-              this is the only thing the project asks anyone for. */}
-          <a
-            className="lp-nav-coffee"
-            href={COFFEE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            ☕ Buy me a coffee
-          </a>
-        </span>
       </nav>
 
       {/* Rigged over the stage and aimed at the CONNECT button, so the
@@ -116,12 +94,6 @@ export function LandingHero({
             />
           </div>
 
-          {/* A real anchor in the prerendered markup: this is the only crawlable
-              edge from the home page into the guide's fourteen indexable URLs,
-              so a crawler that runs no JavaScript still follows it. */}
-          <a className="lp-guide-link lp-anim" href="/guide">
-            Read the guide →
-          </a>
         </div>
 
         <LandingStack side="right" />

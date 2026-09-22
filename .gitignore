@@ -41,3 +41,6 @@ dumps
 
 # Cloudflare Wrangler local state / cache
 .wrangler
+# Local package store and assistant output folder
+.pnpm-store/
+Claude outputs/

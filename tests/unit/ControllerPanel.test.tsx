@@ -6,6 +6,7 @@ import { PRSTDecoder } from '@/core/PRSTDecoder';
 import { ControllerPanel } from '@/components/ControllerPanel';
 import type { ExpAssignment, GP200Preset } from '@/core/types';
 import { defaultExpAssignments } from '@/core/controlRecords';
+import { createDefaultPreset } from '@/core/defaultPreset';
 
 function loadFixture(): GP200Preset {
   const bytes = readFileSync(join(process.cwd(), 'dumps/prts/01-A Start Pedal.prst'));
@@ -25,6 +26,20 @@ function withAssignment(overrides: Partial<ExpAssignment>): GP200Preset {
 // dumps/ is gitignored (real device exports, not committed), so this suite only
 // runs on a machine that has them. Same convention as PRSTEncoder.test.ts.
 const HAS_FIXTURES = existsSync(join(process.cwd(), 'dumps/prts/01-A Start Pedal.prst'));
+
+describe('ControllerPanel device-write notice', () => {
+  it('does not promise that connected expression edits are saved to the pedal', () => {
+    const { getByText } = render(
+      <ControllerPanel
+        preset={createDefaultPreset()}
+        connected
+        onParamSelect={vi.fn()}
+        onMinMax={vi.fn()}
+      />,
+    );
+    expect(getByText(/SAVE to GP-200 does not transfer these assignments/)).toBeTruthy();
+  });
+});
 
 describe.skipIf(!HAS_FIXTURES)('ControllerPanel', () => {
   it('renders 3 page selectors and 3 Para cards with pedal + parameter selects', () => {

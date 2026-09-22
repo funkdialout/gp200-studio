@@ -22,6 +22,7 @@ export interface PatchManagerSheetProps {
   onClose: () => void;
   connected: boolean;
   presetNames: (string | null)[];
+  presetStyles: (number | null)[];
   namesLoadProgress: number;
   /** True while the background pass is re-verifying cache-seeded names. */
   namesSyncing?: boolean;
@@ -47,7 +48,7 @@ export interface PatchManagerSheetProps {
   onImportFile: (bytes: Uint8Array) => void;
   /** Open the editor's export-preset dialog for the current patch. */
   onExportRequest: () => void;
-  /** User-IR slot names enumerated at connect (30 entries; empty offline). */
+  /** User-IR slot names enumerated at connect (20 entries; empty offline). */
   userIrNames: string[];
 }
 
@@ -70,6 +71,7 @@ export function PatchManagerSheet({
   onClose,
   connected,
   presetNames,
+  presetStyles,
   namesLoadProgress,
   namesSyncing = false,
   currentSlot,
@@ -99,6 +101,7 @@ export function PatchManagerSheet({
   const [renameValue, setRenameValue] = useState('');
   const [busy, setBusy] = useState(false);
   const [confirmImportSlot, setConfirmImportSlot] = useState<number | null>(null);
+  const [importError, setImportError] = useState<string | null>(null);
   const pendingImportRef = useRef<Uint8Array | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const editorFileInputRef = useRef<HTMLInputElement>(null);
@@ -161,6 +164,7 @@ export function PatchManagerSheet({
     const file = e.target.files?.[0];
     if (!file || selected === null) return;
     const targetSlot = selected;
+    setImportError(null);
     const reader = new FileReader();
     reader.onload = (ev) => {
       pendingImportRef.current = new Uint8Array(ev.target!.result as ArrayBuffer);
@@ -176,7 +180,11 @@ export function PatchManagerSheet({
     setConfirmImportSlot(null);
     pendingImportRef.current = null;
     if (slot === null || !bytes) return;
-    await runBusy(() => onImportToSlot(slot, bytes));
+    try {
+      await runBusy(() => onImportToSlot(slot, bytes));
+    } catch (error) {
+      setImportError(error instanceof Error ? error.message : String(error));
+    }
   }
 
   function handleEditorFilePick(e: React.ChangeEvent<HTMLInputElement>) {
@@ -235,7 +243,7 @@ export function PatchManagerSheet({
         <button
           type="button"
           onClick={onRefreshNames}
-          disabled={!connected || namesLoading || namesSyncing || bulkRunning}
+          disabled={!connected || namesSyncing || bulkRunning}
           className="font-mono-display text-caption px-2 py-0.5 rounded disabled:opacity-40"
           style={{ border: '1px solid rgba(0,0,0,0.20)', color: 'var(--text-muted)' }}
           title="Re-read all slot names from the device"
@@ -378,6 +386,7 @@ export function PatchManagerSheet({
       <div className="flex-1 min-h-0 flex flex-col px-2 pb-2">
         <PatchPicker
           presetNames={presetNames}
+          presetStyles={presetStyles}
           namesLoadProgress={namesLoadProgress}
           currentSlot={currentSlot}
           selected={selected}
@@ -635,6 +644,16 @@ export function PatchManagerSheet({
 
       {/* Overwrite confirmation, inline (a nested Dialog would double-bind
           the document Escape handler and close the whole sheet) */}
+      {busy && (
+        <p role="status" className="px-4 py-2 font-mono-display text-caption" style={{ color: 'var(--text-secondary)' }}>
+          Writing or reading the device… Please wait.
+        </p>
+      )}
+      {importError && (
+        <p role="alert" className="px-4 py-3 font-mono-display text-caption" style={{ color: 'var(--accent-red, #c05050)' }}>
+          Import failed: {importError}
+        </p>
+      )}
       {confirmImportSlot !== null && (
         <div
           role="alertdialog"
@@ -649,6 +668,9 @@ export function PatchManagerSheet({
             Overwrite {SysExCodec.slotToLabel(confirmImportSlot)}
             {' '}“{presetNames[confirmImportSlot] ?? '-'}” on the device?
             This cannot be undone.
+          </p>
+          <p className="font-mono-display text-xs mb-2" style={{ color: 'var(--accent-red, #c05050)' }}>
+            Expression-pedal assignments are not transferred by this import. The slot keeps its current expression settings.
           </p>
           <div className="flex justify-end gap-2">
             <Button

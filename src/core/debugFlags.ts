@@ -15,8 +15,8 @@ export function isMidiMonitorEnabled(): boolean {
 // Hex-dump the User-IR enumeration sweep the handshake performs
 // (0x11/0x1C → 0x12/0x1C, useMidiDevice step 9) with:
 //   localStorage.setItem('gp200:debug:assignments', '1')
-// The sweep was re-identified 2026-08-08 as the device's 30 User-IR slot
-// names (docs/protocol-capture.md §3); the names feed `userIrNames`, and this
+// The sweep returns the device's 20 User-IR slot names; the names feed
+// `userIrNames`, and this
 // flag dumps each raw record for eyeballing the layout beyond the name field.
 export const ASSIGNMENT_DUMP_FLAG = 'gp200:debug:assignments';
 

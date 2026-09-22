@@ -18,6 +18,7 @@ import { barSecondsFromTempo } from '@/core/looperTransport';
 import { SIGNATURES } from '@/core/drumMachine';
 import { PRSTDecoder } from '@/core/PRSTDecoder';
 import { PRSTEncoder } from '@/core/PRSTEncoder';
+import { expressionAssignmentMismatch } from '@/core/presetWriteVerification';
 import { pushPresetToDevice, type PushProgress } from '@/core/devicePush';
 import { EFFECT_MAP } from '@/core/effectNames';
 import type { GP200Preset } from '@/core/types';
@@ -202,14 +203,6 @@ function App() {
     drumBpm: drumMachine.bpm,
   });
 
-  // The guide is a separate prerendered document now, so this is a navigation
-  // rather than a view swap. It opens in a new tab deliberately: from the board
-  // a same-tab navigation would discard an unsaved preset. The landing page
-  // links to it with a plain <a href> instead, which is what crawlers follow.
-  const openGuide = useCallback(() => {
-    track('view_change', { view: 'guide' });
-    window.open('/guide', '_blank', 'noopener');
-  }, []);
   const [pushProgress, setPushProgress] = useState<PushProgress | null>(null);
   const pushAbortRef = useRef<AbortController | null>(null);
 
@@ -463,6 +456,10 @@ function App() {
 
   // Stable reference (useCallback([]) inside useMidiDevice), safe to close over.
   const saveToSlot = midiDevice.saveToSlot;
+  const sendStyleName = midiDevice.sendStyleName;
+  const pullImportedSlot = midiDevice.pullPreset;
+  const importCurrentSlot = midiDevice.currentSlot;
+  const importConnected = midiDevice.status === 'connected';
   const handleFile = useCallback((buffer: Uint8Array) => {
     try {
       const decoded = new PRSTDecoder(buffer).decode();
@@ -470,6 +467,10 @@ function App() {
       loadPreset(decoded);
       setLoadError(null);
       track('preset_import', { target: 'editor', ok: true });
+      if (importConnected && importCurrentSlot === null) {
+        setLoadError('Preset opened in the editor only. The connected pedal’s active slot is unknown, so no device save was attempted.');
+        return;
+      }
       // Live-push the import, then commit it to the active slot (the SAVE
       // flow), so an import lands on the pedal permanently without a
       // separate save step. Both no-op while disconnected; saveToSlot
@@ -479,15 +480,24 @@ function App() {
       void (async () => {
         await sendPresetToDevice(decoded);
         await new Promise((settle) => setTimeout(settle, 250));
-        await saveToSlot(decoded.patchName);
-      })().catch(() => setLoadError('Failed to save to device'));
+        sendStyleName(patchStyleName(decoded.patchStyle));
+        await new Promise((settle) => setTimeout(settle, 30));
+        await saveToSlot(decoded.patchName, undefined, decoded.patchStyle);
+        if (importConnected && importCurrentSlot !== null) {
+          const readback = await pullImportedSlot(importCurrentSlot);
+          const expDifference = expressionAssignmentMismatch(decoded, readback);
+          setLoadError(expDifference
+            ? `Patch saved to ${SysExCodec.slotToLabel(importCurrentSlot)}, but ${expDifference}. Expression edits are only in the open editor; export a .prst to keep them.`
+            : null);
+        }
+      })().catch((error) => setLoadError(`Preset save or readback failed: ${error instanceof Error ? error.message : String(error)}`));
     } catch (err) {
       let message = String(err);
       if (err instanceof Error) message = err.message;
       setLoadError(`Error loading file: ${message}`);
       track('preset_import', { target: 'editor', ok: false });
     }
-  }, [loadPreset, sendPresetToDevice, saveToSlot, markEditorEntry]);
+  }, [loadPreset, sendPresetToDevice, sendStyleName, saveToSlot, pullImportedSlot, importCurrentSlot, importConnected, markEditorEntry]);
 
   function handleExportConfirm(name: string, author: string | undefined, slot: number) {
     if (!preset) return;
@@ -584,23 +594,29 @@ function App() {
   async function handleImportToSlot(slot: number, bytes: Uint8Array) {
     try {
       const decoded = new PRSTDecoder(bytes).decode();
-      // Flash-upload path (chunked 0x12/0x20, mirrors the official editor):
-      // full fidelity including the CTRL/EXP controls tail, and much faster
-      // than the per-parameter writePresetToSlot fallback.
-      await midiDevice.pushPreset(decoded, slot);
-      setLoadError(null);
-      track('preset_import', { target: 'slot', ok: true });
+      // Persist to the selected device slot, then load its verified readback
+      // so the editor shows what the pedal actually retained.
+      const verified = await midiDevice.pushPreset(decoded, slot);
+      markEditorEntry('slot');
+      loadPreset(verified);
+      setShowPatchManager(false);
+      const expDifference = expressionAssignmentMismatch(decoded, verified);
+      setLoadError(expDifference
+        ? `Partial import to ${SysExCodec.slotToLabel(slot)}: patch loaded, but ${expDifference}. The pedal kept its previous expression settings; review them before playing.`
+        : null);
+      track('preset_import', { target: 'slot', ok: !expDifference });
     } catch (err) {
       let detail = String(err);
       if (err instanceof Error) detail = err.message;
       setLoadError(`Failed to write to ${SysExCodec.slotToLabel(slot)}: ${detail}`);
       track('preset_import', { target: 'slot', ok: false });
+      throw err;
     }
   }
 
   // In-app patch clipboard, for copy/paste and swap in the patch manager.
-  // Built on pullPreset/pushPreset — the same proven read and flash-upload
-  // path the per-slot EXPORT and IMPORT buttons already use — rather than the
+  // Built on pullPreset/pushPreset — the same verified read and live-write
+  // path the per-slot EXPORT and IMPORT buttons use — rather than the
   // device's own patch-move message, which is decoded but not hardware-verified
   // and would reshuffle all 256 slots if it turned out to be wrong.
   async function handleCopySlot(slot: number) {
@@ -616,8 +632,12 @@ function App() {
   async function handlePasteToSlot(slot: number) {
     if (!clipboard) return;
     try {
-      await midiDevice.pushPreset({ ...clipboard.preset, slotIndex: slot }, slot);
-      setLoadError(null);
+      const copied = { ...clipboard.preset, slotIndex: slot };
+      const verified = await midiDevice.pushPreset(copied, slot);
+      const expDifference = expressionAssignmentMismatch(copied, verified);
+      setLoadError(expDifference
+        ? `Partial paste to ${SysExCodec.slotToLabel(slot)}: patch copied, but ${expDifference}. The target kept its previous expression settings.`
+        : null);
     } catch (err) {
       const detail = err instanceof Error ? err.message : String(err);
       setLoadError(`Failed to paste into ${SysExCodec.slotToLabel(slot)}: ${detail}`);
@@ -631,9 +651,13 @@ function App() {
       // untouched instead of half-swapped.
       const a = await midiDevice.pullPreset(first);
       const b = await midiDevice.pullPreset(second);
-      await midiDevice.pushPreset({ ...b, slotIndex: first }, first);
-      await midiDevice.pushPreset({ ...a, slotIndex: second }, second);
-      setLoadError(null);
+      const firstReadback = await midiDevice.pushPreset({ ...b, slotIndex: first }, first);
+      const secondReadback = await midiDevice.pushPreset({ ...a, slotIndex: second }, second);
+      const firstExp = expressionAssignmentMismatch(b, firstReadback);
+      const secondExp = expressionAssignmentMismatch(a, secondReadback);
+      setLoadError(firstExp || secondExp
+        ? `Partial swap: verified patch data moved, but expression settings stayed with their original slots${firstExp ? ` (${SysExCodec.slotToLabel(first)}: ${firstExp})` : ''}${secondExp ? ` (${SysExCodec.slotToLabel(second)}: ${secondExp})` : ''}.`
+        : null);
     } catch (err) {
       const detail = err instanceof Error ? err.message : String(err);
       setLoadError(
@@ -701,8 +725,11 @@ function App() {
   async function handlePushConfirm(slot: number) {
     if (!preset) return;
     try {
-      await midiDevice.pushPreset(preset, slot);
-      setLoadError(null);
+      const verified = await midiDevice.pushPreset(preset, slot);
+      const expDifference = expressionAssignmentMismatch(preset, verified);
+      setLoadError(expDifference
+        ? `Partial save to ${SysExCodec.slotToLabel(slot)}: patch loaded, but ${expDifference}. The pedal kept its previous expression settings.`
+        : null);
     } catch {
       setLoadError('Failed to save to device');
     } finally {
@@ -712,12 +739,20 @@ function App() {
 
   async function handleSaveToActiveSlot() {
     if (!preset || midiDevice.currentSlot === null) return;
-    // Save-commit persists the device's edit buffer, which every live edit
-    // (toggle, param, reorder, VOL/PAN/TEMPO, EXP and , since the 0x12/0x14
-    // capture , CTRL footswitch masks) already reached. The flash-upload
-    // alternative is still rejected by real hardware (docs §0.1), so this
-    // stays the save path.
-    await midiDevice.saveToSlot(preset.patchName, midiDevice.currentSlot);
+    const slot = midiDevice.currentSlot;
+    try {
+      // Save-commit persists supported live edits. EXP edits remain file-only
+      // until their device write protocol has been verified on hardware.
+      await midiDevice.saveToSlot(preset.patchName, slot, preset.patchStyle);
+      const readback = await midiDevice.pullPreset(slot);
+      const expDifference = expressionAssignmentMismatch(preset, readback);
+      setLoadError(expDifference
+        ? `Patch saved to ${SysExCodec.slotToLabel(slot)}, but ${expDifference}. Expression edits are only in the open editor; export a .prst to keep them.`
+        : null);
+    } catch (error) {
+      const detail = error instanceof Error ? error.message : String(error);
+      setLoadError(`Save or readback for ${SysExCodec.slotToLabel(slot)} failed: ${detail}`);
+    }
   }
 
   function handleOpenBrowser(mode: 'pull' | 'push') {
@@ -730,17 +765,20 @@ function App() {
   // connect transition, so after a deck CLOSE the handshake preset is still
   // cached; fall back to a fresh pull if it isn't.
   async function handleOpenCurrent() {
-    markEditorEntry('device');
     if (midiDevice.currentPreset) {
+      markEditorEntry('device');
       loadPreset(midiDevice.currentPreset);
       return;
     }
     if (midiDevice.currentSlot === null) return;
     try {
-      loadPreset(await midiDevice.pullPreset(midiDevice.currentSlot));
+      const pulled = await midiDevice.pullPreset(midiDevice.currentSlot);
+      markEditorEntry('device');
+      loadPreset(pulled);
       setLoadError(null);
-    } catch {
-      setLoadError('Failed to load preset from device');
+    } catch (error) {
+      const detail = error instanceof Error ? error.message : String(error);
+      setLoadError(`Failed to load preset from device: ${detail}`);
     }
   }
 
@@ -854,6 +892,7 @@ function App() {
     patchTempo: patchTempo,
     currentSlot: midiDevice.currentSlot,
     connected: midiDevice.status === 'connected',
+    userIrNames: midiDevice.userIrNames,
     onLoadRequest: () => handleOpenBrowser('pull'),
     onSaveToActiveSlot: midiDevice.status === 'connected' ? handleSaveToActiveSlot : undefined,
     onPatchNameChange: setPatchName,
@@ -917,18 +956,12 @@ function App() {
       if (midiDevice.status === 'connected') midiDevice.sendNote(note.slice(0, 40));
     },
     onExpParamSelect: (page, item, blockIndex, paramIdx) => {
-      // Persist with the patch; also apply live when a device is attached
-      // (there is no live "unassign" message; that lands on SAVE).
+      // Keep EXP edits in the in-memory patch for .prst export. The current
+      // live message is not retained by the pedal after SAVE/reload.
       setExpAssignment(page, item, { blockIndex, paramIndex: paramIdx });
-      if (midiDevice.status === 'connected' && blockIndex !== null) {
-        midiDevice.sendExpParamSelect(page, item, blockIndex, paramIdx);
-      }
     },
     onExpMinMax: (page, item, min, max) => {
       setExpAssignment(page, item, { min, max });
-      if (midiDevice.status === 'connected') {
-        midiDevice.sendExpMinMax(page, item, min, max);
-      }
     },
     // CTRL masks write live (0x12/0x14, decoded from dumps/ctrl-assignment).
     // The device frame carries the WHOLE mask, so send the resulting mask
@@ -956,7 +989,6 @@ function App() {
     },
     onOpenPatchManager: handleOpenPatchManager,
     onActivateSlot: handleActivateSlot,
-    onOpenGuide: openGuide,
     onPanelOpen: trackPanelOpen,
     looper: looper,
     looperTempo: {
@@ -1040,6 +1072,7 @@ function App() {
         onClose={() => setShowPatchManager(false)}
         connected={midiDevice.status === 'connected'}
         presetNames={midiDevice.presetNames}
+        presetStyles={midiDevice.presetStyles}
         namesLoadProgress={midiDevice.namesLoadProgress}
         namesSyncing={midiDevice.namesSyncing}
         currentSlot={midiDevice.currentSlot}
@@ -1065,6 +1098,7 @@ function App() {
         <DeviceSlotBrowser
           mode={slotBrowserMode}
           presetNames={midiDevice.presetNames}
+          presetStyles={midiDevice.presetStyles}
           namesLoadProgress={midiDevice.namesLoadProgress}
           currentSlot={midiDevice.currentSlot}
           onConfirm={slotBrowserMode === 'pull' ? handlePullConfirm : handlePushConfirm}

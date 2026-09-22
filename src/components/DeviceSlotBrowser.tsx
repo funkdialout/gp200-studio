@@ -7,6 +7,7 @@ import { PatchPicker } from './PatchPicker';
 interface DeviceSlotBrowserProps {
   mode: 'pull' | 'push';
   presetNames: (string | null)[];
+  presetStyles: (number | null)[];
   namesLoadProgress: number;
   currentSlot: number | null;
   onConfirm: (slot: number) => void;
@@ -27,6 +28,7 @@ function confirmLabelFor(mode: DeviceSlotBrowserProps['mode'], selected: number 
 export function DeviceSlotBrowser({
   mode,
   presetNames,
+  presetStyles,
   namesLoadProgress,
   currentSlot,
   onConfirm,
@@ -90,6 +92,7 @@ export function DeviceSlotBrowser({
 
       <PatchPicker
         presetNames={presetNames}
+        presetStyles={presetStyles}
         namesLoadProgress={namesLoadProgress}
         currentSlot={currentSlot}
         selected={selected}
