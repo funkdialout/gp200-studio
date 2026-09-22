@@ -19,6 +19,7 @@
     "gen:shots:optimize": "node scripts/optimize-guide-shots.mjs"
   },
   "dependencies": {
+    "@fontsource/barlow-condensed": "^5.3.0",
     "@fontsource/dm-sans": "^5.2.8",
     "@fontsource/jetbrains-mono": "^5.2.8",
     "@gsap/react": "^2.1.2",

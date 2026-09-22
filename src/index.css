@@ -14,6 +14,11 @@
 @import '@fontsource/jetbrains-mono/latin-400.css';
 @import '@fontsource/jetbrains-mono/latin-500.css';
 @import '@fontsource/jetbrains-mono/latin-700.css';
+@import '@fontsource/barlow-condensed/latin-500.css';
+@import '@fontsource/barlow-condensed/latin-600.css';
+@import '@fontsource/barlow-condensed/latin-700.css';
+@import './styles/materials.css';
+@import './styles/studio-rack.css';
 
 @tailwind base;
 @tailwind components;
@@ -22,27 +27,30 @@
 :root {
   --font-dm-sans: 'DM Sans';
   --font-jetbrains-mono: 'JetBrains Mono';
+  /* Studio Rack faceplate type: condensed caps for chrome labels, buttons and
+     gear names (src/styles/studio-rack.css). Body copy stays DM Sans. */
+  --font-condensed: 'Barlow Condensed';
 
   /* ── App chrome: LIGHT stage theme, a cool paper-white environment (the dark
      "matrix" theme is gone; dialogs, banners, and browsers share the board's
      light environment). The accents stay warm — amber against paper is the
      contrast the chrome is built on. ── */
   --bg-primary: #e8e9eb;
-  --bg-surface: #f4f5f6;
-  --bg-surface-raised: #f8f9fa;
-  --bg-elevated: #fbfbfc;
-  --bg-card: #f4f5f6;
+  --bg-surface: #eeeeef;
+  --bg-surface-raised: #f4f4f5;
+  --bg-elevated: #f8f8f9;
+  --bg-card: #eeeeef;
   --bg-input: #ffffff;
-  --bg-deep: #dcdee1;
-  --bg-hover: #eceef0;
-  --text-primary: #1e2022;
+  --bg-deep: #cfd1d4;
+  --bg-hover: #e4e5e7;
+  --text-primary: #1b1c1e;
   /* Secondary sits a notch above muted so the two are visually distinct and
      secondary clears WCAG AA on --bg-surface with headroom; muted stays at
      the AA threshold for genuinely de-emphasised / large uppercase labels. */
-  --text-secondary: #43464a;
-  --text-muted: #5c6066;
-  --border-subtle: #d9dbdf;
-  --border-active: #adb1b7;
+  --text-secondary: #3f4145;
+  --text-muted: #595c61;
+  --border-subtle: #c7c9cd;
+  --border-active: #9a9da3;
   /* The accent is cyan, and red/green are the only status colours. That split
      is the whole scheme: cyan means "you can act on this or you just did",
      red and green mean "this is the state of something". The knob halo below
@@ -52,19 +60,19 @@
      Two values per theme, both carrying their own contrast: #0b6f82 clears
      WCAG AA on --bg-surface (5.2:1) and the bright twin takes --bg-primary as
      its text colour on a filled button (10.3:1). */
-  --accent: #0b6f82;
-  --accent-dim: #095766;
+  --accent: #8a5300;
+  --accent-dim: #6e4200;
   --accent-red: #b4423a;
   --accent-green: #2f7e4f;
-  --glow-accent: rgba(11, 111, 130, 0.18);
+  --glow-accent: rgba(200, 130, 30, 0.2);
   --glow-red: rgba(180, 66, 58, 0.15);
   --glow-green: rgba(47, 126, 79, 0.15);
   /* neon halo on a hovered/dragged pedal knob: the cue that the knob has
      claimed the mouse wheel. The same cyan family as --accent, brighter and
      more saturated because a halo has to read as light rather than as ink. */
-  --knob-glow: rgba(0, 178, 204, 0.62);
-  --knob-glow-soft: rgba(0, 178, 204, 0.3);
-  --knob-track: #d9dbdf;
+  --knob-glow: rgba(235, 150, 40, 0.62);
+  --knob-glow-soft: rgba(235, 150, 40, 0.3);
+  --knob-track: #cfd1d4;
   /* the filled part of a knob's arc IS the accent -- held as a reference, not
      a second copy of the hex, which is how it silently stayed amber once. */
   --knob-fill: var(--accent);
@@ -74,26 +82,26 @@
      only the environment tokens are declared here (one token home). The
      board is light-mode for stage readability; the colorful pedal bodies
      come from the artwork manifest, not from these tokens. */
-  --case: #e8e9eb;
-  --board: #dcdee1;
+  --case: #d3d4d7;
+  --board: #76787c;
   /* chassis skin: the board's own plywood/edge/bezel, themed so the dark stage
      doesn't need a second copy of the .board-deck rule */
-  --board-top: #e6e7ea;
-  --board-edge: #b0b3b8;
-  --board-bezel: #c3c6ca;
+  --board-top: #818387;
+  --board-edge: #3c3e42;
+  --board-bezel: #b7b9bd;
   --board-bezel-hi: #f2f3f5;
-  --chrome-bg: #f4f5f6;
+  --chrome-bg: #c6c8cc;
   /* face of a chrome control sitting ON --chrome-bg (buttons, inputs, selects) */
-  --chrome-face: #ffffff;
-  --chrome-border: #cdd0d4;
-  --chrome-text: #1e2022;
-  --chrome-muted: #5c6066;
-  --strip-bg: #f8f9fa;
+  --chrome-face: #e6e7e9;
+  --chrome-border: #8a8d92;
+  --chrome-text: #17181a;
+  --chrome-muted: #45484d;
+  --strip-bg: #dcdde0;
   --stub-ink: #35383c;
   /* readable ink ON a --stub-ink fill (mobile primary buttons, chain pills) */
   --stub-ink-on: #fbfbfc;
-  --dot-off: #bcbfc4;
-  --pedal-shadow: 0 10px 20px rgba(0, 0, 0, 0.28);
+  --dot-off: #a6a9ae;
+  --pedal-shadow: 0 14px 18px rgba(0, 0, 0, 0.42), 0 3px 5px rgba(0, 0, 0, 0.35);
   /* the mains surge the power switch fires across the whole stage: a blown
      highlight and a blackout, cut against each other (board.css/stage-surge) */
   --stage-flash: rgba(248, 250, 255, 0.62);
@@ -122,46 +130,46 @@
 :root[data-theme='dark'],
 .theme-dark {
   --bg-primary: #17181a;
-  --bg-surface: #1e2023;
-  --bg-surface-raised: #24262a;
-  --bg-elevated: #2a2d31;
-  --bg-card: #1e2023;
-  --bg-input: #101113;
-  --bg-deep: #0e0f11;
-  --bg-hover: #2c2f34;
-  --text-primary: #eceae5;
-  --text-secondary: #c5c1b9;
-  --text-muted: #98938a;
-  --border-subtle: #33363b;
-  --border-active: #4d515a;
-  --accent: #4fd6ee;
-  --accent-dim: #33aec4;
+  --bg-surface: #1c1d20;
+  --bg-surface-raised: #232428;
+  --bg-elevated: #2a2b30;
+  --bg-card: #1c1d20;
+  --bg-input: #0c0c0e;
+  --bg-deep: #0b0b0c;
+  --bg-hover: #2b2c31;
+  --text-primary: #ecebe6;
+  --text-secondary: #c9c6be;
+  --text-muted: #9d9a92;
+  --border-subtle: #303136;
+  --border-active: #4a4b52;
+  --accent: #ffb347;
+  --accent-dim: #d99530;
   --accent-red: #e2685c;
-  --accent-green: #4fbd7d;
-  --glow-accent: rgba(79, 214, 238, 0.3);
+  --accent-green: #58c283;
+  --glow-accent: rgba(255, 179, 71, 0.3);
   --glow-red: rgba(226, 104, 92, 0.28);
   --glow-green: rgba(79, 189, 125, 0.26);
-  --knob-glow: rgba(96, 235, 255, 0.68);
-  --knob-glow-soft: rgba(96, 235, 255, 0.32);
-  --knob-track: #3a3d42;
+  --knob-glow: rgba(255, 190, 90, 0.7);
+  --knob-glow-soft: rgba(255, 190, 90, 0.32);
+  --knob-track: #3a3b40;
   --knob-fill: var(--accent);
 
-  --case: #141517;
-  --board: #1c1e21;
-  --board-top: #26282c;
-  --board-edge: #0b0c0d;
-  --board-bezel: #2f3237;
-  --board-bezel-hi: #3d4046;
-  --chrome-bg: #202225;
-  --chrome-face: #2b2e33;
-  --chrome-border: #35383d;
-  --chrome-text: #eceae5;
-  --chrome-muted: #98938a;
-  --strip-bg: #1a1b1e;
+  --case: #121315;
+  --board: #1a1b1d;
+  --board-top: #202124;
+  --board-edge: #050506;
+  --board-bezel: #2a2b2e;
+  --board-bezel-hi: #45474c;
+  --chrome-bg: #2c2e32;
+  --chrome-face: #3a3c41;
+  --chrome-border: #0f1012;
+  --chrome-text: #ecebe6;
+  --chrome-muted: #aaa79f;
+  --strip-bg: #18191c;
   --stub-ink: #cbc6bb;
   --stub-ink-on: #17181a;
-  --dot-off: #4d515a;
-  --pedal-shadow: 0 12px 26px rgba(0, 0, 0, 0.62);
+  --dot-off: #4d4f55;
+  --pedal-shadow: 0 16px 22px rgba(0, 0, 0, 0.6), 0 4px 6px rgba(0, 0, 0, 0.5);
   --stage-flash: rgba(255, 232, 190, 0.34);
   --stage-dim: rgba(0, 0, 0, 0.66);
 }
