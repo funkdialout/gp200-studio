@@ -693,6 +693,43 @@ function bodyColorsFor(spec, module) {
   return colors;
 }
 
+/**
+ * Physical look the board view draws the block with (docs: amp/cab realism).
+ * Amps and cabs carry their tolex, grille cloth and panel finish so the board
+ * can render a head or a speaker cabinet instead of a stompbox; stompboxes
+ * carry their enclosure shape; treadles are flagged so WAH/VOL rock.
+ * Pattern names (tweed, blackweave, diamondplate, ...) pass through verbatim.
+ */
+function lookFor(spec) {
+  switch (spec.t) {
+    case 'amp':
+      return {
+        kind: 'amp',
+        tolex: spec.tolex ?? '#1c1c1e',
+        grille: spec.grille ?? 'blackweave',
+        panel: spec.panel ?? '#26282c',
+        ...(spec.piping ? { piping: spec.piping } : {}),
+        ...(spec.lamp ? { lamp: spec.lamp } : {}),
+      };
+    case 'cab':
+      return {
+        kind: 'cab',
+        tolex: spec.tolex ?? '#1c1c1e',
+        grille: spec.grille ?? 'blackweave',
+        cols: spec.cols ?? 1,
+        rows: spec.rows ?? 1,
+        size: spec.size ?? '',
+        ...(spec.piping ? { piping: spec.piping } : {}),
+      };
+    case 'rocker':
+      return { kind: 'rocker' };
+    case 'stomp':
+      return { kind: 'stomp', shape: spec.shape ?? 'std' };
+    default:
+      return { kind: spec.t };
+  }
+}
+
 function main() {
   const effects = readEffects();
   mkdirSync(OUT, { recursive: true });
@@ -732,6 +769,7 @@ function main() {
       blurb: spec.blurb ?? TYPE_BLURBS[spec.type] ?? '',
       colors: bodyColorsFor(spec, e.module),
       art: BOXES[spec.t](spec),
+      look: lookFor(spec),
     });
   }
 

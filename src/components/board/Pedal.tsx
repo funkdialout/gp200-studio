@@ -10,6 +10,8 @@ import { ModuleGlyph } from './ModuleGlyph';
 import { PedalKnob } from './PedalKnob';
 import { PedalFader } from './PedalFader';
 import { ComboSelect, MiniSwitch } from './MiniSwitch';
+import { resolveLook } from './pedalLook';
+import './pedalRealism.css';
 
 export interface PedalProps {
   slot: EffectSlot;
@@ -38,7 +40,11 @@ export interface PedalProps {
   chainLength: number;
 }
 
-/** One effect slot rendered as a physical pedal (docs/board-design-system.md). */
+/**
+ * One effect slot rendered as physical gear (docs/board-design-system.md): an
+ * amp head for AMP, a speaker cabinet for CAB, a rocker treadle for WAH/VOL and
+ * a stompbox for everything else (see pedalLook.ts).
+ */
 export function Pedal({
   slot,
   index,
@@ -75,7 +81,14 @@ export function Pedal({
   // graphic EQs get faders, not knobs
   const isEq = moduleName === 'EQ';
 
+  const look = resolveLook(moduleName, art);
+  const form = look.form;
+  // amp knobs sit on the panel; cab knobs sit on a dark metal tray
+  const controlInk = form === 'amp' && panel ? panelText : form === 'cab' ? '#e4e4e6' : spec.ink;
+  const knobStyle = form === 'cab' ? 'dark' : spec.knob;
+
   const bodyVars = {
+    ...look.vars,
     '--body': spec.body,
     '--body-deep': spec.bodyDeep,
     '--ink': spec.ink,
@@ -83,19 +96,123 @@ export function Pedal({
     ...(panel ? { '--panel': panel, '--panel-text': panelText } : {}),
   } as CSSProperties;
 
-  const classes = ['pedal'];
-  if (wide) classes.push('wide');
+  const classes = ['pedal', ...look.classes];
+  // amps, cabs and treadles size themselves; only stompboxes use the wide shell
+  if (wide && form === 'stomp') classes.push('wide');
   if (dragging) classes.push('dragging');
   if (!slot.enabled) classes.push('bypassed');
 
+  // Stompboxes get a metal stomp switch. Amps and cabs have no footswitch: the
+  // power/standby switch (with its pilot jewel) is the bypass. A treadle's
+  // whole rocker plate is the toe switch.
+  const toggleLabel = `Toggle ${effectName}`;
   const footswitch = (
     <button
       type="button"
-      className={wide ? 'stomp-round' : 'treadle'}
+      className="stomp-round stomp-metal"
       aria-pressed={slot.enabled}
-      aria-label={`Toggle ${effectName}`}
+      aria-label={toggleLabel}
       onClick={onToggle}
     />
+  );
+  const powerSwitch = (label: string) => (
+    <button
+      type="button"
+      className={`gear-power${slot.enabled ? ' on' : ''}`}
+      aria-pressed={slot.enabled}
+      aria-label={toggleLabel}
+      title={slot.enabled ? `${label}: on` : `${label}: bypassed`}
+      onClick={onToggle}
+    >
+      <span className={`p-led jewel${slot.enabled ? ' on' : ''}`} aria-hidden="true" />
+      <span className="lever" aria-hidden="true" />
+      <span className="lever-label" aria-hidden="true">
+        {slot.enabled ? 'ON' : 'STBY'}
+      </span>
+    </button>
+  );
+
+  const nameButton = (
+    <div className="p-name">
+      <button
+        type="button"
+        className="p-name-btn"
+        aria-label={`Change ${moduleName} effect: ${effectName}`}
+        aria-haspopup="dialog"
+        onClick={onOpenPicker}
+      >
+        {form === 'stomp' && <ModuleGlyph module={moduleName} className="p-name-icon" />}
+        <span className="p-name-text">{effectName}</span>
+      </button>
+    </div>
+  );
+  const description = (
+    <p className="p-desc" title={caption}>
+      {caption}
+    </p>
+  );
+
+  // knob/switch drags must never start a pedal drag
+  const controls = (
+    <div
+      className={`controls${form === 'amp' ? ' amp-panel' : ''}${form === 'cab' ? ' cab-controls' : ''}`}
+      draggable
+      onDragStart={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      }}
+    >
+      {defs.map((def) => {
+        const value = slot.params[def.idx] ?? def.default;
+        // Two defs can share an idx (generated table quirk: Slapback's
+        // Sync + Trail both map param 3), so the key needs the name too.
+        const defKey = `${def.idx}-${def.name}`;
+        if (def.type === 'knob') {
+          if (isEq) {
+            return (
+              <PedalFader
+                key={defKey}
+                param={def}
+                value={value}
+                onChange={(v) => onParamChange(def.idx, v)}
+                pedalName={effectName}
+              />
+            );
+          }
+          return (
+            <PedalKnob
+              key={defKey}
+              param={def}
+              value={value}
+              onChange={(v) => onParamChange(def.idx, v)}
+              knobStyle={knobStyle}
+              ink={controlInk}
+              pedalName={effectName}
+            />
+          );
+        }
+        if (def.type === 'switch') {
+          return (
+            <MiniSwitch
+              key={defKey}
+              param={def}
+              value={value}
+              onChange={(v) => onParamChange(def.idx, v)}
+              pedalName={effectName}
+            />
+          );
+        }
+        return (
+          <ComboSelect
+            key={defKey}
+            param={def}
+            value={value}
+            onChange={(v) => onParamChange(def.idx, v)}
+            pedalName={effectName}
+          />
+        );
+      })}
+    </div>
   );
 
   // data-flip-id: Flip matches captured state to live elements by identity unless
@@ -132,8 +249,17 @@ export function Pedal({
       <span className="pedal-grip" aria-hidden="true" />
       <span className="jack in" data-jack="in" />
       <span className="jack out" data-jack="out" />
-      <span className="screw tl" /><span className="screw tr" />
-      <span className="screw bl" /><span className="screw br" />
+      {form === 'stomp' || form === 'rocker' ? (
+        <>
+          <span className="screw tl" /><span className="screw tr" />
+          <span className="screw bl" /><span className="screw br" />
+        </>
+      ) : (
+        <>
+          <span className="corner tl" /><span className="corner tr" />
+          <span className="corner bl" /><span className="corner br" />
+        </>
+      )}
       <span className="module-chip">{moduleName}</span>
       <button
         type="button"
@@ -164,90 +290,66 @@ export function Pedal({
         #{index + 1}
       </span>
 
-      {/* knob/switch drags must never start a pedal drag */}
-      <div
-        className={`controls${panel ? ' amp-panel' : ''}`}
-        draggable
-        onDragStart={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-        }}
-      >
-        {defs.map((def) => {
-          const value = slot.params[def.idx] ?? def.default;
-          // Two defs can share an idx (generated table quirk: Slapback's
-          // Sync + Trail both map param 3), so the key needs the name too.
-          const defKey = `${def.idx}-${def.name}`;
-          if (def.type === 'knob') {
-            if (isEq) {
-              return (
-                <PedalFader
-                  key={defKey}
-                  param={def}
-                  value={value}
-                  onChange={(v) => onParamChange(def.idx, v)}
-                  pedalName={effectName}
-                />
-              );
-            }
-            return (
-              <PedalKnob
-                key={defKey}
-                param={def}
-                value={value}
-                onChange={(v) => onParamChange(def.idx, v)}
-                knobStyle={spec.knob}
-                ink={panel ? panelText : spec.ink}
-                pedalName={effectName}
-              />
-            );
-          }
-          if (def.type === 'switch') {
-            return (
-              <MiniSwitch
-                key={defKey}
-                param={def}
-                value={value}
-                onChange={(v) => onParamChange(def.idx, v)}
-                pedalName={effectName}
-              />
-            );
-          }
-          return (
-            <ComboSelect
-              key={defKey}
-              param={def}
-              value={value}
-              onChange={(v) => onParamChange(def.idx, v)}
-              pedalName={effectName}
-            />
-          );
-        })}
-      </div>
-
-      <span className={`p-led${slot.enabled ? ' on' : ''}`} />
+      {form === 'amp' && (
+        <>
+          <span className="gear-handle" aria-hidden="true" />
+          <div className="amp-face">
+            <span className="amp-grille" aria-hidden="true" />
+            {nameButton}
+            {description}
+          </div>
+          <div className="amp-panel-row">
+            {powerSwitch('Standby')}
+            {controls}
+          </div>
+        </>
+      )}
+      {form === 'cab' && (
+        <>
+          <div className="cab-baffle" aria-hidden="true">
+            {Array.from({ length: look.cols * look.rows }, (_, i) => (
+              <span key={i} className="cab-speaker" />
+            ))}
+          </div>
+          <div className="cab-badge">
+            {nameButton}
+            {look.size && <span className="cab-size">{look.size}</span>}
+          </div>
+          <div className="cab-tray">
+            {powerSwitch('Cab')}
+            {controls}
+          </div>
+          {description}
+        </>
+      )}
+      {form === 'rocker' && (
+        <>
+          <button
+            type="button"
+            className={`rocker-plate${slot.enabled ? ' on' : ''}`}
+            aria-pressed={slot.enabled}
+            aria-label={toggleLabel}
+            onClick={onToggle}
+          />
+          <div className="rocker-toe">{nameButton}</div>
+          <span className={`p-led${slot.enabled ? ' on' : ''}`} />
+          {controls}
+          {description}
+        </>
+      )}
+      {form === 'stomp' && (
+        <>
+          {controls}
+          <span className={`p-led${slot.enabled ? ' on' : ''}`} />
+          {nameButton}
+          {description}
+          {wide ? <div className="fs-row">{footswitch}</div> : footswitch}
+        </>
+      )}
       {/* visual-only: state is announced via the footswitch aria-pressed */}
       {!slot.enabled && <span className="p-off-tag" aria-hidden="true">BYPASSED</span>}
 
-      <div className="p-name">
-        <button
-          type="button"
-          className="p-name-btn"
-          aria-label={`Change ${moduleName} effect: ${effectName}`}
-          aria-haspopup="dialog"
-          onClick={onOpenPicker}
-        >
-          <ModuleGlyph module={moduleName} className="p-name-icon" />
-          <span className="p-name-text">{effectName}</span>
-        </button>
-      </div>
-      <p className="p-desc" title={caption}>
-        {caption}
-      </p>
-
-      {wide ? <div className="fs-row">{footswitch}</div> : footswitch}
-
-      {/* Touch-only chain reorder. Absolutely positioned over the brand strip so
+      {/* Touch-only chain reorder. Absolutely positioned along the bottom edge so
           enabling them doesn't change the pedal's height (and with it the bay). */}
       {showMoveButtons && (
         <>
@@ -271,7 +373,6 @@ export function Pedal({
           </button>
         </>
       )}
-      <div className="brand-strip">GP200 Studio</div>
     </article>
   );
 }
