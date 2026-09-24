@@ -11,6 +11,7 @@ import { PedalKnob } from './PedalKnob';
 import { PedalFader } from './PedalFader';
 import { ComboSelect, MiniSwitch } from './MiniSwitch';
 import { resolveLook } from './pedalLook';
+import type { CycleDirection } from '@/core/effectCycle';
 import './pedalRealism.css';
 
 export interface PedalProps {
@@ -21,6 +22,8 @@ export interface PedalProps {
   onToggle: () => void;
   /** open the effect browser for this slot */
   onOpenPicker: () => void;
+  /** ‹ › step to the previous/next effect in this block, no menu */
+  onCycle: (direction: CycleDirection) => void;
   onParamChange: (paramIdx: number, value: number) => void;
   onDragStart: (index: number) => void;
   /** keyboard reorder (grip button arrows) */
@@ -51,6 +54,7 @@ export function Pedal({
   art,
   onToggle,
   onOpenPicker,
+  onCycle,
   onParamChange,
   onDragStart,
   onMove,
@@ -132,8 +136,21 @@ export function Pedal({
     </button>
   );
 
+  const cycleButton = (direction: CycleDirection) => (
+    <button
+      type="button"
+      className={`p-cycle ${direction === -1 ? 'prev' : 'next'}`}
+      aria-label={`${direction === -1 ? 'Previous' : 'Next'} ${moduleName} effect`}
+      title={`${direction === -1 ? 'Previous' : 'Next'} ${moduleName} effect`}
+      onClick={() => onCycle(direction)}
+    >
+      <span aria-hidden="true">{direction === -1 ? '‹' : '›'}</span>
+    </button>
+  );
+
   const nameButton = (
     <div className="p-name">
+      {cycleButton(-1)}
       <button
         type="button"
         className="p-name-btn"
@@ -144,6 +161,7 @@ export function Pedal({
         {form === 'stomp' && <ModuleGlyph module={moduleName} className="p-name-icon" />}
         <span className="p-name-text">{effectName}</span>
       </button>
+      {cycleButton(1)}
     </div>
   );
   const description = (

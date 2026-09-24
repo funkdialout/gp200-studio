@@ -350,7 +350,36 @@
   color: var(--chrome-muted);
 }
 
+.mobile-view .m-identity-row {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+}
+
+/* ‹ › effect cycling: thumb-sized, the full height of the identity plate */
+.mobile-view .m-cycle {
+  flex: none;
+  width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0 3px;
+  border-radius: 12px;
+  border: 1px solid var(--chrome-border);
+  background: var(--chrome-bg);
+  color: var(--chrome-text);
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.mobile-view .m-cycle:active {
+  background: var(--chrome-border);
+}
+
 .mobile-view .m-identity {
+  flex: 1;
+  min-width: 0;
   display: flex;
   align-items: center;
   gap: 12px;

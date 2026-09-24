@@ -1052,11 +1052,16 @@
 /* ── name plate (with transparent effect-change select overlay) ── */
 .board-view .p-name {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
   text-align: center;
   margin-top: 2px;
 }
 .board-view .p-name-btn {
   width: 100%;
+  min-width: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1096,6 +1101,39 @@
   border-color: color-mix(in srgb, var(--ink) 35%, transparent);
   background: color-mix(in srgb, var(--ink) 6%, transparent);
   outline: none;
+}
+/* ‹ › effect cycling beside the name: steps through the block's models
+   without opening the browser */
+.board-view .p-cycle {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 24px;
+  padding: 0 0 2px;
+  appearance: none;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-family: var(--font-dm-sans), sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink);
+  opacity: 0.55;
+  cursor: pointer;
+  transition: opacity 0.12s ease, border-color 0.12s ease, background 0.12s ease;
+}
+.board-view .p-cycle:hover,
+.board-view .p-cycle:focus-visible {
+  opacity: 1;
+  border-color: color-mix(in srgb, var(--ink) 35%, transparent);
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
+  outline: none;
+}
+.board-view .p-cycle:active {
+  background: color-mix(in srgb, var(--ink) 16%, transparent);
 }
 .board-view .p-desc {
   text-align: center;
@@ -2081,7 +2119,8 @@
   .effect-picker .ep-row,
   .effect-picker .ep-cat,
   .effect-picker .ep-close,
-  .board-view .p-name-btn {
+  .board-view .p-name-btn,
+  .board-view .p-cycle {
     transition: none;
   }
 }

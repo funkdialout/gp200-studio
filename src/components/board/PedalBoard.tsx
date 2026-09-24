@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type DragEvent } fro
 import type { GP200Preset, EffectSlot } from '@/core/types';
 import type { PushProgress } from '@/core/devicePush';
 import { getSlotModule } from '@/core/effectNames';
+import { stepEffect } from '@/core/effectCycle';
 import { isWideSlot } from './boardLayout';
 import { useFlipReorder } from './useFlipReorder';
 import { useBoardFit } from './useBoardFit';
@@ -353,6 +354,15 @@ export function PedalBoard({
           art={lookupPedalArt(artIndex, slot.effectId)}
           onToggle={() => onToggle(slot.slotIndex, slot.enabled)}
           onOpenPicker={() => setPickerSlot(slot.slotIndex)}
+          onCycle={(direction) => {
+            const next = stepEffect(
+              getSlotModule(slot.slotIndex),
+              slot.effectId,
+              direction,
+              userIrNames,
+            );
+            if (next !== null) onChangeEffect(slot.slotIndex, next);
+          }}
           onParamChange={(paramIdx, value) => onParamChange(slot.slotIndex, slot.effectId, paramIdx, value)}
           onDragStart={onDragStart}
           onMove={handleReorderMove}
