@@ -14,6 +14,24 @@ const NO_OP_ZOOM = 0.995;
 const STEPS = 5;
 
 /**
+ * Growing back needs a real gain. Shrinking is always applied (otherwise the
+ * board overflows), but a regrow of a single step is exactly the move a
+ * feedback loop makes, so it has to be worth at least this much.
+ */
+const GROW_HYSTERESIS = 0.02;
+
+/**
+ * Hunt breaker. If the fit keeps changing its answer while the window itself
+ * hasn't changed size, something the zoom affects is feeding back into the
+ * measurement (a scrollbar appearing, a line re-wrapping, a label crossing
+ * the edge). After this many changes inside the window below, the board
+ * settles on the smallest zoom it tried and stays there until the window is
+ * resized.
+ */
+const HUNT_CHANGES = 3;
+const HUNT_WINDOW_MS = 1000;
+
+/**
  * Shrink the pedal row just enough to keep the whole board on screen.
  *
  * The board is built from fixed-size enclosures (172/310px bays, 44px knobs,
@@ -38,6 +56,12 @@ const STEPS = 5;
  * measurement — laid-out height is monotonic in the scale, which is all a
  * binary search needs.
  *
+ * Stability: while fitting, the stage gets `data-fit`, which (board.css) hides
+ * horizontal overflow and reserves the vertical scrollbar's gutter, so neither
+ * scrollbar can appear or vanish as a side effect of a zoom change and move
+ * the wrap width under the measurement. The hysteresis and hunt breaker above
+ * are the backstop for anything else that feeds back.
+ *
  * @param rowsRef  the `.board-rows` element (also useFlipReorder's scope)
  * @param orderKey re-fit when the chain changes: swapping an effect changes a
  *                 pedal's height, and reordering changes where lines break
@@ -57,10 +81,19 @@ export function useBoardFit(
     if (!rows || !stage) return;
     if (!enabled) {
       rows.style.removeProperty('zoom');
+      delete stage.dataset.fit;
       return;
     }
+    stage.dataset.fit = '';
 
     let frame = 0;
+    let current = 1;
+    let lockedZoom: number | null = null;
+    let lockedFor = '';
+    let lastKey = '';
+    let changes: { at: number; zoom: number }[] = [];
+
+    const viewportKey = () => `${window.innerWidth}x${window.innerHeight}`;
 
     const apply = (zoom: number) => {
       if (zoom >= 1) rows.style.removeProperty('zoom');
@@ -68,15 +101,14 @@ export function useBoardFit(
       return rows.getBoundingClientRect().height;
     };
 
-    const fit = () => {
-      frame = 0;
+    const measure = () => {
       // Measure the unscaled board first: everything else in the stage (its
       // padding, the chassis frame, the floating deck) keeps its size when the
       // row shrinks, so that chrome comes off the height budget once and stays
       // off it.
       const naturalHeight = apply(1);
       const available = stage.clientHeight - (stage.scrollHeight - naturalHeight);
-      if (available <= 0 || naturalHeight <= available) return;
+      if (available <= 0 || naturalHeight <= available) return 1;
 
       // Largest scale whose *laid-out* height still fits.
       let low = MIN_ZOOM;
@@ -90,8 +122,44 @@ export function useBoardFit(
       // Quantise down: sub-pixel jitter would otherwise write a new zoom on
       // every observer tick, and rounding up puts the board back over the edge
       // it was just fitted inside.
-      let next = Math.max(MIN_ZOOM, Math.floor(low * 100) / 100);
-      if (next > NO_OP_ZOOM) next = 1;
+      const next = Math.max(MIN_ZOOM, Math.floor(low * 100) / 100);
+      return next > NO_OP_ZOOM ? 1 : next;
+    };
+
+    const fit = () => {
+      frame = 0;
+      const key = viewportKey();
+      if (lockedZoom !== null) {
+        if (key === lockedFor) {
+          apply(lockedZoom);
+          return;
+        }
+        // the window moved: the lock was for the old size
+        lockedZoom = null;
+        changes = [];
+      }
+
+      let next = measure();
+      // Hysteresis and the hunt count only apply while the window holds still:
+      // a real resize should track the window exactly.
+      const settled = key === lastKey;
+      if (!settled) changes = [];
+      lastKey = key;
+      // A small regrow at a fixed window size is what a feedback loop looks
+      // like; hold the current size.
+      if (settled && next > current && next < 1 && next - current < GROW_HYSTERESIS) next = current;
+
+      if (next !== current) {
+        const now = performance.now();
+        changes = changes.filter((c) => now - c.at < HUNT_WINDOW_MS);
+        changes.push({ at: now, zoom: next });
+        if (changes.length > HUNT_CHANGES) {
+          lockedZoom = Math.min(current, ...changes.map((c) => c.zoom));
+          lockedFor = key;
+          next = lockedZoom;
+        }
+      }
+      current = next;
       apply(next);
     };
 
@@ -101,8 +169,7 @@ export function useBoardFit(
 
     fit();
     // The stage is the box being fitted into; the rows are what changes height
-    // when an effect swap loads a taller pedal. Observing the rows can't loop:
-    // every fit re-measures from scale 1 and lands on the same value.
+    // when an effect swap loads a taller pedal.
     const observer = new ResizeObserver(schedule);
     observer.observe(stage);
     observer.observe(rows);
@@ -113,6 +180,7 @@ export function useBoardFit(
       observer.disconnect();
       window.removeEventListener('resize', schedule);
       rows.style.removeProperty('zoom');
+      delete stage.dataset.fit;
     };
   }, [rowsRef, orderKey, enabled]);
 
