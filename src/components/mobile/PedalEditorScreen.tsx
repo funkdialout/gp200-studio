@@ -8,6 +8,7 @@ import { EffectPicker } from '@/components/board/EffectPicker';
 import { lookupPedalArt, type ManifestIndex } from '@/components/board/pedalManifest';
 import { playSwitchClick } from '@/lib/uiSound';
 import { stepEffect, type CycleDirection } from '@/core/effectCycle';
+import { loadedUserIrName, userIrSlotLabel } from '@/core/userIr';
 import { PedalArt } from './PedalArt';
 import { MobileKnob } from './MobileKnob';
 import { FocusRail } from './FocusRail';
@@ -49,11 +50,12 @@ export function PedalEditorScreen({
   /** param the focus rail is pointed at — the last knob touched */
   const [focusIdx, setFocusIdx] = useState<number | null>(null);
 
-  const effectName = getEffectName(slot.effectId);
+  const effectName = loadedUserIrName(slot.effectId, userIrNames) ?? getEffectName(slot.effectId);
   const moduleName = getSlotModule(slot.slotIndex);
   const art = lookupPedalArt(artIndex, slot.effectId);
   const spec = art?.colors ?? getBodySpec(moduleName);
   const defs = getEffectParams(slot.effectId);
+  const irLabel = userIrSlotLabel(slot.effectId);
   const basedOn = art?.basedOn ?? EFFECT_DESCRIPTIONS[effectName] ?? '';
 
   // Knobs go on the face, in hardware order; everything else reads better as a
@@ -121,7 +123,11 @@ export function PedalEditorScreen({
         <button type="button" className="m-identity" onClick={() => setPickerOpen(true)}>
           <span className="m-identity-text">
             <span className="m-identity-name">{effectName}</span>
-            {basedOn && <span className="m-identity-based">based on {basedOn}</span>}
+            {irLabel ? (
+              <span className="m-identity-based">{irLabel}</span>
+            ) : (
+              basedOn && <span className="m-identity-based">based on {basedOn}</span>
+            )}
           </span>
           <span className="m-identity-swap">SWAP</span>
         </button>

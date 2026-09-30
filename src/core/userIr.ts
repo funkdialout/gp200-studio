@@ -20,3 +20,20 @@ export function userIrSlotIndex(effectId: number): number | null {
   }
   return slot;
 }
+
+/**
+ * The name of the IR loaded in a User-IR slot, or null when the effect is not a
+ * User-IR slot or the device has not reported a name for it (offline, still
+ * loading, or an empty slot).
+ */
+export function loadedUserIrName(effectId: number, userIrNames: readonly string[]): string | null {
+  const slot = userIrSlotIndex(effectId);
+  if (slot === null) return null;
+  return userIrNames[slot]?.trim() || null;
+}
+
+/** Caption for a User-IR slot, e.g. "User IR 03". */
+export function userIrSlotLabel(effectId: number): string | null {
+  const slot = userIrSlotIndex(effectId);
+  return slot === null ? null : `User IR ${String(slot + 1).padStart(2, '0')}`;
+}

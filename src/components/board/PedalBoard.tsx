@@ -352,6 +352,7 @@ export function PedalBoard({
           slot={slot}
           index={index}
           art={lookupPedalArt(artIndex, slot.effectId)}
+          userIrNames={userIrNames}
           onToggle={() => onToggle(slot.slotIndex, slot.enabled)}
           onOpenPicker={() => setPickerSlot(slot.slotIndex)}
           onCycle={(direction) => {
@@ -422,6 +423,7 @@ export function PedalBoard({
       <InfoBar
         slot={inspected}
         art={inspected ? lookupPedalArt(artIndex, inspected.effectId) : undefined}
+        userIrNames={userIrNames}
         pinned={pinnedSlot !== null && inspected !== null}
         onUnpin={() => setPinnedSlot(null)}
       />
