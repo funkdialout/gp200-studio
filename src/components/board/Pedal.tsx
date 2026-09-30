@@ -11,6 +11,8 @@ import { PedalKnob } from './PedalKnob';
 import { PedalFader } from './PedalFader';
 import { ComboSelect, MiniSwitch } from './MiniSwitch';
 import { resolveLook } from './pedalLook';
+import type { CycleDirection } from '@/core/effectCycle';
+import { loadedUserIrName, userIrSlotLabel } from '@/core/userIr';
 import './pedalRealism.css';
 
 export interface PedalProps {
@@ -18,9 +20,13 @@ export interface PedalProps {
   /** array position in the chain (0-based) */
   index: number;
   art?: PedalArtEntry;
+  /** Device User-IR names in slot order, so an IR slot shows the IR it holds. */
+  userIrNames?: readonly string[];
   onToggle: () => void;
   /** open the effect browser for this slot */
   onOpenPicker: () => void;
+  /** ‹ › step to the previous/next effect in this block, no menu */
+  onCycle: (direction: CycleDirection) => void;
   onParamChange: (paramIdx: number, value: number) => void;
   onDragStart: (index: number) => void;
   /** keyboard reorder (grip button arrows) */
@@ -49,8 +55,10 @@ export function Pedal({
   slot,
   index,
   art,
+  userIrNames = [],
   onToggle,
   onOpenPicker,
+  onCycle,
   onParamChange,
   onDragStart,
   onMove,
@@ -62,7 +70,9 @@ export function Pedal({
 }: PedalProps) {
   const [dragging, setDragging] = useState(false);
 
-  const effectName = getEffectName(slot.effectId);
+  // a User-IR slot shows the IR loaded in it; every "USER IR" otherwise looks the same
+  const irName = loadedUserIrName(slot.effectId, userIrNames);
+  const effectName = irName ?? getEffectName(slot.effectId);
   // module identity comes from the physical block (slot 5 is ALWAYS the cab),
   // not the effectId; unmapped/zeroed ids must not relabel or recolor a slot
   const moduleName = getSlotModule(slot.slotIndex);
@@ -73,7 +83,8 @@ export function Pedal({
   // swapping an effect only changes the padding inside the bay, never a
   // neighbour's position (see pedalIsWide)
   const wide = pedalIsWide(slot.slotIndex, slot.effectId);
-  const caption = art?.basedOn ?? EFFECT_DESCRIPTIONS[effectName] ?? '';
+  const caption =
+    userIrSlotLabel(slot.effectId) ?? art?.basedOn ?? EFFECT_DESCRIPTIONS[effectName] ?? '';
 
   // amps get a control-panel strip (knobs live on the panel, like the hardware)
   const panel = art?.colors?.panel;
@@ -132,18 +143,33 @@ export function Pedal({
     </button>
   );
 
+  const cycleButton = (direction: CycleDirection) => (
+    <button
+      type="button"
+      className={`p-cycle ${direction === -1 ? 'prev' : 'next'}`}
+      aria-label={`${direction === -1 ? 'Previous' : 'Next'} ${moduleName} effect`}
+      title={`${direction === -1 ? 'Previous' : 'Next'} ${moduleName} effect`}
+      onClick={() => onCycle(direction)}
+    >
+      <span aria-hidden="true">{direction === -1 ? '‹' : '›'}</span>
+    </button>
+  );
+
   const nameButton = (
     <div className="p-name">
+      {cycleButton(-1)}
       <button
         type="button"
         className="p-name-btn"
         aria-label={`Change ${moduleName} effect: ${effectName}`}
         aria-haspopup="dialog"
+        title={effectName}
         onClick={onOpenPicker}
       >
         {form === 'stomp' && <ModuleGlyph module={moduleName} className="p-name-icon" />}
         <span className="p-name-text">{effectName}</span>
       </button>
+      {cycleButton(1)}
     </div>
   );
   const description = (

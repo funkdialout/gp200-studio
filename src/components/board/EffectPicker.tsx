@@ -92,8 +92,19 @@ function groupRows(rows: PickerRow[], categories: Category[]): Group[] {
 }
 
 function Thumb({ art, name, accent }: { art: PedalArtEntry | undefined; name: string; accent: string }) {
-  if (art) {
-    return <img className="ep-thumb-img" src={pedalArtUrl(art)} alt="" loading="lazy" />;
+  // an artwork that fails to load falls back to the monogram tile rather than
+  // leaving the browser's broken-image icon in the list
+  const [failed, setFailed] = useState(false);
+  if (art && !failed) {
+    return (
+      <img
+        className="ep-thumb-img"
+        src={pedalArtUrl(art)}
+        alt=""
+        loading="lazy"
+        onError={() => setFailed(true)}
+      />
+    );
   }
   return (
     <span className="ep-thumb-fallback" style={{ color: accent }}>
