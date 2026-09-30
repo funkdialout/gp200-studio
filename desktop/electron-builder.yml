@@ -1,0 +1,42 @@
+appId: com.funkdialout.gp200studio
+productName: GP200 Studio
+artifactName: GP200-Studio-${version}-${os}-${arch}.${ext}
+directories:
+  app: app
+  buildResources: build
+  output: release
+files:
+  - main.cjs
+  - package.json
+  - dist/**
+publish: null
+
+mac:
+  target:
+    - target: dmg
+      arch: [x64]
+  category: public.app-category.music
+  icon: build/icon.png
+  identity: null
+  extendInfo:
+    NSMicrophoneUsageDescription: GP200 Studio records loops from your audio input.
+
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+  icon: build/icon.png
+
+nsis:
+  oneClick: true
+  perMachine: false
+  createDesktopShortcut: always
+  createStartMenuShortcut: true
+  shortcutName: GP200 Studio
+
+linux:
+  target:
+    - target: AppImage
+      arch: [x64]
+  category: Audio
+  icon: build/icon.png

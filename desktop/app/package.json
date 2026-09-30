@@ -1,0 +1,9 @@
+{
+  "name": "gp200-studio",
+  "productName": "GP200 Studio",
+  "version": "1.0.0",
+  "description": "Desktop editor and loop station for the Valeton GP-200",
+  "author": "funkdialout",
+  "license": "GPL-3.0-only",
+  "main": "main.cjs"
+}
