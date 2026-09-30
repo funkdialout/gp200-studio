@@ -295,7 +295,8 @@ export function BoardTopBar({
         </button>
         <button
           type="button"
-          className="deck-btn"
+          className="deck-btn deck-btn-library"
+          aria-label="Library"
           title="Bulk preset library: import folders of .prst files, search, and load a selection onto the device"
           onClick={onOpenLibrary}
         >

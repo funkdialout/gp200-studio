@@ -201,6 +201,15 @@
      back-forward swipe gestures on touch devices */
   overscroll-behavior: contain;
 }
+/* While useBoardFit is sizing the board, no scrollbar may come or go as a side
+   effect of a zoom change: a horizontal one (a cable stub or label grazing the
+   edge) steals height, a vertical one steals wrap width, and either moves the
+   very measurement the fit is based on, so the pedals hunt for a size. The
+   wrapped board never needs sideways scrolling, and both-edges keeps it centred. */
+.board-view .stage[data-fit] {
+  overflow-x: hidden;
+  scrollbar-gutter: stable both-edges;
+}
 .board-view .cables-svg {
   position: absolute;
   inset: 0;
@@ -2857,6 +2866,15 @@
    info dots get discovered at all. */
 @media (hover: none) and (min-width: 640px) and (max-width: 1366.98px) {
   .board-view .info-bar:has(.i-empty) {
+    display: none;
+  }
+}
+
+/* LIBRARY joined an already-full cluster. On desktops narrower than 1600px it
+   goes icon-only (its aria-label and title still name it) so the top bar keeps
+   to one line instead of dropping CLOSE and the power switch onto a second. */
+@media (min-width: 1280px) and (max-width: 1599.98px) {
+  .board-view .board-topbar .deck-btn-library .db-label {
     display: none;
   }
 }
