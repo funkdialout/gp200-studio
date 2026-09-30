@@ -1,0 +1,4 @@
+node_modules/
+release/
+app/dist/
+build/icon.png
