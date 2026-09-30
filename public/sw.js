@@ -29,7 +29,9 @@
  *     "normal website", never to a broken one.
  */
 
-const VERSION = 'v1';
+// v2: pedals/manifest.json gained the board `look` object (board realism pass);
+// a new cache name drops the stale-while-revalidate copy of the old shape.
+const VERSION = 'v2';
 const CACHE = `gp200-studio-${VERSION}`;
 
 /**

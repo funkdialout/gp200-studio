@@ -72,11 +72,6 @@ const ACTIONS: Record<string, ActionSpec> = {
     d: '<circle cx="8" cy="8" r="5.8" /><path d="M6.3 6.2a1.8 1.8 0 1 1 2.3 2.2c-.4.2-.6.5-.6.9v.3" /><path d="M8 12.1h.01" />',
     color: '#5c6066',
   },
-  // support the project: a cup with steam
-  coffee: {
-    d: '<path d="M2.8 6.2h8.4v3.4a3.4 3.4 0 0 1-3.4 3.4H6.2a3.4 3.4 0 0 1-3.4-3.4z" /><path d="M11.2 7.2h1.2a1.6 1.6 0 0 1 0 3.2h-1.2" /><path d="M5.6 2.2v1.8M8.4 2.2v1.8" />',
-    color: '#8a6320',
-  },
   // close the preset: step out through a door
   close: {
     d: '<path d="M9.4 2.6H4.2a1.4 1.4 0 0 0-1.4 1.4v8a1.4 1.4 0 0 0 1.4 1.4h5.2" /><path d="m10.8 5.4 2.6 2.6-2.6 2.6" /><path d="M13.4 8H6.6" />',
@@ -121,6 +116,11 @@ const ACTIONS: Record<string, ActionSpec> = {
   ctrl: {
     d: '<circle cx="5.2" cy="5.2" r="2.2" /><circle cx="10.8" cy="5.2" r="2.2" /><circle cx="5.2" cy="10.8" r="2.2" /><circle cx="10.8" cy="10.8" r="2.2" />',
     color: '#7a4fb5',
+  },
+  // preset library: a bookshelf of spines (distinct from the two-slot "patches" mark)
+  library: {
+    d: '<path d="M3 2.4v11.2M6.2 2.4v11.2M9.4 2.4v11.2" /><path d="m11.8 3 1.8 10.6-3.2.5" />',
+    color: '#2f6fa8',
   },
 };
 

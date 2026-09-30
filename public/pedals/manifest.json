@@ -14,6 +14,13 @@
       "knob": "dark",
       "led": "#ff4d4d"
     },
+    "look": {
+      "template": "stomp",
+      "label": "COMP",
+      "shape": "standard",
+      "plate": true,
+      "knob": "dark"
+    },
     "art": {
       "x": 55.6,
       "w": 48.8
@@ -37,6 +44,13 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "C4",
+      "shape": "standard",
+      "plate": true,
+      "knob": "dark"
     },
     "art": {
       "x": 55.6,
@@ -62,6 +76,13 @@
       "knob": "dark",
       "led": "#ff4d4d"
     },
+    "look": {
+      "template": "stomp",
+      "label": "S-COMP",
+      "shape": "standard",
+      "plate": true,
+      "knob": "dark"
+    },
     "art": {
       "x": 55.6,
       "w": 48.8
@@ -85,6 +106,13 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "AC·B",
+      "shape": "standard",
+      "plate": true,
+      "knob": "cream"
     },
     "art": {
       "x": 55.6,
@@ -110,6 +138,13 @@
       "knob": "cream",
       "led": "#ff4d4d"
     },
+    "look": {
+      "template": "stomp",
+      "label": "BB",
+      "shape": "standard",
+      "plate": true,
+      "knob": "cream"
+    },
     "art": {
       "x": 55.6,
       "w": 48.8
@@ -133,6 +168,13 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "RC·B",
+      "shape": "standard",
+      "plate": true,
+      "knob": "cream"
     },
     "art": {
       "x": 55.6,
@@ -158,6 +200,13 @@
       "knob": "cream",
       "led": "#ff4d4d"
     },
+    "look": {
+      "template": "stomp",
+      "label": "GRIND",
+      "shape": "standard",
+      "plate": true,
+      "knob": "cream"
+    },
     "art": {
       "x": 55.6,
       "w": 48.8
@@ -181,6 +230,13 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "MICRO",
+      "shape": "mxr",
+      "plate": false,
+      "knob": "dark"
     },
     "art": {
       "x": 55.6,
@@ -206,6 +262,13 @@
       "knob": "dark",
       "led": "#ff4d4d"
     },
+    "look": {
+      "template": "stomp",
+      "label": "FAT",
+      "shape": "mxr",
+      "plate": false,
+      "knob": "dark"
+    },
     "art": {
       "x": 55.6,
       "w": 48.8
@@ -229,6 +292,13 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "EP",
+      "shape": "mxr",
+      "plate": false,
+      "knob": "dark"
     },
     "art": {
       "x": 55.6,
@@ -254,6 +324,13 @@
       "knob": "dark",
       "led": "#4dff88"
     },
+    "look": {
+      "template": "stomp",
+      "label": "GATE",
+      "shape": "mxr",
+      "plate": false,
+      "knob": "dark"
+    },
     "art": {
       "x": 55.6,
       "w": 48.8
@@ -278,6 +355,12 @@
       "knob": "dark",
       "led": "#4dff88"
     },
+    "look": {
+      "template": "util",
+      "label": "GATE 2",
+      "motif": "gate",
+      "knob": "dark"
+    },
     "art": {
       "x": 51,
       "w": 58
@@ -300,6 +383,12 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#4dff88"
+    },
+    "look": {
+      "template": "util",
+      "label": "GATE 3",
+      "motif": "gate",
+      "knob": "dark"
     },
     "art": {
       "x": 51,
@@ -324,6 +413,12 @@
       "knob": "dark",
       "led": "#ff4d4d"
     },
+    "look": {
+      "template": "util",
+      "label": "REFINER",
+      "motif": "wave2",
+      "knob": "dark"
+    },
     "art": {
       "x": 51,
       "w": 58
@@ -346,6 +441,13 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "AC SIM",
+      "shape": "standard",
+      "plate": true,
+      "knob": "dark"
     },
     "art": {
       "x": 55.6,
@@ -371,6 +473,12 @@
       "knob": "dark",
       "led": "#ff4d4d"
     },
+    "look": {
+      "template": "util",
+      "label": "T-WAH",
+      "motif": "filter",
+      "knob": "dark"
+    },
     "art": {
       "x": 51,
       "w": 58
@@ -393,6 +501,12 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "util",
+      "label": "A-WAH",
+      "motif": "filter",
+      "knob": "cream"
     },
     "art": {
       "x": 51,
@@ -417,6 +531,12 @@
       "knob": "cream",
       "led": "#ff4d4d"
     },
+    "look": {
+      "template": "util",
+      "label": "STEP",
+      "motif": "steps",
+      "knob": "cream"
+    },
     "art": {
       "x": 51,
       "w": 58
@@ -439,6 +559,12 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "util",
+      "label": "OCTA",
+      "motif": "octave",
+      "knob": "cream"
     },
     "art": {
       "x": 51,
@@ -463,6 +589,12 @@
       "knob": "cream",
       "led": "#ff4d4d"
     },
+    "look": {
+      "template": "util",
+      "label": "PITCH",
+      "motif": "harmony",
+      "knob": "cream"
+    },
     "art": {
       "x": 51,
       "w": 58
@@ -485,6 +617,12 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "util",
+      "label": "P-BEND",
+      "motif": "octave",
+      "knob": "cream"
     },
     "art": {
       "x": 51,
@@ -509,6 +647,12 @@
       "knob": "cream",
       "led": "#4da6ff"
     },
+    "look": {
+      "template": "util",
+      "label": "DETUNE",
+      "motif": "detune",
+      "knob": "cream"
+    },
     "art": {
       "x": 51,
       "w": 58
@@ -531,6 +675,12 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#4da6ff"
+    },
+    "look": {
+      "template": "util",
+      "label": "BIT SMASH",
+      "motif": "bits",
+      "knob": "cream"
     },
     "art": {
       "x": 51,
@@ -555,6 +705,12 @@
       "knob": "dark",
       "led": "#ff4d4d"
     },
+    "look": {
+      "template": "util",
+      "label": "RING",
+      "motif": "ring",
+      "knob": "dark"
+    },
     "art": {
       "x": 51,
       "w": 58
@@ -577,6 +733,12 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "util",
+      "label": "SATURATE",
+      "motif": "tapesat",
+      "knob": "cream"
     },
     "art": {
       "x": 51,
@@ -601,6 +763,13 @@
       "knob": "dark",
       "led": "#ff4d4d"
     },
+    "look": {
+      "template": "eq",
+      "label": "GTR EQ 1",
+      "bands": 5,
+      "sliderColor": "#f5f5f0",
+      "knob": "dark"
+    },
     "art": {
       "x": 54,
       "w": 52
@@ -623,6 +792,13 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "eq",
+      "label": "GTR EQ 2",
+      "bands": 5,
+      "sliderColor": "#f5f5f0",
+      "knob": "dark"
     },
     "art": {
       "x": 54,
@@ -647,6 +823,13 @@
       "knob": "cream",
       "led": "#ff4d4d"
     },
+    "look": {
+      "template": "eq",
+      "label": "BASS EQ 1",
+      "bands": 5,
+      "sliderColor": "#f5f5f0",
+      "knob": "cream"
+    },
     "art": {
       "x": 54,
       "w": 52
@@ -669,6 +852,13 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "eq",
+      "label": "BASS EQ 2",
+      "bands": 5,
+      "sliderColor": "#f5f5f0",
+      "knob": "cream"
     },
     "art": {
       "x": 54,
@@ -693,6 +883,13 @@
       "knob": "cream",
       "led": "#ff4d4d"
     },
+    "look": {
+      "template": "eq",
+      "label": "MESS EQ",
+      "bands": 5,
+      "sliderColor": "#f5f5f0",
+      "knob": "cream"
+    },
     "art": {
       "x": 54,
       "w": 52
@@ -715,6 +912,13 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "eq",
+      "label": "HYPER EQ",
+      "bands": 10,
+      "sliderColor": "#f5f5f0",
+      "knob": "cream"
     },
     "art": {
       "x": 42,
@@ -739,6 +943,11 @@
       "knob": "cream",
       "led": "#ff4d4d"
     },
+    "look": {
+      "template": "rocker",
+      "label": "HAMMY",
+      "knob": "cream"
+    },
     "art": {
       "x": 36,
       "w": 88
@@ -761,6 +970,12 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "util",
+      "label": "HARM 1",
+      "motif": "harmony",
+      "knob": "dark"
     },
     "art": {
       "x": 51,
@@ -785,6 +1000,12 @@
       "knob": "cream",
       "led": "#ff4d4d"
     },
+    "look": {
+      "template": "util",
+      "label": "HARM 2",
+      "motif": "harmony",
+      "knob": "cream"
+    },
     "art": {
       "x": 51,
       "w": 58
@@ -807,6 +1028,13 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "808",
+      "shape": "standard",
+      "plate": true,
+      "knob": "cream"
     },
     "art": {
       "x": 55.6,
@@ -832,6 +1060,13 @@
       "knob": "cream",
       "led": "#ff4d4d"
     },
+    "look": {
+      "template": "stomp",
+      "label": "OD·9",
+      "shape": "standard",
+      "plate": true,
+      "knob": "cream"
+    },
     "art": {
       "x": 55.6,
       "w": 48.8
@@ -855,6 +1090,13 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "OD·1",
+      "shape": "standard",
+      "plate": true,
+      "knob": "dark"
     },
     "art": {
       "x": 55.6,
@@ -880,6 +1122,13 @@
       "knob": "cream",
       "led": "#ff4d4d"
     },
+    "look": {
+      "template": "stomp",
+      "label": "SOV·2",
+      "shape": "standard",
+      "plate": true,
+      "knob": "cream"
+    },
     "art": {
       "x": 55.6,
       "w": 48.8
@@ -903,6 +1152,13 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "SD·1",
+      "shape": "standard",
+      "plate": true,
+      "knob": "dark"
     },
     "art": {
       "x": 55.6,
@@ -928,6 +1184,13 @@
       "knob": "cream",
       "led": "#ff4d4d"
     },
+    "look": {
+      "template": "stomp",
+      "label": "SCREAM",
+      "shape": "standard",
+      "plate": true,
+      "knob": "cream"
+    },
     "art": {
       "x": 55.6,
       "w": 48.8
@@ -951,6 +1214,13 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "BD·2",
+      "shape": "standard",
+      "plate": true,
+      "knob": "cream"
     },
     "art": {
       "x": 55.6,
@@ -976,6 +1246,13 @@
       "knob": "dark",
       "led": "#ff4d4d"
     },
+    "look": {
+      "template": "stomp",
+      "label": "OCD",
+      "shape": "standard",
+      "plate": true,
+      "knob": "dark"
+    },
     "art": {
       "x": 55.6,
       "w": 48.8
@@ -999,6 +1276,13 @@
       "ink": "#2a4ad8",
       "knob": "dark",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "TUBE DRV",
+      "shape": "standard",
+      "plate": true,
+      "knob": "dark"
     },
     "art": {
       "x": 55.6,
@@ -1024,6 +1308,13 @@
       "knob": "dark",
       "led": "#ff4d4d"
     },
+    "look": {
+      "template": "stomp",
+      "label": "BLUESBRKR",
+      "shape": "standard",
+      "plate": true,
+      "knob": "dark"
+    },
     "art": {
       "x": 55.6,
       "w": 48.8
@@ -1047,6 +1338,13 @@
       "ink": "#d8b860",
       "knob": "cream",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "MASTER",
+      "shape": "standard",
+      "plate": true,
+      "knob": "cream"
     },
     "art": {
       "x": 55.6,
@@ -1072,6 +1370,13 @@
       "knob": "dark",
       "led": "#ff4d4d"
     },
+    "look": {
+      "template": "stomp",
+      "label": "ZEN",
+      "shape": "mxr",
+      "plate": false,
+      "knob": "dark"
+    },
     "art": {
       "x": 55.6,
       "w": 48.8
@@ -1095,6 +1400,13 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "CENTAUR",
+      "shape": "big",
+      "plate": true,
+      "knob": "dark"
     },
     "art": {
       "x": 47.6,
@@ -1120,6 +1432,13 @@
       "knob": "cream",
       "led": "#ffffff"
     },
+    "look": {
+      "template": "stomp",
+      "label": "PRECISION",
+      "shape": "standard",
+      "plate": true,
+      "knob": "cream"
+    },
     "art": {
       "x": 55.6,
       "w": 48.8
@@ -1143,6 +1462,13 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "TIMMY",
+      "shape": "mxr",
+      "plate": false,
+      "knob": "dark"
     },
     "art": {
       "x": 55.6,
@@ -1168,6 +1494,13 @@
       "knob": "dark",
       "led": "#ff4d4d"
     },
+    "look": {
+      "template": "stomp",
+      "label": "MUFF",
+      "shape": "big",
+      "plate": true,
+      "knob": "dark"
+    },
     "art": {
       "x": 47.6,
       "w": 64.8
@@ -1191,6 +1524,13 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "FUZZ",
+      "shape": "round",
+      "plate": false,
+      "knob": "cream"
     },
     "art": {
       "x": 53,
@@ -1216,6 +1556,13 @@
       "knob": "dark",
       "led": "#ff4d4d"
     },
+    "look": {
+      "template": "stomp",
+      "label": "BENDER",
+      "shape": "mxr",
+      "plate": false,
+      "knob": "dark"
+    },
     "art": {
       "x": 55.6,
       "w": 48.8
@@ -1239,6 +1586,13 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "DIST +",
+      "shape": "mxr",
+      "plate": false,
+      "knob": "dark"
     },
     "art": {
       "x": 55.6,
@@ -1264,6 +1618,13 @@
       "knob": "dark",
       "led": "#ff4d4d"
     },
+    "look": {
+      "template": "stomp",
+      "label": "DS·1",
+      "shape": "standard",
+      "plate": true,
+      "knob": "dark"
+    },
     "art": {
       "x": 55.6,
       "w": 48.8
@@ -1287,6 +1648,13 @@
       "ink": "#e8e8e8",
       "knob": "cream",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "RAT",
+      "shape": "mxr",
+      "plate": false,
+      "knob": "cream"
     },
     "art": {
       "x": 55.6,
@@ -1312,6 +1680,13 @@
       "knob": "cream",
       "led": "#ff4d4d"
     },
+    "look": {
+      "template": "stomp",
+      "label": "GUV'NOR",
+      "shape": "standard",
+      "plate": true,
+      "knob": "cream"
+    },
     "art": {
       "x": 55.6,
       "w": 48.8
@@ -1335,6 +1710,13 @@
       "ink": "#c8c8c8",
       "knob": "cream",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "SHRED",
+      "shape": "standard",
+      "plate": true,
+      "knob": "cream"
     },
     "art": {
       "x": 55.6,
@@ -1360,6 +1742,13 @@
       "knob": "cream",
       "led": "#ff4d4d"
     },
+    "look": {
+      "template": "stomp",
+      "label": "CRUNCH",
+      "shape": "mxr",
+      "plate": false,
+      "knob": "cream"
+    },
     "art": {
       "x": 55.6,
       "w": 48.8
@@ -1383,6 +1772,13 @@
       "ink": "#e04030",
       "knob": "cream",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "RIOT",
+      "shape": "standard",
+      "plate": true,
+      "knob": "cream"
     },
     "art": {
       "x": 55.6,
@@ -1408,6 +1804,13 @@
       "knob": "cream",
       "led": "#ff4d4d"
     },
+    "look": {
+      "template": "stomp",
+      "label": "FLEX",
+      "shape": "standard",
+      "plate": true,
+      "knob": "cream"
+    },
     "art": {
       "x": 55.6,
       "w": 48.8
@@ -1431,6 +1834,13 @@
       "ink": "#e8e8ea",
       "knob": "cream",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "BASS OD",
+      "shape": "standard",
+      "plate": true,
+      "knob": "cream"
     },
     "art": {
       "x": 55.6,
@@ -1456,6 +1866,13 @@
       "knob": "cream",
       "led": "#ffffff"
     },
+    "look": {
+      "template": "stomp",
+      "label": "B7K",
+      "shape": "mxr",
+      "plate": false,
+      "knob": "cream"
+    },
     "art": {
       "x": 55.6,
       "w": 48.8
@@ -1479,6 +1896,13 @@
       "ink": "#6a3ab0",
       "knob": "dark",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "P.O.T.",
+      "shape": "standard",
+      "plate": true,
+      "knob": "dark"
     },
     "art": {
       "x": 55.6,
@@ -1504,6 +1928,13 @@
       "knob": "cream",
       "led": "#ff4d4d"
     },
+    "look": {
+      "template": "stomp",
+      "label": "HAMMER",
+      "shape": "standard",
+      "plate": true,
+      "knob": "cream"
+    },
     "art": {
       "x": 55.6,
       "w": 48.8
@@ -1527,6 +1958,13 @@
       "ink": "#d8b860",
       "knob": "cream",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "BE·OD",
+      "shape": "standard",
+      "plate": true,
+      "knob": "cream"
     },
     "art": {
       "x": 55.6,
@@ -1552,6 +1990,13 @@
       "knob": "cream",
       "led": "#4da6ff"
     },
+    "look": {
+      "template": "stomp",
+      "label": "CE·3",
+      "shape": "standard",
+      "plate": true,
+      "knob": "cream"
+    },
     "art": {
       "x": 55.6,
       "w": 48.8
@@ -1575,6 +2020,13 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#4da6ff"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "CE·1",
+      "shape": "big",
+      "plate": true,
+      "knob": "dark"
     },
     "art": {
       "x": 47.6,
@@ -1600,6 +2052,13 @@
       "knob": "dark",
       "led": "#4da6ff"
     },
+    "look": {
+      "template": "stomp",
+      "label": "DC·2",
+      "shape": "standard",
+      "plate": true,
+      "knob": "dark"
+    },
     "art": {
       "x": 55.6,
       "w": 48.8
@@ -1623,6 +2082,13 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#4da6ff"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "B-CHORUS",
+      "shape": "standard",
+      "plate": true,
+      "knob": "cream"
     },
     "art": {
       "x": 55.6,
@@ -1648,6 +2114,13 @@
       "knob": "dark",
       "led": "#4da6ff"
     },
+    "look": {
+      "template": "stomp",
+      "label": "CH·1",
+      "shape": "standard",
+      "plate": true,
+      "knob": "dark"
+    },
     "art": {
       "x": 55.6,
       "w": 48.8
@@ -1671,6 +2144,13 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#4da6ff"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "BF·2",
+      "shape": "standard",
+      "plate": true,
+      "knob": "cream"
     },
     "art": {
       "x": 55.6,
@@ -1696,6 +2176,13 @@
       "knob": "cream",
       "led": "#4da6ff"
     },
+    "look": {
+      "template": "stomp",
+      "label": "B-JET",
+      "shape": "standard",
+      "plate": true,
+      "knob": "cream"
+    },
     "art": {
       "x": 55.6,
       "w": 48.8
@@ -1719,6 +2206,13 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#4da6ff"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "N-JET",
+      "shape": "standard",
+      "plate": true,
+      "knob": "cream"
     },
     "art": {
       "x": 55.6,
@@ -1744,6 +2238,12 @@
       "knob": "cream",
       "led": "#4da6ff"
     },
+    "look": {
+      "template": "util",
+      "label": "TREM JET",
+      "motif": "wave2",
+      "knob": "cream"
+    },
     "art": {
       "x": 51,
       "w": 58
@@ -1766,6 +2266,13 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#4da6ff"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "VB·2",
+      "shape": "standard",
+      "plate": true,
+      "knob": "dark"
     },
     "art": {
       "x": 55.6,
@@ -1791,6 +2298,13 @@
       "knob": "dark",
       "led": "#4da6ff"
     },
+    "look": {
+      "template": "stomp",
+      "label": "CE·1 VIB",
+      "shape": "big",
+      "plate": true,
+      "knob": "dark"
+    },
     "art": {
       "x": 47.6,
       "w": 64.8
@@ -1814,6 +2328,13 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#4da6ff"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "VIBRATO",
+      "shape": "standard",
+      "plate": true,
+      "knob": "dark"
     },
     "art": {
       "x": 55.6,
@@ -1839,6 +2360,12 @@
       "knob": "cream",
       "led": "#4da6ff"
     },
+    "look": {
+      "template": "util",
+      "label": "VIB·T",
+      "motif": "wave2",
+      "knob": "cream"
+    },
     "art": {
       "x": 51,
       "w": 58
@@ -1861,6 +2388,13 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#4da6ff"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "PHASE 90",
+      "shape": "mxr",
+      "plate": false,
+      "knob": "dark"
     },
     "art": {
       "x": 55.6,
@@ -1886,6 +2420,13 @@
       "knob": "cream",
       "led": "#4da6ff"
     },
+    "look": {
+      "template": "stomp",
+      "label": "PH·1",
+      "shape": "standard",
+      "plate": true,
+      "knob": "cream"
+    },
     "art": {
       "x": 55.6,
       "w": 48.8
@@ -1909,6 +2450,13 @@
       "ink": "#2a6a3a",
       "knob": "dark",
       "led": "#4da6ff"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "STONE",
+      "shape": "mxr",
+      "plate": false,
+      "knob": "dark"
     },
     "art": {
       "x": 55.6,
@@ -1934,6 +2482,12 @@
       "knob": "cream",
       "led": "#4da6ff"
     },
+    "look": {
+      "template": "util",
+      "label": "PAN PHASE",
+      "motif": "pan",
+      "knob": "cream"
+    },
     "art": {
       "x": 51,
       "w": 58
@@ -1956,6 +2510,13 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#4da6ff"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "M-VIBE",
+      "shape": "mxr",
+      "plate": false,
+      "knob": "cream"
     },
     "art": {
       "x": 55.6,
@@ -1981,6 +2542,13 @@
       "knob": "cream",
       "led": "#4da6ff"
     },
+    "look": {
+      "template": "stomp",
+      "label": "UNI·V",
+      "shape": "big",
+      "plate": true,
+      "knob": "cream"
+    },
     "art": {
       "x": 47.6,
       "w": 64.8
@@ -2004,6 +2572,13 @@
       "ink": "#e8e8e8",
       "knob": "cream",
       "led": "#4da6ff"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "TREMULATE",
+      "shape": "mxr",
+      "plate": false,
+      "knob": "cream"
     },
     "art": {
       "x": 55.6,
@@ -2029,6 +2604,12 @@
       "knob": "cream",
       "led": "#4da6ff"
     },
+    "look": {
+      "template": "util",
+      "label": "SINE TREM",
+      "motif": "sine",
+      "knob": "cream"
+    },
     "art": {
       "x": 51,
       "w": 58
@@ -2051,6 +2632,12 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#4da6ff"
+    },
+    "look": {
+      "template": "util",
+      "label": "TRI TREM",
+      "motif": "tri",
+      "knob": "cream"
     },
     "art": {
       "x": 51,
@@ -2075,6 +2662,12 @@
       "knob": "cream",
       "led": "#4da6ff"
     },
+    "look": {
+      "template": "util",
+      "label": "BIAS TREM",
+      "motif": "wave2",
+      "knob": "cream"
+    },
     "art": {
       "x": 51,
       "w": 58
@@ -2097,6 +2690,12 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "util",
+      "label": "SWELL",
+      "motif": "swell",
+      "knob": "dark"
     },
     "art": {
       "x": 51,
@@ -2121,6 +2720,12 @@
       "knob": "dark",
       "led": "#ff4d4d"
     },
+    "look": {
+      "template": "util",
+      "label": "HOLD",
+      "motif": "hold",
+      "knob": "dark"
+    },
     "art": {
       "x": 51,
       "w": 58
@@ -2143,6 +2748,12 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "util",
+      "label": "FREEZE",
+      "motif": "snow",
+      "knob": "dark"
     },
     "art": {
       "x": 51,
@@ -2167,6 +2778,11 @@
       "knob": "dark",
       "led": "#ff4d4d"
     },
+    "look": {
+      "template": "rocker",
+      "label": "V·846",
+      "knob": "dark"
+    },
     "art": {
       "x": 36,
       "w": 88
@@ -2189,6 +2805,11 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "rocker",
+      "label": "S-WAH",
+      "knob": "cream"
     },
     "art": {
       "x": 36,
@@ -2213,6 +2834,11 @@
       "knob": "cream",
       "led": "#ff4d4d"
     },
+    "look": {
+      "template": "rocker",
+      "label": "B-WAH",
+      "knob": "cream"
+    },
     "art": {
       "x": 36,
       "w": 88
@@ -2235,6 +2861,11 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "rocker",
+      "label": "CRYBABY",
+      "knob": "cream"
     },
     "art": {
       "x": 36,
@@ -2259,6 +2890,11 @@
       "knob": "cream",
       "led": "#ff4d4d"
     },
+    "look": {
+      "template": "rocker",
+      "label": "JP·95",
+      "knob": "cream"
+    },
     "art": {
       "x": 36,
       "w": 88
@@ -2281,6 +2917,11 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#ffffff"
+    },
+    "look": {
+      "template": "rocker",
+      "label": "VOLUME",
+      "knob": "dark"
     },
     "art": {
       "x": 36,
@@ -2306,6 +2947,17 @@
       "led": "#ffa23f",
       "panel": "#4a3520",
       "panelText": "#e8d8b0"
+    },
+    "look": {
+      "template": "amp",
+      "label": "TWEED",
+      "tolex": "tweed",
+      "panel": "#4a3520",
+      "panelText": "#e8d8b0",
+      "grille": "oxblood",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#ff5a4d"
     },
     "art": {
       "x": 6,
@@ -2335,6 +2987,17 @@
       "panel": "#4a3520",
       "panelText": "#e8d8b0"
     },
+    "look": {
+      "template": "amp",
+      "label": "59·N",
+      "tolex": "tweed",
+      "panel": "#4a3520",
+      "panelText": "#e8d8b0",
+      "grille": "oxblood",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -2362,6 +3025,18 @@
       "led": "#ffa23f",
       "panel": "#26282c",
       "panelText": "#e8e8e8"
+    },
+    "look": {
+      "template": "amp",
+      "label": "TWIN",
+      "tolex": "#1c1c1e",
+      "panel": "#26282c",
+      "panelText": "#e8e8e8",
+      "grille": "silverface",
+      "piping": "#b8b8c0",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#ff5a4d"
     },
     "art": {
       "x": 6,
@@ -2392,6 +3067,18 @@
       "panel": "#26282c",
       "panelText": "#e8e8e8"
     },
+    "look": {
+      "template": "amp",
+      "label": "DELUXE",
+      "tolex": "#1c1c1e",
+      "panel": "#26282c",
+      "panelText": "#e8e8e8",
+      "grille": "silverface",
+      "piping": "#b8b8c0",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -2420,6 +3107,18 @@
       "led": "#ffa23f",
       "panel": "#26282c",
       "panelText": "#e8e8e8"
+    },
+    "look": {
+      "template": "amp",
+      "label": "VIBRA",
+      "tolex": "#1c1c1e",
+      "panel": "#26282c",
+      "panelText": "#e8e8e8",
+      "grille": "silverface",
+      "piping": "#b8b8c0",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#ff5a4d"
     },
     "art": {
       "x": 6,
@@ -2450,6 +3149,18 @@
       "panel": "#b8bcc0",
       "panelText": "#2a4a8a"
     },
+    "look": {
+      "template": "amp",
+      "label": "SF TWIN",
+      "tolex": "#1c1c1e",
+      "panel": "#b8bcc0",
+      "panelText": "#2a4a8a",
+      "grille": "silverface",
+      "piping": "#8a90a8",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -2479,6 +3190,17 @@
       "panel": "#28304a",
       "panelText": "#e8e8e8"
     },
+    "look": {
+      "template": "amp",
+      "label": "DUAL·T",
+      "tolex": "#c8c8c0",
+      "panel": "#28304a",
+      "panelText": "#e8e8e8",
+      "grille": "wheat",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -2506,6 +3228,18 @@
       "led": "#ffa23f",
       "panel": "#2a2620",
       "panelText": "#d89a50"
+    },
+    "look": {
+      "template": "amp",
+      "label": "AC·100",
+      "tolex": "#1a1a1c",
+      "panel": "#2a2620",
+      "panelText": "#d89a50",
+      "grille": "diamond",
+      "piping": "#c8a850",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#ff5a4d"
     },
     "art": {
       "x": 6,
@@ -2536,6 +3270,18 @@
       "panel": "#2a2620",
       "panelText": "#d89a50"
     },
+    "look": {
+      "template": "amp",
+      "label": "AC·30",
+      "tolex": "#1a1a1c",
+      "panel": "#2a2620",
+      "panelText": "#d89a50",
+      "grille": "diamond",
+      "piping": "#c8a850",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -2565,6 +3311,17 @@
       "panel": "#2a2a2e",
       "panelText": "#e8e8e8"
     },
+    "look": {
+      "template": "amp",
+      "label": "JC·120",
+      "tolex": "#1c1c1e",
+      "panel": "#2a2a2e",
+      "panelText": "#e8e8e8",
+      "grille": "metalgrid",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -2592,6 +3349,17 @@
       "led": "#ffa23f",
       "panel": "#1a1a1c",
       "panelText": "#e8d060"
+    },
+    "look": {
+      "template": "amp",
+      "label": "MATCH",
+      "tolex": "#1c1c1e",
+      "panel": "#1a1a1c",
+      "panelText": "#e8d060",
+      "grille": "silverface",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#ff5a4d"
     },
     "art": {
       "x": 6,
@@ -2621,6 +3389,17 @@
       "panel": "#c9b998",
       "panelText": "#1a1a1c"
     },
+    "look": {
+      "template": "amp",
+      "label": "L-STAR",
+      "tolex": "#1c1c1e",
+      "panel": "#c9b998",
+      "panelText": "#1a1a1c",
+      "grille": "cane",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -2648,6 +3427,17 @@
       "led": "#ffa23f",
       "panel": "#c8ccd0",
       "panelText": "#1a1a1c"
+    },
+    "look": {
+      "template": "amp",
+      "label": "SHIVA",
+      "tolex": "#1c1c1e",
+      "panel": "#c8ccd0",
+      "panelText": "#1a1a1c",
+      "grille": "blackweave",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
     },
     "art": {
       "x": 6,
@@ -2677,6 +3467,17 @@
       "panel": "#1c1c1e",
       "panelText": "#e8e8e8"
     },
+    "look": {
+      "template": "amp",
+      "label": "MAZ 38",
+      "tolex": "#8a2222",
+      "panel": "#1c1c1e",
+      "panelText": "#e8e8e8",
+      "grille": "wheat",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -2704,6 +3505,17 @@
       "led": "#ffa23f",
       "panel": "#c8b888",
       "panelText": "#1c1712"
+    },
+    "look": {
+      "template": "amp",
+      "label": "PG·20",
+      "tolex": "#2a4a3a",
+      "panel": "#c8b888",
+      "panelText": "#1c1712",
+      "grille": "basket",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
     },
     "art": {
       "x": 6,
@@ -2733,6 +3545,17 @@
       "panel": "#e8e0c8",
       "panelText": "#1c1712"
     },
+    "look": {
+      "template": "amp",
+      "label": "HOT CAT",
+      "tolex": "#1c1c1e",
+      "panel": "#e8e0c8",
+      "panelText": "#1c1712",
+      "grille": "wheat",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -2760,6 +3583,17 @@
       "led": "#ffa23f",
       "panel": "#2a2a2e",
       "panelText": "#e05a5a"
+    },
+    "look": {
+      "template": "amp",
+      "label": "SLO·100",
+      "tolex": "#1c1c1e",
+      "panel": "#2a2a2e",
+      "panelText": "#e05a5a",
+      "grille": "blackweave",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#ff5a4d"
     },
     "art": {
       "x": 6,
@@ -2789,6 +3623,17 @@
       "panel": "#4a3520",
       "panelText": "#e8d8b0"
     },
+    "look": {
+      "template": "amp",
+      "label": "59·B",
+      "tolex": "tweed",
+      "panel": "#4a3520",
+      "panelText": "#e8d8b0",
+      "grille": "oxblood",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -2816,6 +3661,18 @@
       "led": "#ffa23f",
       "panel": "#2a2620",
       "panelText": "#d89a50"
+    },
+    "look": {
+      "template": "amp",
+      "label": "AC·30 TB",
+      "tolex": "#1a1a1c",
+      "panel": "#2a2620",
+      "panelText": "#d89a50",
+      "grille": "diamond",
+      "piping": "#c8a850",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#ff5a4d"
     },
     "art": {
       "x": 6,
@@ -2846,6 +3703,17 @@
       "panel": "#28304a",
       "panelText": "#e8e8e8"
     },
+    "look": {
+      "template": "amp",
+      "label": "DUAL·T 2",
+      "tolex": "#c8c8c0",
+      "panel": "#28304a",
+      "panelText": "#e8e8e8",
+      "grille": "wheat",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -2873,6 +3741,18 @@
       "led": "#ffa23f",
       "panel": "#b8933a",
       "panelText": "#1c1207"
+    },
+    "look": {
+      "template": "amp",
+      "label": "JTM·45",
+      "tolex": "#1c1c1e",
+      "panel": "#b8933a",
+      "panelText": "#1c1207",
+      "grille": "blackweave",
+      "piping": "#c8a850",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
     },
     "art": {
       "x": 6,
@@ -2903,6 +3783,18 @@
       "panel": "#b8933a",
       "panelText": "#1c1207"
     },
+    "look": {
+      "template": "amp",
+      "label": "JTM·45+",
+      "tolex": "#1c1c1e",
+      "panel": "#b8933a",
+      "panelText": "#1c1207",
+      "grille": "blackweave",
+      "piping": "#c8a850",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -2931,6 +3823,18 @@
       "led": "#ffa23f",
       "panel": "#b8933a",
       "panelText": "#1c1207"
+    },
+    "look": {
+      "template": "amp",
+      "label": "JTM·45 JP",
+      "tolex": "#1c1c1e",
+      "panel": "#b8933a",
+      "panelText": "#1c1207",
+      "grille": "blackweave",
+      "piping": "#c8a850",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
     },
     "art": {
       "x": 6,
@@ -2961,6 +3865,18 @@
       "panel": "#b8933a",
       "panelText": "#1c1207"
     },
+    "look": {
+      "template": "amp",
+      "label": "JMP·50",
+      "tolex": "#1c1c1e",
+      "panel": "#b8933a",
+      "panelText": "#1c1207",
+      "grille": "blackweave",
+      "piping": "#c8a850",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -2989,6 +3905,18 @@
       "led": "#ffa23f",
       "panel": "#b8933a",
       "panelText": "#1c1207"
+    },
+    "look": {
+      "template": "amp",
+      "label": "JMP·50+",
+      "tolex": "#1c1c1e",
+      "panel": "#b8933a",
+      "panelText": "#1c1207",
+      "grille": "blackweave",
+      "piping": "#c8a850",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
     },
     "art": {
       "x": 6,
@@ -3019,6 +3947,18 @@
       "panel": "#b8933a",
       "panelText": "#1c1207"
     },
+    "look": {
+      "template": "amp",
+      "label": "JMP·50 JP",
+      "tolex": "#1c1c1e",
+      "panel": "#b8933a",
+      "panelText": "#1c1207",
+      "grille": "blackweave",
+      "piping": "#c8a850",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -3047,6 +3987,18 @@
       "led": "#ffa23f",
       "panel": "#b8933a",
       "panelText": "#1c1207"
+    },
+    "look": {
+      "template": "amp",
+      "label": "SLP·1959",
+      "tolex": "#1c1c1e",
+      "panel": "#b8933a",
+      "panelText": "#1c1207",
+      "grille": "blackweave",
+      "piping": "#c8a850",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
     },
     "art": {
       "x": 6,
@@ -3077,6 +4029,18 @@
       "panel": "#b8933a",
       "panelText": "#1c1207"
     },
+    "look": {
+      "template": "amp",
+      "label": "JCM·800",
+      "tolex": "#1c1c1e",
+      "panel": "#b8933a",
+      "panelText": "#1c1207",
+      "grille": "blackweave",
+      "piping": "#c8a850",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -3106,6 +4070,17 @@
       "panel": "#c8ccd0",
       "panelText": "#1a1a1c"
     },
+    "look": {
+      "template": "amp",
+      "label": "MK IIC+",
+      "tolex": "#1c1c1e",
+      "panel": "#c8ccd0",
+      "panelText": "#1a1a1c",
+      "grille": "cane",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -3133,6 +4108,17 @@
       "led": "#ffa23f",
       "panel": "#c8ccd0",
       "panelText": "#1a1a1c"
+    },
+    "look": {
+      "template": "amp",
+      "label": "MK IIC+ 2",
+      "tolex": "#1c1c1e",
+      "panel": "#c8ccd0",
+      "panelText": "#1a1a1c",
+      "grille": "cane",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
     },
     "art": {
       "x": 6,
@@ -3162,6 +4148,17 @@
       "panel": "#c8ccd0",
       "panelText": "#1a1a1c"
     },
+    "look": {
+      "template": "amp",
+      "label": "MK IIC+ 3",
+      "tolex": "#1c1c1e",
+      "panel": "#c8ccd0",
+      "panelText": "#1a1a1c",
+      "grille": "cane",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -3189,6 +4186,17 @@
       "led": "#ffa23f",
       "panel": "#c8ccd0",
       "panelText": "#1a1a1c"
+    },
+    "look": {
+      "template": "amp",
+      "label": "SHIVA OD",
+      "tolex": "#1c1c1e",
+      "panel": "#c8ccd0",
+      "panelText": "#1a1a1c",
+      "grille": "blackweave",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
     },
     "art": {
       "x": 6,
@@ -3218,6 +4226,17 @@
       "panel": "#e8e0c8",
       "panelText": "#c05a10"
     },
+    "look": {
+      "template": "amp",
+      "label": "AD·30",
+      "tolex": "orangeweave",
+      "panel": "#e8e0c8",
+      "panelText": "#c05a10",
+      "grille": "basket",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -3245,6 +4264,17 @@
       "led": "#ffa23f",
       "panel": "#26262a",
       "panelText": "#e8e8e8"
+    },
+    "look": {
+      "template": "amp",
+      "label": "BE·100",
+      "tolex": "#1c1c1e",
+      "panel": "#26262a",
+      "panelText": "#e8e8e8",
+      "grille": "blackweave",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#ff5a4d"
     },
     "art": {
       "x": 6,
@@ -3274,6 +4304,17 @@
       "panel": "#26262a",
       "panelText": "#e8e8e8"
     },
+    "look": {
+      "template": "amp",
+      "label": "BE·100 DLX",
+      "tolex": "#1c1c1e",
+      "panel": "#26262a",
+      "panelText": "#e8e8e8",
+      "grille": "blackweave",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -3301,6 +4342,17 @@
       "led": "#ffa23f",
       "panel": "#3a3a3e",
       "panelText": "#5a8ad8"
+    },
+    "look": {
+      "template": "amp",
+      "label": "XTC BLUE",
+      "tolex": "#1c1c1e",
+      "panel": "#3a3a3e",
+      "panelText": "#5a8ad8",
+      "grille": "metalgrid",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#ff5a4d"
     },
     "art": {
       "x": 6,
@@ -3330,6 +4382,17 @@
       "panel": "#3a3a3e",
       "panelText": "#5a8ad8"
     },
+    "look": {
+      "template": "amp",
+      "label": "XTC BLUE+",
+      "tolex": "#1c1c1e",
+      "panel": "#3a3a3e",
+      "panelText": "#5a8ad8",
+      "grille": "metalgrid",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -3357,6 +4420,17 @@
       "led": "#ffa23f",
       "panel": "#2a2a2e",
       "panelText": "#e05a5a"
+    },
+    "look": {
+      "template": "amp",
+      "label": "SLO CRUNCH",
+      "tolex": "#1c1c1e",
+      "panel": "#2a2a2e",
+      "panelText": "#e05a5a",
+      "grille": "blackweave",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#ff5a4d"
     },
     "art": {
       "x": 6,
@@ -3386,6 +4460,17 @@
       "panel": "#1a1a1c",
       "panelText": "#e8d060"
     },
+    "look": {
+      "template": "amp",
+      "label": "MATCH OD",
+      "tolex": "#1c1c1e",
+      "panel": "#1a1a1c",
+      "panelText": "#e8d060",
+      "grille": "silverface",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -3413,6 +4498,17 @@
       "led": "#ffa23f",
       "panel": "#1c1c1e",
       "panelText": "#e8e8e8"
+    },
+    "look": {
+      "template": "amp",
+      "label": "MAZ 38 OD",
+      "tolex": "#8a2222",
+      "panel": "#1c1c1e",
+      "panelText": "#e8e8e8",
+      "grille": "wheat",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#ff5a4d"
     },
     "art": {
       "x": 6,
@@ -3442,6 +4538,17 @@
       "panel": "#c9b998",
       "panelText": "#1a1a1c"
     },
+    "look": {
+      "template": "amp",
+      "label": "L-STAR OD",
+      "tolex": "#1c1c1e",
+      "panel": "#c9b998",
+      "panelText": "#1a1a1c",
+      "grille": "cane",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -3470,6 +4577,17 @@
       "panel": "#e8e0c8",
       "panelText": "#1c1712"
     },
+    "look": {
+      "template": "amp",
+      "label": "HOT CAT+",
+      "tolex": "#1c1c1e",
+      "panel": "#e8e0c8",
+      "panelText": "#1c1712",
+      "grille": "wheat",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -3497,6 +4615,18 @@
       "led": "#ffa23f",
       "panel": "#b8933a",
       "panelText": "#1c1207"
+    },
+    "look": {
+      "template": "amp",
+      "label": "JCM·900",
+      "tolex": "#1c1c1e",
+      "panel": "#b8933a",
+      "panelText": "#1c1207",
+      "grille": "blackweave",
+      "piping": "#c8a850",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
     },
     "art": {
       "x": 6,
@@ -3527,6 +4657,17 @@
       "panel": "#e8e0c8",
       "panelText": "#c05a10"
     },
+    "look": {
+      "template": "amp",
+      "label": "RV·100",
+      "tolex": "orangeweave",
+      "panel": "#e8e0c8",
+      "panelText": "#c05a10",
+      "grille": "basket",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -3554,6 +4695,17 @@
       "led": "#ffa23f",
       "panel": "#c8ccd0",
       "panelText": "#1a1a1c"
+    },
+    "look": {
+      "template": "amp",
+      "label": "MK IV LD",
+      "tolex": "#1c1c1e",
+      "panel": "#c8ccd0",
+      "panelText": "#1a1a1c",
+      "grille": "cane",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
     },
     "art": {
       "x": 6,
@@ -3583,6 +4735,17 @@
       "panel": "#c8ccd0",
       "panelText": "#1a1a1c"
     },
+    "look": {
+      "template": "amp",
+      "label": "MK IV LD2",
+      "tolex": "#1c1c1e",
+      "panel": "#c8ccd0",
+      "panelText": "#1a1a1c",
+      "grille": "cane",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -3610,6 +4773,17 @@
       "led": "#ffa23f",
       "panel": "#c8ccd0",
       "panelText": "#1a1a1c"
+    },
+    "look": {
+      "template": "amp",
+      "label": "MK IV LD3",
+      "tolex": "#1c1c1e",
+      "panel": "#c8ccd0",
+      "panelText": "#1a1a1c",
+      "grille": "cane",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
     },
     "art": {
       "x": 6,
@@ -3639,6 +4813,17 @@
       "panel": "#2a2a2e",
       "panelText": "#e05a5a"
     },
+    "look": {
+      "template": "amp",
+      "label": "SLO LEAD",
+      "tolex": "#1c1c1e",
+      "panel": "#2a2a2e",
+      "panelText": "#e05a5a",
+      "grille": "blackweave",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -3666,6 +4851,17 @@
       "led": "#ffa23f",
       "panel": "#26282c",
       "panelText": "#c8c8cc"
+    },
+    "look": {
+      "template": "amp",
+      "label": "5150",
+      "tolex": "#1c1c1e",
+      "panel": "#26282c",
+      "panelText": "#c8c8cc",
+      "grille": "blackweave",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#ff5a4d"
     },
     "art": {
       "x": 6,
@@ -3695,6 +4891,17 @@
       "panel": "#26262a",
       "panelText": "#e8e8e8"
     },
+    "look": {
+      "template": "amp",
+      "label": "BE·HBE",
+      "tolex": "#1c1c1e",
+      "panel": "#26262a",
+      "panelText": "#e8e8e8",
+      "grille": "blackweave",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -3723,6 +4930,17 @@
       "panel": "#26262a",
       "panelText": "#e8e8e8"
     },
+    "look": {
+      "template": "amp",
+      "label": "BE·HBE DLX",
+      "tolex": "#1c1c1e",
+      "panel": "#26262a",
+      "panelText": "#e8e8e8",
+      "grille": "blackweave",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -3750,6 +4968,17 @@
       "led": "#ffa23f",
       "panel": "#1a1a1c",
       "panelText": "#d8d8dc"
+    },
+    "look": {
+      "template": "amp",
+      "label": "SAVAGE",
+      "tolex": "#1c1c1e",
+      "panel": "#1a1a1c",
+      "panelText": "#d8d8dc",
+      "grille": "metalgrid",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#4a90e0"
     },
     "art": {
       "x": 6,
@@ -3780,6 +5009,17 @@
       "panel": "#1a1a1c",
       "panelText": "#d8d8dc"
     },
+    "look": {
+      "template": "amp",
+      "label": "SAVAGE+",
+      "tolex": "#1c1c1e",
+      "panel": "#1a1a1c",
+      "panelText": "#d8d8dc",
+      "grille": "metalgrid",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#4a90e0"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -3808,6 +5048,17 @@
       "led": "#ffa23f",
       "panel": "#1a1a1c",
       "panelText": "#d8d8dc"
+    },
+    "look": {
+      "template": "amp",
+      "label": "PWRBALL",
+      "tolex": "#1c1c1e",
+      "panel": "#1a1a1c",
+      "panelText": "#d8d8dc",
+      "grille": "metalgrid",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#4a90e0"
     },
     "art": {
       "x": 6,
@@ -3838,6 +5089,17 @@
       "panel": "#b8bcc0",
       "panelText": "#1a1a1c"
     },
+    "look": {
+      "template": "amp",
+      "label": "VH4 CH1",
+      "tolex": "#1c1c1e",
+      "panel": "#b8bcc0",
+      "panelText": "#1a1a1c",
+      "grille": "metalgrid",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -3865,6 +5127,17 @@
       "led": "#ffa23f",
       "panel": "#b8bcc0",
       "panelText": "#1a1a1c"
+    },
+    "look": {
+      "template": "amp",
+      "label": "VH4 CH2",
+      "tolex": "#1c1c1e",
+      "panel": "#b8bcc0",
+      "panelText": "#1a1a1c",
+      "grille": "metalgrid",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
     },
     "art": {
       "x": 6,
@@ -3894,6 +5167,17 @@
       "panel": "#b0b4b8",
       "panelText": "#1a1a1c"
     },
+    "look": {
+      "template": "amp",
+      "label": "RECTO V",
+      "tolex": "#1c1c1e",
+      "panel": "diamondplate",
+      "panelText": "#1a1a1c",
+      "grille": "metalgrid",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -3921,6 +5205,17 @@
       "led": "#ffa23f",
       "panel": "#b0b4b8",
       "panelText": "#1a1a1c"
+    },
+    "look": {
+      "template": "amp",
+      "label": "RECTO M",
+      "tolex": "#1c1c1e",
+      "panel": "diamondplate",
+      "panelText": "#1a1a1c",
+      "grille": "metalgrid",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
     },
     "art": {
       "x": 6,
@@ -3950,6 +5245,17 @@
       "panel": "#b8bcc0",
       "panelText": "#1a1a1c"
     },
+    "look": {
+      "template": "amp",
+      "label": "VH4 CH3",
+      "tolex": "#1c1c1e",
+      "panel": "#b8bcc0",
+      "panelText": "#1a1a1c",
+      "grille": "metalgrid",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -3977,6 +5283,17 @@
       "led": "#ffa23f",
       "panel": "#b8bcc0",
       "panelText": "#1a1a1c"
+    },
+    "look": {
+      "template": "amp",
+      "label": "VH4 CH4",
+      "tolex": "#1c1c1e",
+      "panel": "#b8bcc0",
+      "panelText": "#1a1a1c",
+      "grille": "metalgrid",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
     },
     "art": {
       "x": 6,
@@ -4006,6 +5323,17 @@
       "panel": "#3a3a3e",
       "panelText": "#d85a5a"
     },
+    "look": {
+      "template": "amp",
+      "label": "XTC RED",
+      "tolex": "#1c1c1e",
+      "panel": "#3a3a3e",
+      "panelText": "#d85a5a",
+      "grille": "metalgrid",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -4033,6 +5361,17 @@
       "led": "#ffa23f",
       "panel": "#3a3a3e",
       "panelText": "#d85a5a"
+    },
+    "look": {
+      "template": "amp",
+      "label": "XTC RED+",
+      "tolex": "#1c1c1e",
+      "panel": "#3a3a3e",
+      "panelText": "#d85a5a",
+      "grille": "metalgrid",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#ff5a4d"
     },
     "art": {
       "x": 6,
@@ -4062,6 +5401,17 @@
       "panel": "#26282c",
       "panelText": "#5a8ad8"
     },
+    "look": {
+      "template": "amp",
+      "label": "SVT",
+      "tolex": "#1c1c1e",
+      "panel": "#26282c",
+      "panelText": "#5a8ad8",
+      "grille": "blackweave",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -4089,6 +5439,18 @@
       "led": "#ffa23f",
       "panel": "#2a2620",
       "panelText": "#d89a50"
+    },
+    "look": {
+      "template": "amp",
+      "label": "AC·100 B",
+      "tolex": "#1a1a1c",
+      "panel": "#2a2620",
+      "panelText": "#d89a50",
+      "grille": "diamond",
+      "piping": "#c8a850",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#ff5a4d"
     },
     "art": {
       "x": 6,
@@ -4119,6 +5481,17 @@
       "panel": "#c8ccd0",
       "panelText": "#1a1a1c"
     },
+    "look": {
+      "template": "amp",
+      "label": "BASS 400",
+      "tolex": "#1c1c1e",
+      "panel": "#c8ccd0",
+      "panelText": "#1a1a1c",
+      "grille": "blackweave",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -4146,6 +5519,17 @@
       "led": "#ffa23f",
       "panel": "#c8b888",
       "panelText": "#1c1712"
+    },
+    "look": {
+      "template": "amp",
+      "label": "PG·20+",
+      "tolex": "#2a4a3a",
+      "panel": "#c8b888",
+      "panelText": "#1c1712",
+      "grille": "basket",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
     },
     "art": {
       "x": 6,
@@ -4175,6 +5559,17 @@
       "panel": "#c8b888",
       "panelText": "#1c1712"
     },
+    "look": {
+      "template": "amp",
+      "label": "PG·20 OD",
+      "tolex": "#2a4a3a",
+      "panel": "#c8b888",
+      "panelText": "#1c1712",
+      "grille": "basket",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -4203,6 +5598,17 @@
       "panel": "#26282c",
       "panelText": "#e8e8e8"
     },
+    "look": {
+      "template": "amp",
+      "label": "B·15",
+      "tolex": "bluecheck",
+      "panel": "#26282c",
+      "panelText": "#e8e8e8",
+      "grille": "silverface",
+      "knobColor": "#d8d2c0",
+      "knob": "cream",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -4229,6 +5635,13 @@
       "knob": "cream",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "rack",
+      "label": "TUBE PRE",
+      "display": "F2B",
+      "displayColor": "#ffb050",
+      "knob": "dark"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -4253,6 +5666,17 @@
       "led": "#ffa23f",
       "panel": "#c8c4b8",
       "panelText": "#1a1a1c"
+    },
+    "look": {
+      "template": "amp",
+      "label": "AER C2",
+      "tolex": "#26262a",
+      "panel": "#c8c4b8",
+      "panelText": "#1a1a1c",
+      "grille": "blackweave",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
     },
     "art": {
       "x": 6,
@@ -4282,6 +5706,17 @@
       "panel": "#c8c4b8",
       "panelText": "#1a1a1c"
     },
+    "look": {
+      "template": "amp",
+      "label": "AER C2·B",
+      "tolex": "#26262a",
+      "panel": "#c8c4b8",
+      "panelText": "#1a1a1c",
+      "grille": "blackweave",
+      "knobColor": "#16130f",
+      "knob": "dark",
+      "lamp": "#ff5a4d"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -4307,6 +5742,16 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#ffa23f"
+    },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#c8c8c0",
+      "grille": "wheat",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×6",
+      "knob": "dark"
     },
     "art": {
       "x": 38,
@@ -4336,6 +5781,16 @@
       "knob": "dark",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "tweed",
+      "grille": "oxblood",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×8",
+      "knob": "dark"
+    },
     "art": {
       "x": 38,
       "w": 84
@@ -4364,6 +5819,16 @@
       "knob": "dark",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "tweed",
+      "grille": "oxblood",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×10",
+      "knob": "dark"
+    },
     "art": {
       "x": 38,
       "w": 84
@@ -4391,6 +5856,17 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ffa23f"
+    },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "silverface",
+      "piping": "#b8b8c0",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×12",
+      "knob": "dark"
     },
     "art": {
       "x": 38,
@@ -4421,6 +5897,17 @@
       "knob": "cream",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "silverface",
+      "piping": "#b8b8c0",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×12",
+      "knob": "dark"
+    },
     "art": {
       "x": 38,
       "w": 84
@@ -4450,6 +5937,16 @@
       "knob": "dark",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#d8d0b8",
+      "grille": "wheat",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×12",
+      "knob": "dark"
+    },
     "art": {
       "x": 38,
       "w": 84
@@ -4477,6 +5974,16 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ffa23f"
+    },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×12",
+      "knob": "dark"
     },
     "art": {
       "x": 38,
@@ -4506,6 +6013,16 @@
       "knob": "cream",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "wheat",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×12",
+      "knob": "dark"
+    },
     "art": {
       "x": 38,
       "w": 84
@@ -4533,6 +6050,17 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ffa23f"
+    },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1a1a1c",
+      "grille": "diamond",
+      "piping": "#c8a850",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×12",
+      "knob": "dark"
     },
     "art": {
       "x": 38,
@@ -4563,6 +6091,16 @@
       "knob": "cream",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "cane",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×12",
+      "knob": "dark"
+    },
     "art": {
       "x": 38,
       "w": 84
@@ -4590,6 +6128,16 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#ffa23f"
+    },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#c8b890",
+      "grille": "wheat",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×12",
+      "knob": "dark"
     },
     "art": {
       "x": 38,
@@ -4619,6 +6167,16 @@
       "knob": "dark",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "tweed",
+      "grille": "oxblood",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×12",
+      "knob": "dark"
+    },
     "art": {
       "x": 38,
       "w": 84
@@ -4646,6 +6204,16 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ffa23f"
+    },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×12",
+      "knob": "dark"
     },
     "art": {
       "x": 38,
@@ -4675,6 +6243,16 @@
       "knob": "cream",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#3a5a4a",
+      "grille": "wheat",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×12",
+      "knob": "dark"
+    },
     "art": {
       "x": 38,
       "w": 84
@@ -4702,6 +6280,17 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ffa23f"
+    },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "piping": "#c8a850",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×12",
+      "knob": "dark"
     },
     "art": {
       "x": 38,
@@ -4732,6 +6321,17 @@
       "knob": "cream",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1a1a1c",
+      "grille": "diamond",
+      "piping": "#c8a850",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×12",
+      "knob": "dark"
+    },
     "art": {
       "x": 26,
       "w": 108
@@ -4761,6 +6361,16 @@
       "knob": "cream",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "silverface",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×12",
+      "knob": "dark"
+    },
     "art": {
       "x": 26,
       "w": 108
@@ -4789,6 +6399,16 @@
       "knob": "cream",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×12",
+      "knob": "dark"
+    },
     "art": {
       "x": 26,
       "w": 108
@@ -4816,6 +6436,17 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ffa23f"
+    },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "silverface",
+      "piping": "#b8b8c0",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×12",
+      "knob": "dark"
     },
     "art": {
       "x": 26,
@@ -4846,6 +6477,17 @@
       "knob": "cream",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "piping": "#c8a850",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×12",
+      "knob": "dark"
+    },
     "art": {
       "x": 26,
       "w": 108
@@ -4875,6 +6517,16 @@
       "knob": "dark",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "tweed",
+      "grille": "oxblood",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×10",
+      "knob": "dark"
+    },
     "art": {
       "x": 26,
       "w": 108
@@ -4902,6 +6554,16 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ffa23f"
+    },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#5a4a6a",
+      "grille": "wheat",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×12",
+      "knob": "dark"
     },
     "art": {
       "x": 26,
@@ -4931,6 +6593,16 @@
       "knob": "dark",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#d8cfa8",
+      "grille": "oxblood",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×12",
+      "knob": "dark"
+    },
     "art": {
       "x": 26,
       "w": 108
@@ -4958,6 +6630,16 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#ffa23f"
+    },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#c8c8c0",
+      "grille": "wheat",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×12",
+      "knob": "dark"
     },
     "art": {
       "x": 26,
@@ -4987,6 +6669,16 @@
       "knob": "cream",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "silverface",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×12",
+      "knob": "dark"
+    },
     "art": {
       "x": 26,
       "w": 108
@@ -5014,6 +6706,16 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ffa23f"
+    },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "cane",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×12",
+      "knob": "dark"
     },
     "art": {
       "x": 26,
@@ -5043,6 +6745,16 @@
       "knob": "cream",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×12",
+      "knob": "dark"
+    },
     "art": {
       "x": 26,
       "w": 108
@@ -5070,6 +6782,16 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ffa23f"
+    },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "silverface",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×12",
+      "knob": "dark"
     },
     "art": {
       "x": 26,
@@ -5099,6 +6821,16 @@
       "knob": "cream",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#3a3a3e",
+      "grille": "silverface",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×12",
+      "knob": "dark"
+    },
     "art": {
       "x": 26,
       "w": 108
@@ -5126,6 +6858,17 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ffa23f"
+    },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#26324a",
+      "grille": "blackweave",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×12",
+      "cone": "#3a70c8",
+      "knob": "dark"
     },
     "art": {
       "x": 26,
@@ -5155,6 +6898,16 @@
       "knob": "dark",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "tweed",
+      "grille": "oxblood",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×10",
+      "knob": "dark"
+    },
     "art": {
       "x": 26,
       "w": 108
@@ -5182,6 +6935,17 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ffa23f"
+    },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "piping": "#c8a850",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12",
+      "knob": "dark"
     },
     "art": {
       "x": 26,
@@ -5212,6 +6976,17 @@
       "knob": "cream",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "basket",
+      "piping": "#c8a850",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12",
+      "knob": "dark"
+    },
     "art": {
       "x": 26,
       "w": 108
@@ -5240,6 +7015,17 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ffa23f"
+    },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "piping": "#c8a850",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12",
+      "knob": "dark"
     },
     "art": {
       "x": 26,
@@ -5270,6 +7056,17 @@
       "knob": "cream",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "basket",
+      "piping": "#c8a850",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12",
+      "knob": "dark"
+    },
     "art": {
       "x": 26,
       "w": 108
@@ -5299,6 +7096,16 @@
       "knob": "cream",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12",
+      "knob": "dark"
+    },
     "art": {
       "x": 26,
       "w": 108
@@ -5326,6 +7133,16 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ffa23f"
+    },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12",
+      "knob": "dark"
     },
     "art": {
       "x": 26,
@@ -5355,6 +7172,16 @@
       "knob": "cream",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12",
+      "knob": "dark"
+    },
     "art": {
       "x": 26,
       "w": 108
@@ -5382,6 +7209,16 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ffa23f"
+    },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12",
+      "knob": "dark"
     },
     "art": {
       "x": 26,
@@ -5411,6 +7248,16 @@
       "knob": "cream",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12",
+      "knob": "dark"
+    },
     "art": {
       "x": 26,
       "w": 108
@@ -5438,6 +7285,16 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ffa23f"
+    },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12",
+      "knob": "dark"
     },
     "art": {
       "x": 26,
@@ -5467,6 +7324,16 @@
       "knob": "cream",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "orangeweave",
+      "grille": "basket",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12",
+      "knob": "dark"
+    },
     "art": {
       "x": 26,
       "w": 108
@@ -5494,6 +7361,17 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ffa23f"
+    },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "piping": "#4a70b8",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12",
+      "knob": "dark"
     },
     "art": {
       "x": 26,
@@ -5524,6 +7402,16 @@
       "knob": "cream",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "basket",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12",
+      "knob": "dark"
+    },
     "art": {
       "x": 26,
       "w": 108
@@ -5551,6 +7439,16 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ffa23f"
+    },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "wheat",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12",
+      "knob": "dark"
     },
     "art": {
       "x": 26,
@@ -5580,6 +7478,16 @@
       "knob": "cream",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12",
+      "knob": "dark"
+    },
     "art": {
       "x": 26,
       "w": 108
@@ -5607,6 +7515,16 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ffa23f"
+    },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12",
+      "knob": "dark"
     },
     "art": {
       "x": 26,
@@ -5636,6 +7554,16 @@
       "knob": "cream",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12",
+      "knob": "dark"
+    },
     "art": {
       "x": 26,
       "w": 108
@@ -5663,6 +7591,17 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ffa23f"
+    },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "piping": "#c8a850",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12",
+      "knob": "dark"
     },
     "art": {
       "x": 26,
@@ -5693,6 +7632,16 @@
       "knob": "cream",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12",
+      "knob": "dark"
+    },
     "art": {
       "x": 26,
       "w": 108
@@ -5720,6 +7669,16 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ffa23f"
+    },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×15",
+      "knob": "dark"
     },
     "art": {
       "x": 38,
@@ -5749,6 +7708,16 @@
       "knob": "cream",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×15",
+      "knob": "dark"
+    },
     "art": {
       "x": 38,
       "w": 84
@@ -5776,6 +7745,16 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ffa23f"
+    },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "cols": 1,
+      "rows": 1,
+      "size": "1×15",
+      "knob": "dark"
     },
     "art": {
       "x": 38,
@@ -5805,6 +7784,16 @@
       "knob": "cream",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×10",
+      "knob": "dark"
+    },
     "art": {
       "x": 26,
       "w": 108
@@ -5832,6 +7821,17 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ffa23f"
+    },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "cols": 2,
+      "rows": 1,
+      "size": "2×10",
+      "cone": "#e8c030",
+      "knob": "dark"
     },
     "art": {
       "x": 26,
@@ -5861,6 +7861,16 @@
       "knob": "cream",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×10",
+      "knob": "dark"
+    },
     "art": {
       "x": 26,
       "w": 108
@@ -5888,6 +7898,17 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ffa23f"
+    },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "piping": "#c8c8cc",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×10",
+      "knob": "dark"
     },
     "art": {
       "x": 26,
@@ -5918,6 +7939,16 @@
       "knob": "cream",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×10",
+      "knob": "dark"
+    },
     "art": {
       "x": 26,
       "w": 108
@@ -5946,6 +7977,18 @@
       "knob": "cream",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "metalgrid",
+      "cols": 2,
+      "rows": 2,
+      "size": "4×12",
+      "cone": "#c8ccd0",
+      "exposed": true,
+      "knob": "dark"
+    },
     "art": {
       "x": 26,
       "w": 108
@@ -5973,6 +8016,17 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ffa23f"
+    },
+    "look": {
+      "template": "cab",
+      "label": "",
+      "tolex": "#1c1c1e",
+      "grille": "blackweave",
+      "piping": "#c8c8cc",
+      "cols": 2,
+      "rows": 4,
+      "size": "8×10",
+      "knob": "dark"
     },
     "art": {
       "x": 26,
@@ -6003,6 +8057,13 @@
       "knob": "dark",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "acoustic",
+      "label": "DREAD",
+      "shape": "dread",
+      "wood": "#d9a95e",
+      "knob": "cream"
+    },
     "art": {
       "x": 58,
       "w": 44
@@ -6025,6 +8086,13 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#ffa23f"
+    },
+    "look": {
+      "template": "acoustic",
+      "label": "DREAD 2",
+      "shape": "dread",
+      "wood": "#c89048",
+      "knob": "cream"
     },
     "art": {
       "x": 58,
@@ -6049,6 +8117,13 @@
       "knob": "dark",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "acoustic",
+      "label": "OM",
+      "shape": "om",
+      "wood": "#d9a95e",
+      "knob": "cream"
+    },
     "art": {
       "x": 58,
       "w": 44
@@ -6071,6 +8146,13 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#ffa23f"
+    },
+    "look": {
+      "template": "acoustic",
+      "label": "JUMBO",
+      "shape": "jumbo",
+      "wood": "#c89860",
+      "knob": "cream"
     },
     "art": {
       "x": 58,
@@ -6095,6 +8177,13 @@
       "knob": "cream",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "acoustic",
+      "label": "H-BIRD",
+      "shape": "dread",
+      "wood": "#a85a20",
+      "knob": "cream"
+    },
     "art": {
       "x": 58,
       "w": 44
@@ -6117,6 +8206,13 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#ffa23f"
+    },
+    "look": {
+      "template": "acoustic",
+      "label": "GA",
+      "shape": "om",
+      "wood": "#c8a060",
+      "knob": "cream"
     },
     "art": {
       "x": 58,
@@ -6141,6 +8237,13 @@
       "knob": "dark",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "acoustic",
+      "label": "CLASSICAL",
+      "shape": "classical",
+      "wood": "#e0b060",
+      "knob": "cream"
+    },
     "art": {
       "x": 58,
       "w": 44
@@ -6163,6 +8266,13 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ffa23f"
+    },
+    "look": {
+      "template": "acoustic",
+      "label": "MANDOLIN",
+      "shape": "mandolin",
+      "wood": "#b87838",
+      "knob": "cream"
     },
     "art": {
       "x": 58,
@@ -6187,6 +8297,13 @@
       "knob": "cream",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "acoustic",
+      "label": "FRETLESS",
+      "shape": "om",
+      "wood": "#7a4a20",
+      "knob": "cream"
+    },
     "art": {
       "x": 58,
       "w": 44
@@ -6209,6 +8326,13 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#ffa23f"
+    },
+    "look": {
+      "template": "acoustic",
+      "label": "UPRIGHT",
+      "shape": "doublebass",
+      "wood": "#8a4a1a",
+      "knob": "cream"
     },
     "art": {
       "x": 58,
@@ -6233,6 +8357,12 @@
       "knob": "cream",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "util",
+      "label": "USER IR",
+      "motif": "ir",
+      "knob": "cream"
+    },
     "art": {
       "x": 51,
       "w": 58
@@ -6255,6 +8385,13 @@
       "ink": "#eeeeff",
       "knob": "cream",
       "led": "#4da6ff"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "PURE",
+      "shape": "standard",
+      "plate": true,
+      "knob": "cream"
     },
     "art": {
       "x": 55.6,
@@ -6280,6 +8417,13 @@
       "knob": "dark",
       "led": "#4da6ff"
     },
+    "look": {
+      "template": "stomp",
+      "label": "ANALOG",
+      "shape": "standard",
+      "plate": true,
+      "knob": "dark"
+    },
     "art": {
       "x": 55.6,
       "w": 48.8
@@ -6304,6 +8448,13 @@
       "knob": "cream",
       "led": "#4da6ff"
     },
+    "look": {
+      "template": "tape",
+      "label": "RE·201",
+      "kind": "reels",
+      "panel": "#2a3630",
+      "knob": "cream"
+    },
     "art": {
       "x": 32,
       "w": 96
@@ -6326,6 +8477,12 @@
       "ink": "#eeeeff",
       "knob": "cream",
       "led": "#4da6ff"
+    },
+    "look": {
+      "template": "util",
+      "label": "DUAL",
+      "motif": "pan",
+      "knob": "cream"
     },
     "art": {
       "x": 51,
@@ -6350,6 +8507,12 @@
       "knob": "cream",
       "led": "#4da6ff"
     },
+    "look": {
+      "template": "util",
+      "label": "PING PONG",
+      "motif": "pan",
+      "knob": "cream"
+    },
     "art": {
       "x": 51,
       "w": 58
@@ -6372,6 +8535,13 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#4da6ff"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "SLAP",
+      "shape": "standard",
+      "plate": true,
+      "knob": "dark"
     },
     "art": {
       "x": 55.6,
@@ -6397,6 +8567,12 @@
       "knob": "cream",
       "led": "#4da6ff"
     },
+    "look": {
+      "template": "util",
+      "label": "SWEEP",
+      "motif": "filter",
+      "knob": "cream"
+    },
     "art": {
       "x": 51,
       "w": 58
@@ -6419,6 +8595,12 @@
       "ink": "#eeeeff",
       "knob": "cream",
       "led": "#4da6ff"
+    },
+    "look": {
+      "template": "util",
+      "label": "RING ECHO",
+      "motif": "ring",
+      "knob": "cream"
     },
     "art": {
       "x": 51,
@@ -6443,6 +8625,13 @@
       "knob": "cream",
       "led": "#4da6ff"
     },
+    "look": {
+      "template": "tape",
+      "label": "ECHOREC",
+      "kind": "drum",
+      "panel": "#3a3020",
+      "knob": "cream"
+    },
     "art": {
       "x": 32,
       "w": 96
@@ -6466,6 +8655,13 @@
       "knob": "cream",
       "led": "#4da6ff"
     },
+    "look": {
+      "template": "tape",
+      "label": "M-ECHO",
+      "kind": "reels",
+      "panel": "#33333a",
+      "knob": "cream"
+    },
     "art": {
       "x": 32,
       "w": 96
@@ -6488,6 +8684,13 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#4da6ff"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "AD·900",
+      "shape": "mxr",
+      "plate": false,
+      "knob": "dark"
     },
     "art": {
       "x": 55.6,
@@ -6513,6 +8716,13 @@
       "knob": "cream",
       "led": "#4da6ff"
     },
+    "look": {
+      "template": "rack",
+      "label": "ECHO",
+      "display": "999",
+      "displayColor": "#5df08a",
+      "knob": "dark"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -6536,6 +8746,13 @@
       "knob": "cream",
       "led": "#4da6ff"
     },
+    "look": {
+      "template": "rack",
+      "label": "DELAY",
+      "display": "80s",
+      "displayColor": "#ff7a4d",
+      "knob": "dark"
+    },
     "art": {
       "x": 6,
       "w": 148
@@ -6558,6 +8775,13 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#4da6ff"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "DM·3",
+      "shape": "standard",
+      "plate": true,
+      "knob": "dark"
     },
     "art": {
       "x": 55.6,
@@ -6583,6 +8807,13 @@
       "knob": "dark",
       "led": "#4da6ff"
     },
+    "look": {
+      "template": "stomp",
+      "label": "DD·3",
+      "shape": "standard",
+      "plate": true,
+      "knob": "dark"
+    },
     "art": {
       "x": 55.6,
       "w": 48.8
@@ -6607,6 +8838,13 @@
       "knob": "cream",
       "led": "#4da6ff"
     },
+    "look": {
+      "template": "tape",
+      "label": "TAPE·S",
+      "kind": "reels",
+      "panel": "#2a3630",
+      "knob": "cream"
+    },
     "art": {
       "x": 32,
       "w": 96
@@ -6629,6 +8867,12 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#4da6ff"
+    },
+    "look": {
+      "template": "util",
+      "label": "LO-FI",
+      "motif": "bits",
+      "knob": "cream"
     },
     "art": {
       "x": 51,
@@ -6653,6 +8897,12 @@
       "knob": "cream",
       "led": "#4da6ff"
     },
+    "look": {
+      "template": "util",
+      "label": "REVERSE",
+      "motif": "rev",
+      "knob": "cream"
+    },
     "art": {
       "x": 51,
       "w": 58
@@ -6675,6 +8925,13 @@
       "ink": "#1a5ab8",
       "knob": "dark",
       "led": "#4da6ff"
+    },
+    "look": {
+      "template": "stomp",
+      "label": "MEMORY 1",
+      "shape": "big",
+      "plate": true,
+      "knob": "dark"
     },
     "art": {
       "x": 47.6,
@@ -6700,6 +8957,13 @@
       "knob": "dark",
       "led": "#4da6ff"
     },
+    "look": {
+      "template": "stomp",
+      "label": "MEMORY 2",
+      "shape": "big",
+      "plate": true,
+      "knob": "dark"
+    },
     "art": {
       "x": 47.6,
       "w": 64.8
@@ -6724,6 +8988,12 @@
       "knob": "cream",
       "led": "#4da6ff"
     },
+    "look": {
+      "template": "util",
+      "label": "BROKEN",
+      "motif": "bits",
+      "knob": "cream"
+    },
     "art": {
       "x": 51,
       "w": 58
@@ -6746,6 +9016,12 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#4da6ff"
+    },
+    "look": {
+      "template": "util",
+      "label": "ICE",
+      "motif": "snow",
+      "knob": "dark"
     },
     "art": {
       "x": 51,
@@ -6770,6 +9046,12 @@
       "knob": "dark",
       "led": "#4dffe0"
     },
+    "look": {
+      "template": "util",
+      "label": "ROOM",
+      "motif": "arcs",
+      "knob": "dark"
+    },
     "art": {
       "x": 51,
       "w": 58
@@ -6792,6 +9074,12 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#4dffe0"
+    },
+    "look": {
+      "template": "util",
+      "label": "HALL",
+      "motif": "arcs",
+      "knob": "cream"
     },
     "art": {
       "x": 51,
@@ -6816,6 +9104,12 @@
       "knob": "cream",
       "led": "#4dffe0"
     },
+    "look": {
+      "template": "util",
+      "label": "CHURCH",
+      "motif": "arcs",
+      "knob": "cream"
+    },
     "art": {
       "x": 51,
       "w": 58
@@ -6838,6 +9132,12 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#4dffe0"
+    },
+    "look": {
+      "template": "util",
+      "label": "PLATE",
+      "motif": "plate",
+      "knob": "dark"
     },
     "art": {
       "x": 51,
@@ -6862,6 +9162,12 @@
       "knob": "dark",
       "led": "#4dffe0"
     },
+    "look": {
+      "template": "util",
+      "label": "SPRING",
+      "motif": "spring",
+      "knob": "dark"
+    },
     "art": {
       "x": 51,
       "w": 58
@@ -6884,6 +9190,12 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#4dffe0"
+    },
+    "look": {
+      "template": "util",
+      "label": "N-STAR",
+      "motif": "sparkle",
+      "knob": "dark"
     },
     "art": {
       "x": 51,
@@ -6908,6 +9220,12 @@
       "knob": "cream",
       "led": "#4dffe0"
     },
+    "look": {
+      "template": "util",
+      "label": "DEEPSEA",
+      "motif": "wave2",
+      "knob": "cream"
+    },
     "art": {
       "x": 51,
       "w": 58
@@ -6930,6 +9248,12 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#4dffe0"
+    },
+    "look": {
+      "template": "util",
+      "label": "SPACE",
+      "motif": "sparkle",
+      "knob": "dark"
     },
     "art": {
       "x": 51,
@@ -6954,6 +9278,12 @@
       "knob": "dark",
       "led": "#4dffe0"
     },
+    "look": {
+      "template": "util",
+      "label": "SHIMMER",
+      "motif": "sparkle",
+      "knob": "dark"
+    },
     "art": {
       "x": 51,
       "w": 58
@@ -6976,6 +9306,12 @@
       "ink": "#1c1712",
       "knob": "dark",
       "led": "#4dffe0"
+    },
+    "look": {
+      "template": "util",
+      "label": "STUDIO",
+      "motif": "arcs",
+      "knob": "dark"
     },
     "art": {
       "x": 51,
@@ -7000,6 +9336,12 @@
       "knob": "cream",
       "led": "#4dffe0"
     },
+    "look": {
+      "template": "util",
+      "label": "CLUB",
+      "motif": "arcs",
+      "knob": "cream"
+    },
     "art": {
       "x": 51,
       "w": 58
@@ -7022,6 +9364,12 @@
       "ink": "#f2ede2",
       "knob": "cream",
       "led": "#4dffe0"
+    },
+    "look": {
+      "template": "util",
+      "label": "CONCERT",
+      "motif": "arcs",
+      "knob": "cream"
     },
     "art": {
       "x": 51,
@@ -7046,6 +9394,12 @@
       "knob": "cream",
       "led": "#4dffe0"
     },
+    "look": {
+      "template": "util",
+      "label": "ARENA",
+      "motif": "arcs",
+      "knob": "cream"
+    },
     "art": {
       "x": 51,
       "w": 58
@@ -7068,6 +9422,12 @@
       "ink": "#dfe4e6",
       "knob": "cream",
       "led": "#4dffe0"
+    },
+    "look": {
+      "template": "util",
+      "label": "AMP SPR",
+      "motif": "spring",
+      "knob": "cream"
     },
     "art": {
       "x": 51,
@@ -7092,6 +9452,12 @@
       "knob": "cream",
       "led": "#4dffe0"
     },
+    "look": {
+      "template": "util",
+      "label": "TUBE SPR",
+      "motif": "spring",
+      "knob": "cream"
+    },
     "art": {
       "x": 51,
       "w": 58
@@ -7115,6 +9481,12 @@
       "knob": "cream",
       "led": "#ffa23f"
     },
+    "look": {
+      "template": "util",
+      "label": "NAM",
+      "motif": "nam",
+      "knob": "cream"
+    },
     "art": {
       "x": 51,
       "w": 58
@@ -7137,6 +9509,12 @@
       "ink": "#6ad8b0",
       "knob": "cream",
       "led": "#ff4d4d"
+    },
+    "look": {
+      "template": "util",
+      "label": "NAM",
+      "motif": "nam",
+      "knob": "cream"
     },
     "art": {
       "x": 51,
