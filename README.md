@@ -10,7 +10,7 @@ Build patches on a pedalboard you can actually see, manage all 256 of them,
 and stack loops over your own playing. It runs in the browser, so there is
 nothing to install and nothing to sign up for.
 
-**[▶ Open the app](https://gp200studio.com/)** · **[☕ Buy me a coffee](https://buymeacoffee.com/kabir0st)**
+**Fork of [kabir0st/gp200-studio](https://github.com/kabir0st/gp200-studio)** — adds a preset library with bulk load-to-device and realistic board chassis. See `HANDOFF.md`. The support/donation links of the upstream project are removed in this fork; support the original author at the upstream repo.
 
 [![Chrome or Edge](https://img.shields.io/badge/works%20in-Chrome%20%7C%20Edge-orange?logo=googlechrome&logoColor=white)](#how-to-start)
 [![Windows, macOS, Linux, Android](https://img.shields.io/badge/on-Windows%20·%20macOS%20·%20Linux%20·%20Android-5df08a)](#how-to-start)
@@ -51,6 +51,14 @@ cables follow along. That board up there is a real patch, not a mock-up.
 Hover any pedal and the top strip tells you what it actually is. All 305 effects
 are matched to the real amps and stompboxes they model, so "MESS4 LD 3" reads as
 a Mesa/Boogie Mark IV instead of a code you have to look up.
+
+And each block is drawn as the kind of hardware it models, not one grey box in
+different colours. Amps are heads, with tolex, a control panel, a pilot lamp that
+lights when the amp is on and a strip of grille cloth. Cabinets show their cloth
+and speaker layout, from a 1×8 to an 8×10. Wahs and volume pedals are treadles,
+tape echoes have reels and a VU meter, rack delays have ears and a readout, and
+the small squat boxes get a round stomp switch. It is all colour, shape and
+layout: no logos or brand names are drawn on anything.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="public/guide/04-info-bar-chain-dark.png" />
@@ -271,7 +279,7 @@ every site that uses them, so hiding it would buy nothing.
 
 Bug reports, protocol captures from your own pedal and pull requests are all
 welcome on [GitHub](https://github.com/kabir0st/gp200-studio). If this saved you
-from the 4" screen, [buy me a coffee](https://buymeacoffee.com/kabir0st). ☕
+from the 4" screen, support the upstream author via the original repo.
 
 Everything else you see above is a screenshot of the app. GP-200
 and Valeton are their trademarks; this project is not affiliated with or endorsed

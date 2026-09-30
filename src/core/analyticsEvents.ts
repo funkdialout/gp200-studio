@@ -25,6 +25,7 @@ export type PanelId =
   | 'drums'
   | 'remote'
   | 'patch_manager'
+  | 'library'
   | 'slot_browser'
   | 'patch_meta';
 

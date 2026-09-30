@@ -216,6 +216,11 @@
 }
 .board-view .cables-svg text {
   fill: var(--stub-ink);
+  /* halo: keeps a stub label legible where it grazes an enclosure edge */
+  paint-order: stroke;
+  stroke: var(--case);
+  stroke-width: 3px;
+  stroke-linejoin: round;
   font-family: var(--font-jetbrains-mono), monospace;
   font-size: 9px;
   font-weight: 700;
@@ -1157,7 +1162,7 @@
 .board-view .stomp-round:active {
   transform: translateY(1px);
 }
-.board-view .pedal.wide .fs-row {
+.board-view .pedal .fs-row {
   display: flex;
   align-items: center;
   justify-content: center;

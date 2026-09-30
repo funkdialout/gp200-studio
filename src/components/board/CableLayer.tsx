@@ -67,17 +67,31 @@ export function CableLayer({ modules, orderKey, hidden }: CableLayerProps) {
       // board's edge , exactly where there is least of it. Cable and label are
       // budgeted separately: the tail is 30px, the label another ~44 beyond it.
       // The row reserves side padding for the tail (board.css); when the label
-      // won't also fit it goes under the plug rather than across the pedal.
+      // won't also fit it stacks above the tail rather than beside it.
       const TAIL = 34;
       const TAIL_AND_LABEL = 80;
       const stub = (p: Plug, dir: 1 | -1, text: string) => {
         let dx = dir;
         if (dx < 0 && p.x - TAIL < 0) dx = 1; // no room to the left
         if (dx > 0 && p.x + TAIL > sr.width) dx = -1; // no room to the right
-        const labelFits = dx > 0 ? p.x + TAIL_AND_LABEL <= sr.width : p.x - TAIL_AND_LABEL >= 0;
-        let label: Segment['label'] = { text, x: p.x, y: p.y + 32, anchor: 'middle' };
+        // a tail that had to flip inward runs across the pedal: its label never
+        // goes beside it
+        const labelFits =
+          dx === dir && (dx > 0 ? p.x + TAIL_AND_LABEL <= sr.width : p.x - TAIL_AND_LABEL >= 0);
+        let label: Segment['label'];
         if (labelFits) {
           label = { text, x: p.x + 36 * dx, y: p.y + 19, anchor: dx > 0 ? 'start' : 'end' };
+        } else {
+          // No room beside the tail: centre the label over the tail's end,
+          // clamped inside the stage. Under the plug (the old fallback) it
+          // landed on the pedal's face , an amp panel or a cab's back plate ,
+          // on top of the knob labels. The text carries a case-coloured halo
+          // (board.css) for the few px it may still overlap an enclosure edge.
+          const HALF = 22;
+          // `dir`, not `dx`: when the tail had to flip inward, the label still
+          // belongs on the outside of the plug, not across the pedal
+          const x = Math.min(sr.width - HALF, Math.max(HALF, p.x + 30 * dir));
+          label = { text, x, y: p.y - 9, anchor: 'middle' };
         }
         segs.push({
           d: `M ${p.x} ${p.y} c ${8 * dx} 12, ${20 * dx} 16, ${30 * dx} 16`,

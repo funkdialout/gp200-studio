@@ -42,6 +42,8 @@ import {
   PatchManagerSheet,
   type BulkExportProgress,
 } from '@/components/PatchManagerSheet';
+import { LibrarySheet, type LibraryVerifyResult } from '@/components/LibrarySheet';
+import { verifyWrite } from '@/core/library';
 import { createDefaultPreset } from '@/core/defaultPreset';
 import { createZip, type ZipEntry } from '@/core/zipStore';
 import { slotsForScope, type BulkScope } from '@/core/bulkApply';
@@ -207,6 +209,7 @@ function App() {
   const pushAbortRef = useRef<AbortController | null>(null);
 
   const [showPatchManager, setShowPatchManager] = useState(false);
+  const [showLibrary, setShowLibrary] = useState(false);
   const [bulkProgress, setBulkProgress] = useState<BulkExportProgress | null>(null);
   const bulkCancelRef = useRef(false);
 
@@ -591,6 +594,16 @@ function App() {
     }
   }
 
+  // Flash-upload path (chunked 0x12/0x20, mirrors the official editor): full
+  // fidelity including the CTRL/EXP controls tail, and much faster than the
+  // per-parameter writePresetToSlot fallback. Throws rather than setting
+  // loadError so callers driving their own per-row status (the library's
+  // bulk write) can catch it themselves instead of it clobbering their UI.
+  async function writeBytesToSlot(slot: number, bytes: Uint8Array) {
+    const decoded = new PRSTDecoder(bytes).decode();
+    await midiDevice.pushPreset(decoded, slot);
+  }
+
   async function handleImportToSlot(slot: number, bytes: Uint8Array) {
     try {
       const decoded = new PRSTDecoder(bytes).decode();
@@ -612,6 +625,15 @@ function App() {
       track('preset_import', { target: 'slot', ok: false });
       throw err;
     }
+  }
+
+  // Library "Load to device": write then, when requested, pull the slot back
+  // and compare it against the bytes just written (patch name, every block's
+  // effect/enabled/params, routing, FX-loop send/return).
+  async function handleVerifySlot(slot: number, bytes: Uint8Array): Promise<LibraryVerifyResult> {
+    const expected = new PRSTDecoder(bytes).decode();
+    const actual = await midiDevice.pullPreset(slot);
+    return verifyWrite(expected, actual);
   }
 
   // In-app patch clipboard, for copy/paste and swap in the patch manager.
@@ -988,6 +1010,13 @@ function App() {
       midiDevice.sendCtrlAssignment(ctrlIndex, 0, current?.state ?? 0);
     },
     onOpenPatchManager: handleOpenPatchManager,
+    onOpenLibrary: () => {
+      setShowLibrary(true);
+      trackPanelOpen('library');
+      if (midiDevice.status === 'connected' && midiDevice.namesLoadProgress < 256) {
+        void midiDevice.loadPresetNames();
+      }
+    },
     onActivateSlot: handleActivateSlot,
     onPanelOpen: trackPanelOpen,
     looper: looper,
@@ -1092,6 +1121,16 @@ function App() {
         onImportFile={handleFile}
         onExportRequest={() => setShowExportDialog(true)}
         userIrNames={midiDevice.userIrNames}
+      />
+
+      <LibrarySheet
+        open={showLibrary}
+        onClose={() => setShowLibrary(false)}
+        connected={midiDevice.status === 'connected'}
+        presetNames={midiDevice.presetNames}
+        onImportFile={handleFile}
+        onWriteToSlot={writeBytesToSlot}
+        onVerifySlot={handleVerifySlot}
       />
 
       {slotBrowserMode && (
