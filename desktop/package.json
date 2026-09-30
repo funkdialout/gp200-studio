@@ -1,0 +1,14 @@
+{
+  "name": "gp200-studio-desktop-build",
+  "private": true,
+  "description": "Packaging tooling for the GP200 Studio desktop app. The app itself is in ./app.",
+  "scripts": {
+    "dist:win": "electron-builder --win --publish never",
+    "dist:mac": "electron-builder --mac --publish never",
+    "dist:linux": "electron-builder --linux --publish never"
+  },
+  "devDependencies": {
+    "electron": "44.5.1",
+    "electron-builder": "26.15.3"
+  }
+}
